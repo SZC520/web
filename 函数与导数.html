@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函数与导数 | 高考必考热点复习</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(220, 20, 60, 0.05) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(30, 144, 255, 0.05) 0%, transparent 25%);
+        }
+        
+        /* 高考冲刺主题色 */
+        :root {
+            --primary-red: #dc143c;      /* 高考红 */
+            --primary-blue: #1e90ff;     /* 希望蓝 */
+            --accent-orange: #ff8c00;    /* 冲刺橙 */
+            --accent-purple: #8a2be2;    /* 智慧紫 */
+            --light-bg: #f8faff;
+            --card-bg: #ffffff;
+            --dark-text: #1a1a2e;
+            --light-text: #4a5568;
+            --success-green: #2ecc71;
+            --warning-yellow: #f1c40f;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary-red);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary-red), var(--accent-orange));
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
+        }
+        
+        .logo-text {
+            background: linear-gradient(to right, #ffffff, #ffcccb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .back-btn {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .back-btn:hover {
+            color: white;
+            background-color: rgba(220, 20, 60, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+        }
+        
+        /* 主要内容区域 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        /* 页面头部 */
+        .page-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #1e3a8a 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-left: 6px solid var(--primary-red);
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(220, 20, 60, 0.1) 0%, transparent 70%);
+        }
+        
+        .topic-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-red), #ff4757);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 6px 15px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 8px rgba(220, 20, 60, 0.3);
+        }
+        
+        .topic-title {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .topic-subtitle {
+            font-size: 1.3rem;
+            color: #e2e8f0;
+            max-width: 900px;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+        
+        .topic-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 140px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffcc00;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            text-align: center;
+        }
+        
+        /* 内容卡片 */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-blue);
+        }
+        
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-blue), var(--accent-purple));
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-red), var(--accent-orange));
+            box-shadow: 0 6px 12px rgba(220, 20, 60, 0.2);
+        }
+        
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .card-content {
+            color: var(--light-text);
+            line-height: 1.7;
+        }
+        
+        .card-content p {
+            margin-bottom: 15px;
+        }
+        
+        .card-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .card-content li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .card-content li::before {
+            content: '•';
+            color: var(--primary-red);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        /* 复习建议特殊样式 */
+        .advice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .advice-item {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid var(--primary-blue);
+            transition: all 0.3s;
+        }
+        
+        .advice-item:hover {
+            background: #f0f9ff;
+            transform: translateX(5px);
+        }
+        
+        .advice-title {
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .advice-desc {
+            color: var(--light-text);
+            font-size: 0.95rem;
+        }
+        
+        /* 鼓励用语区域 */
+        .encouragement-section {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            border-left: 6px solid var(--warning-yellow);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .encouragement-title {
+            font-size: 1.8rem;
+            color: #92400e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .encouragement-text {
+            font-size: 1.2rem;
+            color: #92400e;
+            font-style: italic;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* 资料下载区域 */
+        .download-section {
+            margin-top: 50px;
+        }
+        
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .download-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--success-green);
+        }
+        
+        .download-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .download-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 15px;
+            background: linear-gradient(135deg, var(--success-green), #27ae60);
+        }
+        
+        .download-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+        
+        .download-desc {
+            color: var(--light-text);
+            margin-bottom: 20px;
+            flex-grow: 1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .download-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary-blue), #3742fa);
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: linear-gradient(135deg, #3742fa, var(--primary-blue));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(30, 144, 255, 0.3);
+        }
+        
+        /* 页脚 */
+        footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            border-top: 4px solid var(--primary-red);
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffcc00;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-red);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .footer-links a i {
+            margin-right: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+        
+        .copyright strong {
+            color: #ffcc00;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .topic-title {
+                font-size: 2.2rem;
+            }
+            
+            .topic-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .topic-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .page-header {
+                padding: 30px 20px;
+            }
+            
+            .content-card {
+                padding: 25px;
+            }
+        }
+        
+        /* 考点重点标记 */
+        .key-point {
+            background: #fef3c7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--warning-yellow);
+        }
+        
+        .key-point-title {
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .key-point-content {
+            color: #92400e;
+        }
+        
+        /* 高亮文本 */
+        .highlight-text {
+            color: var(--primary-red);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="数学宇宙.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <span class="logo-text">MathVerse</span>
+            </a>
+            
+            <a href="备考冲刺.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回首页
+            </a>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="page-header">
+            <div class="topic-tag">
+                <i class="fas fa-fire-alt"></i> 必考热点
+            </div>
+            <h1 class="topic-title">函数与导数</h1>
+            <p class="topic-subtitle">
+                高考必考重点！包括函数性质、图像、基本初等函数、导数的概念、计算和应用，极值与最值问题。
+                <span class="highlight-text">每年高考分值约25-30分。</span>
+            </p>
+            
+            <div class="topic-stats">
+                <div class="stat-item">
+                    <div class="stat-value">25-30分</div>
+                    <div class="stat-label">高考分值</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">8-10小时</div>
+                    <div class="stat-label">建议复习时间</div>
+                </div>
+               
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <div class="content-grid">
+            <!-- 课标解读 -->
+            <div class="content-card">
+                <div class="card-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h2 class="card-title">课标解读</h2>
+                <div class="card-content">
+                    <p>函数是描述客观世界变化规律的重要数学模型，导数是研究函数性质的重要工具。高考中对函数与导数的考查体现了数学的应用价值和思想方法。</p>
+                    
+                    <div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-exclamation-circle"></i> 核心要求
+                        </div>
+                        <div class="key-point-content">
+                            理解函数概念，掌握基本初等函数的性质与图像，理解导数的概念和几何意义，会求简单函数的导数，能利用导数研究函数的单调性、极值和最值。
+                        </div>
+                    </div>
+                    
+                    <p><strong>考查重点：</strong></p>
+                    <ul>
+                        <li>函数的概念、性质与图像</li>
+                        <li>基本初等函数（幂函数、指数函数、对数函数、三角函数）</li>
+                        <li>导数的概念、几何意义与计算</li>
+                        <li>导数在研究函数性质中的应用</li>
+                        <li>函数与方程、不等式的综合应用</li>
+                    </ul>
+                    
+                    <p><strong>能力要求：</strong></p>
+                    <ul>
+                        <li>数学抽象与逻辑推理能力</li>
+                        <li>直观想象与空间观念</li>
+                        <li>数学运算与数据处理能力</li>
+                        <li>数学建模与问题解决能力</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 复习建议 -->
+            <div class="content-card">
+                <div class="card-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h2 class="card-title">复习建议</h2>
+                <div class="card-content">
+                    <p>函数与导数是高中数学的核心内容，也是高考的重点和难点。科学的复习策略能帮助您高效掌握这一模块。</p>
+                    
+                    <div class="advice-list">
+                        <div class="advice-item">
+                            <div class="advice-title">
+                                <i class="fas fa-check-circle"></i> 夯实基础概念
+                            </div>
+                            <div class="advice-desc">
+                                理解函数定义、三要素、性质，掌握基本初等函数的图像与性质，熟练导数定义与几何意义。
+                            </div>
+                        </div>
+                        
+                        <div class="advice-item">
+                            <div class="advice-title">
+                                <i class="fas fa-chart-line"></i> 专题突破训练
+                            </div>
+                            <div class="advice-desc">
+                                分专题练习：函数性质、函数图像、导数计算、导数应用、综合问题。每个专题针对性训练。
+                            </div>
+                        </div>
+                        
+                        <div class="advice-item">
+                            <div class="advice-title">
+                                <i class="fas fa-puzzle-piece"></i> 注重综合应用
+                            </div>
+                            <div class="advice-desc">
+                                加强函数与方程、不等式、数列、解析几何等知识的综合应用训练，提高解题能力。
+                            </div>
+                        </div>
+                        
+                        <div class="advice-item">
+                            <div class="advice-title">
+                                <i class="fas fa-clock"></i> 时间分配建议
+                            </div>
+                            <div class="advice-desc">
+                                <strong>第1-2天：</strong>复习基础知识与概念<br>
+                                <strong>第3-5天：</strong>专题训练与解题技巧<br>
+                                <strong>第6-7天：</strong>综合模拟与查漏补缺<br>
+                                <strong>第8-10天：</strong>真题演练与应试策略
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-star"></i> 高效复习小贴士
+                        </div>
+                        <div class="key-point-content">
+                            1. 每天坚持做2-3道函数与导数综合题<br>
+                            2. 建立错题本，定期回顾易错点<br>
+                            3. 重视图形结合，培养直观想象能力<br>
+                            4. 考前重点复习近5年高考真题
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 核心考点 -->
+            <div class="content-card">
+                <div class="card-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h2 class="card-title">核心考点分析</h2>
+                <div class="card-content">
+                    <p>根据近5年高考统计，函数与导数模块的考点分布如下：</p>
+                    
+                    <div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-chart-pie"></i> 考点分布统计
+                        </div>
+                        <div class="key-point-content">
+                            <strong>1. 函数性质与图像：</strong> 约35%<br>
+                            <strong>2. 导数概念与计算：</strong> 约25%<br>
+                            <strong>3. 导数应用（单调性、极值）：</strong> 约30%<br>
+                            <strong>4. 综合应用题：</strong> 约10%
+                        </div>
+                    </div>
+                    
+                    <p><strong>高频考点：</strong></p>
+                    <ul>
+                        <li>函数的单调性、奇偶性、周期性判断</li>
+                        <li>函数图像的识别与绘制</li>
+                        <li>基本初等函数的性质与应用</li>
+                        <li>导数的几何意义（切线问题）</li>
+                        <li>利用导数研究函数单调性</li>
+                        <li>函数极值与最值的求解</li>
+                        <li>不等式恒成立问题</li>
+                    </ul>
+                    
+                    <p><strong>难点突破：</strong></p>
+                    <ul>
+                        <li>复合函数与抽象函数问题</li>
+                        <li>含参函数的分类讨论</li>
+                        <li>构造函数证明不等式</li>
+                        <li>函数零点与方程根的分布</li>
+                        <li>实际应用问题建模</li>
+                    </ul>
+                    
+                    <div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-clipboard-check"></i> 应试策略
+                        </div>
+                        <div class="key-point-content">
+                            选择题要快速准确，填空题要规范完整，解答题要步骤清晰。特别注意审题，识别题目考查的具体知识点，选择合适的解题方法。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 鼓励用语区域 -->
+        <section class="encouragement-section">
+            <h2 class="encouragement-title">
+                <i class="fas fa-heart"></i> 加油！高考必胜
+            </h2>
+            <p class="encouragement-text">
+                "函数虽抽象，导数虽复杂，但只要掌握规律，勤加练习，必能攻克难关！<br>
+                每一次努力的背后，都是高考分数在向你招手。坚持到底，胜利就在前方！<br>
+                相信自己的潜力，你比想象中更强大。高考数学140+，你可以做到！"
+            </p>
+        </section>
+        
+        <!-- 资料下载区域 -->
+        <section class="download-section">
+            <h2 class="card-title" style="margin-bottom: 10px;">
+                <i class="fas fa-download"></i> 复习资料下载
+            </h2>
+            <p style="color: var(--light-text); margin-bottom: 30px;">精选高质量复习资料，助力高效备考</p>
+            
+            <div class="download-grid">
+                <!-- 资料1 -->
+                <div class="download-card">
+                    <div class="download-header">
+                        <div class="download-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3 class="download-title">函数与导数专题讲义</h3>
+                    </div>
+                    <p class="download-desc">包含函数与导数所有知识点梳理、典型例题解析、解题方法总结，适合基础复习与提高。</p>
+                    <div class="download-meta">
+                        <span><i class="far fa-file"></i> PDF文档</span>
+                        <span><i class="far fa-clock"></i> 100+页</span>
+                    </div>
+                    <a href="downloads/备考冲刺/函数与导数.rar" class="download-btn" onclick="downloadFile('函数与导数专题讲义.pdf')">
+                        <i class="fas fa-download"></i> 立即下载
+                    </a>
+                </div>
+                
+                
+                <!-- 资料3 -->
+                <div class="download-card">
+                    <div class="download-header">
+                        <div class="download-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <h3 class="download-title">易错题集与专项训练</h3>
+                    </div>
+                    <p class="download-desc">针对常见易错点设计的专项训练题，帮助避免常见错误，提高解题准确率。</p>
+                    <div class="download-meta">
+                        <span><i class="far fa-file"></i> PDF文档</span>
+                        <span><i class="far fa-clock"></i> 100+页</span>
+                    </div>
+                    <a href="downloads/备考冲刺/函数与导数专项训练.rar" class="download-btn" onclick="downloadFile('函数与导数易错题集.pdf')">
+                        <i class="fas fa-download"></i> 立即下载
+                    </a>
+                </div>
+                
+               
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+          
+            
+          
+            
+            <div class="copyright">
+                <p>&copy; 2025 MathVerse 高中数学高考冲刺平台. 保留所有权利. <strong>函数与导数 · 高考必考 · 冲刺高分！</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 模拟文件下载功能
+        function downloadFile(filename) {
+            // 显示下载提示
+           
+            
+            // 在实际应用中，这里可以替换为真实的文件下载代码
+            // window.location.href = 'path/to/your/file/' + filename;
+            
+            // 添加下载动画效果
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 下载中...';
+            btn.style.opacity = '0.8';
+            btn.style.cursor = 'wait';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+                
+                // 显示下载成功提示
+                const successMsg = document.createElement('div');
+                successMsg.style.position = 'fixed';
+                successMsg.style.top = '20px';
+                successMsg.style.right = '20px';
+                successMsg.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
+                successMsg.style.color = 'white';
+                successMsg.style.padding = '15px 25px';
+                successMsg.style.borderRadius = '8px';
+                successMsg.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+                successMsg.style.zIndex = '10000';
+                successMsg.innerHTML = `<i class="fas fa-check-circle"></i> ${filename} 下载成功！`;
+                document.body.appendChild(successMsg);
+                
+                setTimeout(() => {
+                    document.body.removeChild(successMsg);
+                }, 3000);
+            }, 1500);
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加卡片动画效果
+            const contentCards = document.querySelectorAll('.content-card');
+            contentCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = `opacity 0.6s ${index * 0.2}s, transform 0.6s ${index * 0.2}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 300 + index * 200);
+            });
+            
+            // 添加下载卡片动画效果
+            setTimeout(() => {
+                const downloadCards = document.querySelectorAll('.download-card');
+                downloadCards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        card.style.transition = `opacity 0.6s ${index * 0.15}s, transform 0.6s ${index * 0.15}s`;
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 500 + index * 150);
+                });
+            }, 800);
+            
+            // 添加统计数据动画
+            const statValues = document.querySelectorAll('.stat-value');
+            statValues.forEach(value => {
+                const originalText = value.textContent;
+                
+                // 特殊处理分数值
+                if (originalText.includes('-')) {
+                    const parts = originalText.split('-');
+                    if (parts.length === 2) {
+                        const start = parseInt(parts[0]);
+                        const end = parseInt(parts[1]);
+                        
+                        let current = 0;
+                        const updateCounter = () => {
+                            if (current < start) {
+                                current++;
+                                value.textContent = current + '-' + end;
+                                setTimeout(updateCounter, 50);
+                            } else {
+                                value.textContent = originalText;
+                            }
+                        };
+                        
+                        setTimeout(updateCounter, 1000);
+                    }
+                } else {
+                    // 其他统计值
+                    value.textContent = '0';
+                    
+                    let counter = 0;
+                    const target = isNaN(parseInt(originalText)) ? 0 : parseInt(originalText);
+                    
+                    if (target > 0) {
+                        const increment = target / 20;
+                        
+                        const updateCounter = () => {
+                            if (counter < target) {
+                                counter += increment;
+                                value.textContent = Math.ceil(counter);
+                                setTimeout(updateCounter, 50);
+                            } else {
+                                value.textContent = originalText;
+                            }
+                        };
+                        
+                        setTimeout(updateCounter, 1000);
+                    }
+                }
+            });
+            
+            // 添加鼓励用语的打字机效果
+            setTimeout(() => {
+                const encouragementText = document.querySelector('.encouragement-text');
+                const originalText = encouragementText.textContent;
+                encouragementText.textContent = '';
+                
+                let i = 0;
+                const typeWriter = () => {
+                    if (i < originalText.length) {
+                        encouragementText.textContent += originalText.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 30);
+                    }
+                };
+                
+                setTimeout(typeWriter, 500);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

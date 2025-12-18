@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学星河 | 高中数学知识图谱</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        html {
+    transform: scale(0.85);
+    transform-origin: top center;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: 100%;
+    min-height: 100%;
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: linear-gradient(135deg, #0a0e2a 0%, #1a1f4b 50%, #0a0e2a 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 增强版星空背景效果 */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+        
+        .star.type-1 {
+            animation: twinkle-1 3s infinite alternate;
+        }
+        
+        .star.type-2 {
+            animation: twinkle-2 2s infinite;
+        }
+        
+        .star.type-3 {
+            animation: twinkle-3 4s infinite alternate;
+        }
+        
+        @keyframes twinkle-1 {
+            0%, 100% { opacity: 0.1; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        @keyframes twinkle-2 {
+            0% { opacity: 0.2; }
+            25% { opacity: 0.8; }
+            50% { opacity: 0.3; }
+            75% { opacity: 0.9; }
+            100% { opacity: 0.2; }
+        }
+        
+        @keyframes twinkle-3 {
+            0% { opacity: 0.3; box-shadow: 0 0 5px #fff; }
+            33% { opacity: 0.9; box-shadow: 0 0 15px #fff, 0 0 20px #8A2BE2; }
+            66% { opacity: 0.5; box-shadow: 0 0 8px #fff; }
+            100% { opacity: 0.8; box-shadow: 0 0 10px #fff, 0 0 15px #00FF9D; }
+        }
+        
+        /* 流星效果 */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px #fff;
+            animation: shoot 3s linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes shoot {
+            0% {
+                opacity: 0;
+                transform: translateX(0) translateY(0);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100vw) translateY(100vh);
+            }
+        }
+        
+        /* 标题区域 */
+        .header {
+            text-align: center;
+            padding: 25px 0 40px;
+            position: relative;
+            background: rgba(10, 14, 42, 0.7);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #00FF9D, #8A2BE2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #A0A7FF;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+        
+        /* 控制面板 */
+        .control-panel {
+            background: rgba(20, 25, 60, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 18px;
+            padding: 25px 30px;
+            margin: 25px auto;
+            max-width: 1500px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 350px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 16px 25px;
+            padding-left: 50px;
+            background: rgba(10, 14, 42, 0.9);
+            border: 1px solid rgba(0, 255, 157, 0.4);
+            border-radius: 30px;
+            color: white;
+            font-size: 1.1rem;
+            font-family: 'Exo 2', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #00FF9D;
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00FF9D;
+            font-size: 1.2rem;
+        }
+        
+        .filter-btn {
+            background: linear-gradient(90deg, #8A2BE2, #4A00E0);
+            border: none;
+            color: white;
+            padding: 16px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.5);
+        }
+        
+        .reset-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 16px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            display: flex;
+            max-width: 1500px;
+            margin: 0 auto 60px;
+            gap: 30px;
+            padding: 0 30px;
+        }
+        
+        /* 知识图谱容器 */
+        .graph-container {
+            flex: 3;
+            background: rgba(20, 25, 60, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            min-height: 700px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #knowledge-graph {
+            width: 100%;
+            height: 100%;
+            min-height: 700px;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            flex: 1;
+            background: rgba(20, 25, 60, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            min-width: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: #00FF9D;
+            margin-bottom: 25px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 255, 157, 0.4);
+        }
+        
+        /* 知识点详情卡片 */
+        .knowledge-detail {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-header {
+            background: linear-gradient(90deg, #8A2BE2, #4A00E0);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.3);
+        }
+        
+        .detail-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .detail-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        .detail-content {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 500px;
+            padding-right: 10px;
+        }
+        
+        .detail-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .detail-content::-webkit-scrollbar-track {
+            background: rgba(10, 14, 42, 0.5);
+            border-radius: 4px;
+        }
+        
+        .detail-content::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 157, 0.3);
+            border-radius: 4px;
+        }
+        
+        .detail-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(10, 14, 42, 0.6);
+            border-radius: 15px;
+            border-left: 4px solid #00FF9D;
+        }
+        
+        .detail-section h3 {
+            color: #00FF9D;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .detail-section p {
+            line-height: 1.7;
+            margin-bottom: 12px;
+            color: #C2C6FF;
+            font-size: 1.05rem;
+        }
+        
+        .detail-section ul {
+            padding-left: 25px;
+            margin-bottom: 12px;
+        }
+        
+        .detail-section li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            color: #C2C6FF;
+            font-size: 1.05rem;
+        }
+        
+        .resource-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .resource-link {
+            background: rgba(0, 255, 157, 0.12);
+            border: 1px solid rgba(0, 255, 157, 0.4);
+            color: #00FF9D;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .resource-link:hover {
+            background: rgba(0, 255, 157, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.2);
+        }
+        
+        /* 底部信息 */
+        .footer {
+            text-align: center;
+            padding: 40px 30px;
+            color: #8A8FFF;
+            font-size: 1rem;
+            border-top: 1px solid rgba(138, 143, 255, 0.2);
+            background: rgba(10, 14, 42, 0.8);
+            backdrop-filter: blur(15px);
+        }
+        
+        /* 图谱节点样式 */
+        .node {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .node:hover circle {
+            stroke-width: 4px;
+            stroke: #00FF9D;
+            filter: drop-shadow(0 0 8px rgba(0, 255, 157, 0.5));
+        }
+        
+        .node text {
+            fill: white;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            pointer-events: none;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
+        }
+        
+        .node circle {
+            stroke-width: 2.5px;
+            stroke: white;
+            transition: all 0.3s ease;
+        }
+        
+        .link {
+            stroke: rgba(255, 255, 255, 0.4);
+            stroke-width: 2;
+            transition: all 0.3s ease;
+        }
+        
+        /* 筛选面板 */
+        .filter-panel {
+            position: absolute;
+            top: 120px;
+            right: 30px;
+            background: rgba(20, 25, 60, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 18px;
+            padding: 25px;
+            width: 350px;
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: none;
+        }
+        
+        .filter-panel h3 {
+            color: #00FF9D;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+        }
+        
+        .filter-group {
+            margin-bottom: 25px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #C2C6FF;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .filter-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(10, 14, 42, 0.9);
+            border: 1px solid rgba(0, 255, 157, 0.4);
+            border-radius: 10px;
+            color: white;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-group select:focus {
+            outline: none;
+            border-color: #00FF9D;
+            box-shadow: 0 0 10px rgba(0, 255, 157, 0.2);
+        }
+        
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .filter-checkbox input {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        /* 导航栏主样式 */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 14, 42, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(138, 43, 226, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            height: 80px;
+        }
+        
+        /* Logo样式 */
+        .nav-logo {
+            flex: 0 0 auto;
+        }
+        
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.7rem;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-link i {
+            color: #00FF9D;
+            margin-right: 12px;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-link:hover {
+            color: #00FF9D;
+            transform: translateY(-2px);
+        }
+        
+        .logo-link:hover i {
+            transform: rotate(180deg);
+        }
+        
+        /* 导航菜单样式 */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            flex: 1;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 30px;
+            text-decoration: none;
+            color: #C2C6FF;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            font-size: 1.15rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link i {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link .nav-text {
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        /* 导航指示器 */
+        .nav-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00FF9D, #8A2BE2);
+            border-radius: 4px 4px 0 0;
+            transition: width 0.3s ease;
+        }
+        
+        /* 导航链接悬停效果 */
+        .nav-link:hover {
+            color: #fff;
+            background: rgba(138, 43, 226, 0.15);
+            transform: translateY(-3px);
+        }
+        
+        .nav-link:hover i {
+            color: #00FF9D;
+            transform: scale(1.2);
+        }
+        
+        .nav-link:hover .nav-indicator {
+            width: 80%;
+        }
+        
+        /* 激活状态 */
+        .nav-link.active {
+            color: #fff;
+            background: rgba(138, 43, 226, 0.25);
+        }
+        
+        .nav-link.active i {
+            color: #00FF9D;
+        }
+        
+        .nav-link.active .nav-indicator {
+            width: 100%;
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.5);
+        }
+        
+        /* 用户区域 */
+        .nav-user {
+            flex: 0 0 auto;
+            position: relative;
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8A2BE2, #00FF9D);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .user-avatar i {
+            font-size: 1.7rem;
+            color: white;
+        }
+        
+        .user-avatar:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 0 25px rgba(138, 43, 226, 0.6);
+        }
+        
+        /* 用户菜单 */
+        .user-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(20, 25, 60, 0.98);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
+            padding: 20px 0;
+            min-width: 200px;
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .nav-user:hover .user-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .user-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            text-decoration: none;
+            color: #C2C6FF;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .user-link i {
+            width: 22px;
+            margin-right: 15px;
+            color: #8A2BE2;
+            font-size: 1.2rem;
+        }
+        
+        .user-link:hover {
+            color: #fff;
+            background: rgba(138, 43, 226, 0.25);
+        }
+        
+        .user-link:hover i {
+            color: #00FF9D;
+        }
+        
+        /* 移动端菜单按钮 */
+        .mobile-menu-toggle {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .hamburger {
+            width: 35px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .hamburger span {
+            display: block;
+            height: 4px;
+            width: 100%;
+            background: #00FF9D;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        /* 移动端菜单 */
+        .mobile-menu {
+            display: none;
+            background: rgba(10, 14, 42, 0.98);
+            backdrop-filter: blur(15px);
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            padding: 25px;
+            border-top: 1px solid rgba(138, 43, 226, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        
+        .mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .mobile-nav-menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .mobile-nav-item {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .mobile-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 20px 25px;
+            text-decoration: none;
+            color: #C2C6FF;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            background: rgba(20, 25, 60, 0.8);
+            border-left: 5px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-nav-link i {
+            width: 35px;
+            font-size: 1.4rem;
+            margin-right: 18px;
+            color: #8A2BE2;
+        }
+        
+        .mobile-nav-link.active {
+            color: #fff;
+            background: rgba(138, 43, 226, 0.25);
+            border-left-color: #00FF9D;
+        }
+        
+        .mobile-nav-link.active i {
+            color: #00FF9D;
+        }
+        
+        .mobile-nav-link:hover {
+            color: #fff;
+            background: rgba(138, 43, 226, 0.35);
+            transform: translateX(8px);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                min-width: auto;
+            }
+            
+            .control-panel {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                min-width: auto;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .nav-user .user-menu {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+                padding: 0 20px;
+            }
+            
+            .graph-container, .sidebar {
+                padding: 20px;
+            }
+            
+            .nav-container {
+                padding: 0 25px;
+                height: 70px;
+            }
+            
+            .logo-link {
+                font-size: 1.5rem;
+            }
+            
+            .logo-link i {
+                font-size: 1.8rem;
+            }
+            
+            .mobile-menu {
+                top: 70px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .control-panel {
+                padding: 20px;
+                margin: 20px 15px;
+            }
+            
+            .main-content {
+                padding: 0 15px;
+            }
+            
+            .graph-container, .sidebar {
+                padding: 15px;
+            }
+            
+            .nav-container {
+                padding: 0 20px;
+                height: 65px;
+            }
+            
+            .logo-link {
+                font-size: 1.3rem;
+            }
+            
+            .mobile-menu {
+                top: 65px;
+            }
+        }
+        
+        /* 导航栏滚动效果 */
+        .main-nav.scrolled {
+            background: rgba(10, 14, 42, 0.98);
+            height: 70px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+        }
+        
+        .main-nav.scrolled .nav-container {
+            height: 70px;
+        }
+        
+        /* 页面内容偏移（避免被固定导航栏遮挡） */
+        body {
+            padding-top: 80px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding-top: 65px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 添加固定导航栏 -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <!-- 网站Logo -->
+            <div class="nav-logo">
+                <a href="数学宇宙.html" class="logo-link">
+                    <i class="fas fa-atom"></i>
+                    <span class="logo-text">MathVerse</span>
+                </a>
+            </div>
+            
+            <!-- 导航菜单 -->
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="数学宇宙.html" class="nav-link active" data-page="home">
+                        <i class="fas fa-home"></i>
+                        <span class="nav-text">首页</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="智慧工坊.html" class="nav-link" data-page="problem-lab">
+                        <i class="fas fa-tools"></i>
+                        <span class="nav-text">智慧工坊</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="智能题库.html" class="nav-link" data-page="question-bank">
+                        <i class="fas fa-brain"></i>
+                        <span class="nav-text">智能题库</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="备考冲刺.html" class="nav-link" data-page="exam-prep">
+                        <i class="fas fa-rocket"></i>
+                        <span class="nav-text">备考冲刺</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="学习社区.html
+" class="nav-link" data-page="community">
+                        <i class="fas fa-users"></i>
+                        <span class="nav-text">学习社区</span>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </li>
+            </ul>
+            
+            <!-- 用户功能 -->
+            <div class="nav-user">
+                <div class="user-avatar">
+                    <i class="fas fa-user-astronaut"></i>
+                </div>
+                <div class="user-menu">
+                    <a  class="user-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span>个人中心</span>
+                    </a>
+                    <a  class="user-link">
+                        <i class="fas fa-cog"></i>
+                        <span>设置</span>
+                    </a>
+                    <a class="user-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>退出</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul class="mobile-nav-menu">
+                <li class="mobile-nav-item">
+                    <a href="数学宇宙.html" class="mobile-nav-link active">
+                        <i class="fas fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="/problem-lab.html" class="mobile-nav-link">
+                        <i class="fas fa-tools"></i>
+                        <span>智慧工坊</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="/smart-question-bank.html" class="mobile-nav-link">
+                        <i class="fas fa-brain"></i>
+                        <span>智能题库</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="/gaokao-zone.html" class="mobile-nav-link">
+                        <i class="fas fa-rocket"></i>
+                        <span>备考冲刺</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="/community.html" class="mobile-nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>学习社区</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="/profile" class="mobile-nav-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span>个人中心</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 星空背景容器 -->
+    <div class="stars-container" id="stars-container"></div>
+    
+    <!-- 标题区域 -->
+    <header class="header">
+        <h1 class="logo">数学星河</h1>
+        <p class="subtitle">高中数学知识图谱 | 可视化探索数学知识体系，构建你的数学知识网络</p>
+    </header>
+    
+    <!-- 控制面板 -->
+    <div class="control-panel">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="搜索知识点 (如: 函数, 几何, 导数, 概率...)">
+        </div>
+        <button class="filter-btn" id="filter-toggle">
+            <i class="fas fa-filter"></i> 筛选知识点
+        </button>
+        <button class="reset-btn" id="reset-graph">
+            <i class="fas fa-redo"></i> 重置图谱
+        </button>
+    </div>
+    
+    <!-- 筛选面板 -->
+    <div class="filter-panel" id="filter-panel">
+        <h3>筛选知识点</h3>
+        
+        <div class="filter-group">
+            <label for="grade-filter">年级:</label>
+            <select id="grade-filter">
+                <option value="all">全部年级</option>
+                <option value="高一">高一</option>
+                <option value="高二">高二</option>
+                <option value="高三">高三</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="type-filter">知识类型:</label>
+            <select id="type-filter">
+                <option value="all">全部类型</option>
+                <option value="代数">代数</option>
+                <option value="几何">几何</option>
+                <option value="概率统计">概率统计</option>
+                <option value="函数">函数</option>
+                <option value="微积分">导数</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label>难度级别:</label>
+            <div class="filter-checkbox">
+                <input type="checkbox" id="difficulty-easy" checked>
+                <label for="difficulty-easy">基础</label>
+            </div>
+            <div class="filter-checkbox">
+                <input type="checkbox" id="difficulty-medium" checked>
+                <label for="difficulty-medium">中等</label>
+            </div>
+            <div class="filter-checkbox">
+                <input type="checkbox" id="difficulty-hard" checked>
+                <label for="difficulty-hard">进阶</label>
+            </div>
+        </div>
+        
+        <div class="filter-group">
+            <label>显示连接:</label>
+            <div class="filter-checkbox">
+                <input type="checkbox" id="show-links" checked>
+                <label for="show-links">显示知识点关联</label>
+            </div>
+        </div>
+        
+        <button class="filter-btn" id="apply-filter" style="width: 100%; margin-top: 15px;">
+            <i class="fas fa-check"></i> 应用筛选
+        </button>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <div class="main-content">
+        <!-- 知识图谱容器 -->
+        <div class="graph-container">
+            <div id="knowledge-graph"></div>
+        </div>
+        
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <h2 class="sidebar-title">知识点详情</h2>
+            <div class="knowledge-detail" id="knowledge-detail">
+                <div class="detail-header">
+                    <h2 class="detail-title">高中数学知识图谱</h2>
+                    <p class="detail-subtitle">点击图谱中的节点查看详细信息</p>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-section">
+                        <h3>📚 使用说明</h3>
+                        <p>这是一个交互式高中数学知识图谱，展示了高中数学的知识体系与关联。</p>
+                        <ul>
+                            <li>点击任意节点查看知识点详细信息</li>
+                            <li>拖拽节点可以重新布局图谱</li>
+                            <li>使用搜索框快速查找知识点</li>
+                            <li>使用筛选功能按年级、类型过滤知识点</li>
+                        </ul>
+                    </div>
+                    <div class="detail-section">
+                        <h3>🧩 知识体系</h3>
+                        <p>高中数学主要包含以下四大模块：</p>
+                        <ul>
+                            <li><strong>代数</strong>：集合、函数、数列、不等式等</li>
+                            <li><strong>几何</strong>：平面几何、立体几何、解析几何等</li>
+                            <li><strong>概率统计</strong>：概率、统计、排列组合等</li>
+                            <li><strong>导数初步</strong>：导数等</li>
+                        </ul>
+                    </div>
+                    <div class="detail-section">
+                        <h3>🚀 学习建议</h3>
+                        <p>建议按照知识体系的关联性进行系统学习，先从基础概念开始，逐步深入。</p>
+                        <p>使用本图谱可以：</p>
+                        <ul>
+                            <li>了解知识点之间的前置关系</li>
+                            <li>发现知识薄弱环节</li>
+                            <li>规划系统性学习路径</li>
+                        </ul>
+                        <div class="resource-links">
+                            <a href="学习资源.html" class="resource-link"target="_blank">知识点讲解视频</a>
+                            <a href="智能题库.html" class="resource-link"target="_blank">典型例题训练</a>
+                            <a href="备考冲刺.html" class="resource-link"target="_blank">高考考点解析</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部信息 -->
+    <footer class="footer">
+        <p>© 2025 数学星河 | MathVerse 高中教育资源平台 | 高中数学知识图谱 v1.0</p>
+        <p style="margin-top: 15px; font-size: 1.1rem;">建议使用 Chrome 或 Edge 浏览器获得最佳体验</p>
+    </footer>
+    
+    <script>
+        // 增强版星空背景功能
+        class Starfield {
+            constructor() {
+                this.container = document.getElementById('stars-container');
+                this.starCount = 200;
+                this.shootingStarsEnabled = true;
+                this.shootingStarInterval = null;
+                
+                this.init();
+            }
+            
+            init() {
+                this.createStars();
+                if (this.shootingStarsEnabled) this.startShootingStars();
+            }
+            
+            // 创建星星
+            createStars() {
+                for (let i = 0; i < this.starCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    
+                    // 随机位置
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    
+                    // 随机大小
+                    const size = Math.random() * 4;
+                    
+                    // 随机类型（闪烁效果）
+                    const starType = Math.floor(Math.random() * 3) + 1;
+                    star.classList.add(`type-${starType}`);
+                    
+                    // 随机颜色
+                    const colorRand = Math.random();
+                    if (colorRand < 0.7) {
+                        star.style.backgroundColor = '#FFFFFF';
+                    } else if (colorRand < 0.85) {
+                        star.style.backgroundColor = '#A0A7FF';
+                    } else if (colorRand < 0.95) {
+                        star.style.backgroundColor = '#FFA0A0';
+                    } else {
+                        star.style.backgroundColor = '#A0FFA0';
+                    }
+                    
+                    // 设置位置和大小
+                    star.style.left = `${x}%`;
+                    star.style.top = `${y}%`;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    
+                    // 随机动画延迟
+                    const delay = Math.random() * 5;
+                    star.style.animationDelay = `${delay}s`;
+                    
+                    this.container.appendChild(star);
+                }
+            }
+            
+            // 开始流星效果
+            startShootingStars() {
+                this.shootingStarInterval = setInterval(() => {
+                    this.createShootingStar();
+                }, 2500);
+            }
+            
+            // 创建单个流星
+            createShootingStar() {
+                const shootingStar = document.createElement('div');
+                shootingStar.classList.add('shooting-star');
+                
+                // 随机起始位置
+                const fromLeft = Math.random() > 0.5;
+                let startX, startY;
+                
+                if (fromLeft) {
+                    startX = Math.random() * 20;
+                    startY = Math.random() * 30;
+                } else {
+                    startX = Math.random() * 40;
+                    startY = 0;
+                }
+                
+                // 随机颜色
+                const colors = ['#FFFFFF', '#00FF9D', '#8A2BE2', '#00B8FF'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // 设置样式
+                shootingStar.style.left = `${startX}%`;
+                shootingStar.style.top = `${startY}%`;
+                shootingStar.style.backgroundColor = color;
+                shootingStar.style.boxShadow = `0 0 10px 2px ${color}`;
+                
+                // 随机动画持续时间
+                const duration = 1 + Math.random() * 2;
+                shootingStar.style.animationDuration = `${duration}s`;
+                
+                this.container.appendChild(shootingStar);
+                
+                // 动画结束后移除元素
+                setTimeout(() => {
+                    if (shootingStar.parentNode) {
+                        shootingStar.remove();
+                    }
+                }, duration * 1000);
+            }
+        }
+        
+        // 初始化星空背景
+        const starfield = new Starfield();
+        
+        // 知识图谱数据
+        const knowledgeData = {
+            nodes: [
+                // 代数模块
+                { id: "集合", group: "代数", grade: "高一", difficulty: "基础", description: "集合的概念、表示方法和运算" },
+                { id: "函数", group: "代数", grade: "高一", difficulty: "基础", description: "函数的概念、性质和图像" },
+                { id: "指数函数", group: "代数", grade: "高一", difficulty: "中等", description: "指数函数的定义、性质和图像" },
+                { id: "对数函数", group: "代数", grade: "高一", difficulty: "中等", description: "对数函数的定义、性质和图像" },
+                { id: "三角函数", group: "代数", grade: "高一", difficulty: "中等", description: "三角函数的定义、性质和图像" },
+                { id: "数列", group: "代数", grade: "高二", difficulty: "中等", description: "等差数列、等比数列的概念和求和" },
+                { id: "不等式", group: "代数", grade: "高二", difficulty: "中等", description: "一元二次不等式、线性规划等" },
+                
+                // 几何模块
+                { id: "平面几何", group: "几何", grade: "高一", difficulty: "基础", description: "平面图形的基本性质和定理" },
+                { id: "立体几何", group: "几何", grade: "高二", difficulty: "中等", description: "空间几何体的性质和计算" },
+                { id: "解析几何", group: "几何", grade: "高二", difficulty: "进阶", description: "坐标系、直线、圆的方程" },
+                { id: "圆锥曲线", group: "几何", grade: "高二", difficulty: "进阶", description: "椭圆、双曲线、抛物线的性质和方程" },
+                { id: "向量", group: "几何", grade: "高二", difficulty: "中等", description: "向量的概念、运算和应用" },
+                
+                // 概率统计模块
+                { id: "概率", group: "概率统计", grade: "高二", difficulty: "中等", description: "随机事件的概率计算" },
+                { id: "统计", group: "概率统计", grade: "高二", difficulty: "中等", description: "数据的收集、整理和分析" },
+                { id: "排列组合", group: "概率统计", grade: "高二", difficulty: "中等", description: "排列、组合和二项式定理" },
+                
+                // 微积分模块
+                { id: "导数", group: "微积分", grade: "高三", difficulty: "进阶", description: "导数的概念、计算和应用" },
+                { id: "积分", group: "微积分", grade: "高三", difficulty: "进阶", description: "定积分和不定积分的概念和计算" },
+                { id: "极限", group: "微积分", grade: "高三", difficulty: "进阶", description: "数列和函数的极限" },
+                
+                // 综合应用
+                { id: "函数应用", group: "函数", grade: "高三", difficulty: "进阶", description: "函数在实际问题中的应用" },
+                { id: "几何证明", group: "几何", grade: "高三", difficulty: "进阶", description: "几何问题的证明方法" },
+                { id: "数学建模", group: "综合", grade: "高三", difficulty: "进阶", description: "数学建模的基本方法" }
+            ],
+            links: [
+                // 代数内部关联
+                { source: "集合", target: "函数", strength: 0.8 },
+                { source: "函数", target: "指数函数", strength: 0.7 },
+                { source: "函数", target: "对数函数", strength: 0.7 },
+                { source: "函数", target: "三角函数", strength: 0.7 },
+                { source: "函数", target: "数列", strength: 0.6 },
+                { source: "函数", target: "不等式", strength: 0.5 },
+                { source: "指数函数", target: "对数函数", strength: 0.9 },
+                
+                // 几何内部关联
+                { source: "平面几何", target: "立体几何", strength: 0.7 },
+                { source: "平面几何", target: "解析几何", strength: 0.8 },
+                { source: "解析几何", target: "圆锥曲线", strength: 0.9 },
+                { source: "向量", target: "解析几何", strength: 0.7 },
+                { source: "向量", target: "立体几何", strength: 0.6 },
+                
+                // 概率统计内部关联
+                { source: "排列组合", target: "概率", strength: 0.8 },
+                { source: "统计", target: "概率", strength: 0.6 },
+                
+                // 微积分内部关联
+                { source: "极限", target: "导数", strength: 0.9 },
+                { source: "导数", target: "积分", strength: 0.9 },
+                
+                // 跨模块关联
+                { source: "函数", target: "导数", strength: 0.8 },
+                { source: "三角函数", target: "导数", strength: 0.7 },
+                { source: "函数", target: "函数应用", strength: 0.9 },
+                { source: "平面几何", target: "几何证明", strength: 0.8 },
+                { source: "立体几何", target: "几何证明", strength: 0.8 },
+                { source: "函数", target: "数学建模", strength: 0.7 },
+                { source: "概率", target: "数学建模", strength: 0.6 },
+                { source: "统计", target: "数学建模", strength: 0.7 }
+            ]
+        };
+        
+        // 知识图谱详细数据
+        const knowledgeDetails = {
+            "集合": {
+                title: "集合",
+                subtitle: "高一 | 代数 | 基础",
+                description: "集合是数学中最基本的概念之一，它是具有某种特定性质的事物的总体。",
+                content: `
+                    <h3>核心概念</h3>
+                    <p>集合是由一些确定的、不同的对象组成的整体。集合中的对象称为元素。</p>
+                    
+                    <h3>主要内容</h3>
+                    <ul>
+                        <li>集合的表示法：列举法、描述法</li>
+                        <li>集合间的关系：子集、真子集、相等</li>
+                        <li>集合的运算：交集、并集、补集</li>
+                        <li>常用数集：自然数集、整数集、有理数集、实数集</li>
+                    </ul>
+                    
+                    <h3>学习要点</h3>
+                    <p>掌握集合的基本概念和表示方法，理解集合间的关系和运算规则。</p>
+                `,
+                resources: ["集合概念讲解", "集合运算例题", "集合综合练习"]
+            },
+            "函数": {
+                title: "函数",
+                subtitle: "高一 | 代数 | 基础",
+                description: "函数是描述两个变量之间依赖关系的重要数学概念。",
+                content: `
+                    <h3>核心概念</h3>
+                    <p>函数是建立在两个非空数集之间的一种特殊对应关系，对于定义域中的每一个自变量，都有唯一确定的函数值与之对应。</p>
+                    
+                    <h3>主要内容</h3>
+                    <ul>
+                        <li>函数的定义：映射观点下的函数定义</li>
+                        <li>函数的表示法：解析法、列表法、图像法</li>
+                        <li>函数的性质：单调性、奇偶性、周期性</li>
+                        <li>基本初等函数：幂函数、指数函数、对数函数、三角函数</li>
+                    </ul>
+                    
+                    <h3>学习要点</h3>
+                    <p>理解函数的概念，掌握函数的表示方法和基本性质，能够绘制常见函数的图像。</p>
+                `,
+                resources: ["函数概念视频", "函数性质练习", "函数图像绘制"]
+            },
+            "导数": {
+                title: "导数",
+                subtitle: "高三 | 微积分 | 进阶",
+                description: "导数是微积分中的基本概念，表示函数在某一点处的变化率。",
+                content: `
+                    <h3>核心概念</h3>
+                    <p>导数是函数在某一点处的瞬时变化率，反映了函数在该点附近的变化趋势。</p>
+                    
+                    <h3>主要内容</h3>
+                    <ul>
+                        <li>导数的定义：极限观点下的导数定义</li>
+                        <li>导数的计算：基本求导公式、求导法则</li>
+                        <li>导数的应用：切线方程、函数单调性、极值问题</li>
+                        <li>高阶导数：二阶导数及其应用</li>
+                    </ul>
+                    
+                    <h3>学习要点</h3>
+                    <p>理解导数的概念和几何意义，掌握常见函数的求导方法，能够应用导数解决实际问题。</p>
+                `,
+                resources: ["导数概念讲解", "求导方法训练", "导数应用例题"]
+            },
+            "概率": {
+                title: "概率",
+                subtitle: "高二 | 概率统计 | 中等",
+                description: "概率是研究随机现象发生可能性的数学分支。",
+                content: `
+                    <h3>核心概念</h3>
+                    <p>概率是刻画随机事件发生可能性大小的数值，取值范围在0到1之间。</p>
+                    
+                    <h3>主要内容</h3>
+                    <ul>
+                        <li>随机事件：必然事件、不可能事件、随机事件</li>
+                        <li>概率的定义：古典概型、几何概型、统计定义</li>
+                        <li>概率的计算：加法公式、乘法公式、条件概率</li>
+                        <li>随机变量：离散型随机变量、连续型随机变量</li>
+                    </ul>
+                    
+                    <h3>学习要点</h3>
+                    <p>理解概率的基本概念，掌握概率的计算方法，能够应用概率知识解决实际问题。</p>
+                `,
+                resources: ["概率基础讲解", "概率计算练习", "概率应用实例"]
+            }
+        };
+        
+        // 默认知识详情
+        const defaultDetail = {
+            title: "高中数学知识图谱",
+            subtitle: "点击图谱中的节点查看详细信息",
+            description: "这是一个交互式高中数学知识图谱，展示了高中数学的知识体系与关联。",
+            content: `
+                <h3>📚 使用说明</h3>
+                <p>这是一个交互式高中数学知识图谱，展示了高中数学的知识体系与关联。</p>
+                <ul>
+                    <li>点击任意节点查看知识点详细信息</li>
+                    <li>拖拽节点可以重新布局图谱</li>
+                    <li>使用搜索框快速查找知识点</li>
+                    <li>使用筛选功能按年级、类型过滤知识点</li>
+                </ul>
+                
+                <h3>🧩 知识体系</h3>
+                <p>高中数学主要包含以下四大模块：</p>
+                <ul>
+                    <li><strong>代数</strong>：集合、函数、数列、不等式等</li>
+                    <li><strong>几何</strong>：平面几何、立体几何、解析几何等</li>
+                    <li><strong>概率统计</strong>：概率、统计、排列组合等</li>
+                    <li><strong>微积分初步</strong>：导数、积分等</li>
+                </ul>
+                
+                <h3>🚀 学习建议</h3>
+                <p>建议按照知识体系的关联性进行系统学习，先从基础概念开始，逐步深入。</p>
+                <p>使用本图谱可以：</p>
+                <ul>
+                    <li>了解知识点之间的前置关系</li>
+                    <li>发现知识薄弱环节</li>
+                    <li>规划系统性学习路径</li>
+                </ul>
+            `,
+            resources: ["知识点讲解视频", "典型例题训练", "高考考点解析"]
+        };
+        
+        // 初始化知识图谱
+        function initKnowledgeGraph() {
+            const container = document.getElementById('knowledge-graph');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            // 清除容器内容
+            container.innerHTML = '';
+            
+            // 创建SVG画布
+            const svg = d3.select("#knowledge-graph")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+            
+            // 创建缩放和平移行为
+            const zoom = d3.zoom()
+                .scaleExtent([0.1, 4])
+                .on("zoom", (event) => {
+                    g.attr("transform", event.transform);
+                });
+            
+            svg.call(zoom);
+            
+            // 创建主分组
+            const g = svg.append("g");
+            
+            // 创建力导向图模拟器
+            const simulation = d3.forceSimulation(knowledgeData.nodes)
+                .force("link", d3.forceLink(knowledgeData.links)
+                    .id(d => d.id)
+                    .distance(120)
+                    .strength(d => d.strength))
+                .force("charge", d3.forceManyBody().strength(-350))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("collision", d3.forceCollide().radius(60));
+            
+            // 创建连线
+            const link = g.append("g")
+                .attr("class", "links")
+                .selectAll("line")
+                .data(knowledgeData.links)
+                .enter()
+                .append("line")
+                .attr("class", "link")
+                .attr("stroke-width", d => d.strength * 2.5);
+            
+            // 创建节点分组
+            const node = g.append("g")
+                .attr("class", "nodes")
+                .selectAll("g")
+                .data(knowledgeData.nodes)
+                .enter()
+                .append("g")
+                .attr("class", "node")
+                .call(d3.drag()
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended));
+            
+            // 为每个节点添加圆形
+            node.append("circle")
+                .attr("r", d => {
+                    // 根据难度设置节点大小
+                    if (d.difficulty === "基础") return 25;
+                    if (d.difficulty === "中等") return 30;
+                    if (d.difficulty === "进阶") return 35;
+                    return 25;
+                })
+                .attr("fill", d => {
+                    // 根据知识类型设置节点颜色
+                    const colors = {
+                        "代数": "#8A2BE2",
+                        "几何": "#00B8FF",
+                        "概率统计": "#FF0080",
+                        "微积分": "#00FF9D",
+                        "函数": "#FFA500",
+                        "综合": "#FFD700"
+                    };
+                    return colors[d.group] || "#8A2BE2";
+                })
+                .attr("stroke", "white")
+                .attr("stroke-width", 2.5);
+            
+            // 为每个节点添加文字
+            node.append("text")
+                .attr("dx", 0)
+                .attr("dy", ".35em")
+                .attr("text-anchor", "middle")
+                .text(d => d.id)
+                .attr("font-size", d => {
+                    // 根据节点大小调整字体大小
+                    if (d.difficulty === "基础") return "12px";
+                    if (d.difficulty === "中等") return "14px";
+                    if (d.difficulty === "进阶") return "16px";
+                    return "12px";
+                })
+                .attr("font-weight", "500");
+            
+            // 节点点击事件
+            node.on("click", (event, d) => {
+                // 更新侧边栏内容
+                updateKnowledgeDetail(d);
+                
+                // 高亮当前节点和关联节点
+                highlightNode(d.id);
+            });
+            
+            // 更新力导向图
+            simulation.on("tick", () => {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+                
+                node
+                    .attr("transform", d => `translate(${d.x},${d.y})`);
+            });
+            
+            // 拖动函数
+            function dragstarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+            
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+            
+            function dragended(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+            
+            // 高亮节点函数
+            function highlightNode(nodeId) {
+                // 重置所有节点和连线样式
+                node.select("circle")
+                    .attr("stroke", "white")
+                    .attr("stroke-width", 2.5);
+                
+                link
+                    .attr("stroke", "rgba(255, 255, 255, 0.4)")
+                    .attr("stroke-width", 2);
+                
+                // 高亮当前节点
+                node.filter(d => d.id === nodeId)
+                    .select("circle")
+                    .attr("stroke", "#00FF9D")
+                    .attr("stroke-width", 5);
+                
+                // 高亮与当前节点相连的连线
+                link
+                    .filter(d => d.source.id === nodeId || d.target.id === nodeId)
+                    .attr("stroke", "#00FF9D")
+                    .attr("stroke-width", 4);
+                
+                // 高亮与当前节点相连的节点
+                const connectedNodeIds = new Set();
+                knowledgeData.links.forEach(link => {
+                    if (link.source.id === nodeId) connectedNodeIds.add(link.target.id);
+                    if (link.target.id === nodeId) connectedNodeIds.add(link.source.id);
+                });
+                
+                node.filter(d => connectedNodeIds.has(d.id))
+                    .select("circle")
+                    .attr("stroke", "#00B8FF")
+                    .attr("stroke-width", 4);
+            }
+            
+            // 保存节点和连线引用，以便后续过滤
+            window.knowledgeGraph = {
+                nodes: node,
+                links: link,
+                simulation: simulation,
+                allNodes: knowledgeData.nodes,
+                allLinks: knowledgeData.links
+            };
+        }
+        
+        // 更新知识详情
+        function updateKnowledgeDetail(nodeData) {
+            const detailContainer = document.getElementById('knowledge-detail');
+            const detail = knowledgeDetails[nodeData.id] || {
+                title: nodeData.id,
+                subtitle: `${nodeData.grade} | ${nodeData.group} | ${nodeData.difficulty}`,
+                description: nodeData.description,
+                content: `
+                    <h3>知识点简介</h3>
+                    <p>${nodeData.description}</p>
+                    
+                    <h3>学习建议</h3>
+                    <p>建议先掌握相关前置知识，再学习本知识点。</p>
+                    
+                    <h3>关联知识点</h3>
+                    <p>点击图谱中与本节点相连的节点，可以查看相关知识点。</p>
+                `,
+                resources: ["知识点讲解", "例题训练", "综合练习"]
+            };
+            
+            detailContainer.innerHTML = `
+                <div class="detail-header">
+                    <h2 class="detail-title">${detail.title}</h2>
+                    <p class="detail-subtitle">${detail.subtitle}</p>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-section">
+                        <h3>📖 知识点概述</h3>
+                        <p>${detail.description}</p>
+                        ${detail.content}
+                    </div>
+                    <div class="detail-section">
+                        <h3>🔗 学习资源</h3>
+                        <div class="resource-links">
+                            ${detail.resources.map(resource => 
+                                `<a href="#" class="resource-link">${resource}</a>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 筛选知识点
+        function filterKnowledgeGraph() {
+            const gradeFilter = document.getElementById('grade-filter').value;
+            const typeFilter = document.getElementById('type-filter').value;
+            const difficultyEasy = document.getElementById('difficulty-easy').checked;
+            const difficultyMedium = document.getElementById('difficulty-medium').checked;
+            const difficultyHard = document.getElementById('difficulty-hard').checked;
+            const showLinks = document.getElementById('show-links').checked;
+            
+            // 筛选节点
+            const filteredNodes = knowledgeData.nodes.filter(node => {
+                let pass = true;
+                
+                // 年级筛选
+                if (gradeFilter !== 'all' && node.grade !== gradeFilter) {
+                    pass = false;
+                }
+                
+                // 类型筛选
+                if (typeFilter !== 'all' && node.group !== typeFilter) {
+                    pass = false;
+                }
+                
+                // 难度筛选
+                if (!((node.difficulty === '基础' && difficultyEasy) ||
+                      (node.difficulty === '中等' && difficultyMedium) ||
+                      (node.difficulty === '进阶' && difficultyHard))) {
+                    pass = false;
+                }
+                
+                return pass;
+            });
+            
+            // 筛选连线（只连接筛选后的节点）
+            const filteredLinks = knowledgeData.links.filter(link => {
+                const sourceNode = filteredNodes.find(n => n.id === link.source.id || n.id === link.source);
+                const targetNode = filteredNodes.find(n => n.id === link.target.id || n.id === link.target);
+                return sourceNode && targetNode;
+            });
+            
+            // 更新图谱
+            updateGraphWithFilteredData(filteredNodes, filteredLinks, showLinks);
+        }
+        
+        // 使用筛选后的数据更新图谱
+        function updateGraphWithFilteredData(filteredNodes, filteredLinks, showLinks) {
+            const graph = window.knowledgeGraph;
+            
+            if (!graph) return;
+            
+            // 更新节点
+            const nodeUpdate = graph.nodes
+                .data(filteredNodes, d => d.id);
+            
+            // 移除不再显示的节点
+            nodeUpdate.exit().remove();
+            
+            // 添加新节点
+            const nodeEnter = nodeUpdate.enter()
+                .append("g")
+                .attr("class", "node")
+                .call(d3.drag()
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended));
+            
+            // 为新节点添加圆形
+            nodeEnter.append("circle")
+                .attr("r", d => {
+                    if (d.difficulty === "基础") return 25;
+                    if (d.difficulty === "中等") return 30;
+                    if (d.difficulty === "进阶") return 35;
+                    return 25;
+                })
+                .attr("fill", d => {
+                    const colors = {
+                        "代数": "#8A2BE2",
+                        "几何": "#00B8FF",
+                        "概率统计": "#FF0080",
+                        "微积分": "#00FF9D",
+                        "函数": "#FFA500",
+                        "综合": "#FFD700"
+                    };
+                    return colors[d.group] || "#8A2BE2";
+                })
+                .attr("stroke", "white")
+                .attr("stroke-width", 2.5);
+            
+            // 为新节点添加文字
+            nodeEnter.append("text")
+                .attr("dx", 0)
+                .attr("dy", ".35em")
+                .attr("text-anchor", "middle")
+                .text(d => d.id)
+                .attr("font-size", d => {
+                    if (d.difficulty === "基础") return "12px";
+                    if (d.difficulty === "中等") return "14px";
+                    if (d.difficulty === "进阶") return "16px";
+                    return "12px";
+                })
+                .attr("font-weight", "500");
+            
+            // 合并新旧节点
+            const node = nodeEnter.merge(graph.nodes);
+            
+            // 更新连线
+            const linkUpdate = graph.links
+                .data(showLinks ? filteredLinks : [], d => `${d.source.id || d.source}-${d.target.id || d.target}`);
+            
+            // 移除不再显示的连线
+            linkUpdate.exit().remove();
+            
+            // 添加新连线
+            const linkEnter = linkUpdate.enter()
+                .append("line")
+                .attr("class", "link")
+                .attr("stroke-width", d => d.strength * 2.5);
+            
+            // 合并新旧连线
+            const link = linkEnter.merge(graph.links);
+            
+            // 更新力导向图
+            graph.simulation.nodes(filteredNodes);
+            graph.simulation.force("link").links(showLinks ? filteredLinks : []);
+            graph.simulation.alpha(0.3).restart();
+            
+            // 重新绑定事件
+            node.on("click", (event, d) => {
+                updateKnowledgeDetail(d);
+                highlightNode(d.id);
+            });
+            
+            // 更新引用
+            window.knowledgeGraph.nodes = node;
+            window.knowledgeGraph.links = link;
+            
+            // 拖动函数
+            function dragstarted(event, d) {
+                if (!event.active) graph.simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+            
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+            
+            function dragended(event, d) {
+                if (!event.active) graph.simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+            
+            // 高亮节点函数
+            function highlightNode(nodeId) {
+                node.select("circle")
+                    .attr("stroke", "white")
+                    .attr("stroke-width", 2.5);
+                
+                link
+                    .attr("stroke", "rgba(255, 255, 255, 0.4)")
+                    .attr("stroke-width", 2);
+                
+                node.filter(d => d.id === nodeId)
+                    .select("circle")
+                    .attr("stroke", "#00FF9D")
+                    .attr("stroke-width", 5);
+                
+                if (showLinks) {
+                    link
+                        .filter(d => d.source.id === nodeId || d.target.id === nodeId)
+                        .attr("stroke", "#00FF9D")
+                        .attr("stroke-width", 4);
+                    
+                    const connectedNodeIds = new Set();
+                    filteredLinks.forEach(link => {
+                        if (link.source.id === nodeId) connectedNodeIds.add(link.target.id);
+                        if (link.target.id === nodeId) connectedNodeIds.add(link.source.id);
+                    });
+                    
+                    node.filter(d => connectedNodeIds.has(d.id))
+                        .select("circle")
+                        .attr("stroke", "#00B8FF")
+                        .attr("stroke-width", 4);
+                }
+            }
+        }
+        
+        // 搜索知识点
+        function searchKnowledge() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+            
+            if (!searchTerm) {
+                // 如果搜索框为空，重置图谱
+                resetGraph();
+                return;
+            }
+            
+            // 查找匹配的节点
+            const matchedNodes = knowledgeData.nodes.filter(node => 
+                node.id.toLowerCase().includes(searchTerm) || 
+                node.description.toLowerCase().includes(searchTerm) ||
+                node.group.toLowerCase().includes(searchTerm)
+            );
+            
+            if (matchedNodes.length === 0) {
+                alert(`未找到包含"${searchTerm}"的知识点`);
+                return;
+            }
+            
+            // 查找与匹配节点相连的连线
+            const matchedNodeIds = matchedNodes.map(node => node.id);
+            const matchedLinks = knowledgeData.links.filter(link => 
+                matchedNodeIds.includes(link.source.id || link.source) || 
+                matchedNodeIds.includes(link.target.id || link.target)
+            );
+            
+            // 查找通过连线连接的节点
+            const connectedNodeIds = new Set(matchedNodeIds);
+            matchedLinks.forEach(link => {
+                connectedNodeIds.add(link.source.id || link.source);
+                connectedNodeIds.add(link.target.id || link.target);
+            });
+            
+            const allRelatedNodes = knowledgeData.nodes.filter(node => 
+                connectedNodeIds.has(node.id)
+            );
+            
+            // 更新图谱显示搜索结果
+            updateGraphWithFilteredData(allRelatedNodes, matchedLinks, true);
+            
+            // 显示第一个匹配节点的详情
+            updateKnowledgeDetail(matchedNodes[0]);
+        }
+        
+        // 重置图谱
+        function resetGraph() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('grade-filter').value = 'all';
+            document.getElementById('type-filter').value = 'all';
+            document.getElementById('difficulty-easy').checked = true;
+            document.getElementById('difficulty-medium').checked = true;
+            document.getElementById('difficulty-hard').checked = true;
+            document.getElementById('show-links').checked = true;
+            
+            // 重置详情面板
+            const detailContainer = document.getElementById('knowledge-detail');
+            detailContainer.innerHTML = `
+                <div class="detail-header">
+                    <h2 class="detail-title">${defaultDetail.title}</h2>
+                    <p class="detail-subtitle">${defaultDetail.subtitle}</p>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-section">
+                        <h3>📖 知识点概述</h3>
+                        <p>${defaultDetail.description}</p>
+                        ${defaultDetail.content}
+                    </div>
+                    <div class="detail-section">
+                        <h3>🔗 学习资源</h3>
+                        <div class="resource-links">
+                            ${defaultDetail.resources.map(resource => 
+                                `<a href="#" class="resource-link">${resource}</a>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // 重新初始化图谱
+            initKnowledgeGraph();
+        }
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化知识图谱
+            initKnowledgeGraph();
+            
+            // 搜索框事件
+            document.getElementById('search-input').addEventListener('input', searchKnowledge);
+            
+            // 筛选面板切换
+            document.getElementById('filter-toggle').addEventListener('click', function() {
+                const filterPanel = document.getElementById('filter-panel');
+                filterPanel.style.display = filterPanel.style.display === 'block' ? 'none' : 'block';
+            });
+            
+            // 应用筛选
+            document.getElementById('apply-filter').addEventListener('click', function() {
+                filterKnowledgeGraph();
+                document.getElementById('filter-panel').style.display = 'none';
+            });
+            
+            // 重置图谱
+            document.getElementById('reset-graph').addEventListener('click', resetGraph);
+            
+            // 点击页面其他地方关闭筛选面板
+            document.addEventListener('click', function(event) {
+                const filterPanel = document.getElementById('filter-panel');
+                const filterToggle = document.getElementById('filter-toggle');
+                
+                if (!filterPanel.contains(event.target) && !filterToggle.contains(event.target)) {
+                    filterPanel.style.display = 'none';
+                }
+            });
+            
+            // 窗口大小改变时重新初始化图谱
+            window.addEventListener('resize', function() {
+                // 延迟执行以避免频繁触发
+                clearTimeout(window.resizeTimer);
+                window.resizeTimer = setTimeout(function() {
+                    initKnowledgeGraph();
+                }, 250);
+            });
+            
+            // 移动端菜单切换
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuToggle && mobileMenu) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    
+                    // 汉堡菜单动画
+                    const hamburger = this.querySelector('.hamburger');
+                    hamburger.classList.toggle('active');
+                });
+            }
+            
+            // 点击移动端菜单项关闭菜单
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    document.querySelector('.hamburger').classList.remove('active');
+                });
+            });
+            
+            // 导航栏滚动效果
+            const mainNav = document.querySelector('.main-nav');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    mainNav.classList.add('scrolled');
+                } else {
+                    mainNav.classList.remove('scrolled');
+                }
+            });
+            
+            // 设置当前页面激活状态
+            function setActiveNavItem() {
+                // 获取当前页面路径
+                const currentPath = window.location.pathname;
+                
+                // 移除所有激活状态
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // 设置对应导航项为激活状态
+                if (currentPath.includes('数学宇宙') || currentPath.includes('index')) {
+                    setNavActive('home');
+                } else if (currentPath.includes('problem-lab')) {
+                    setNavActive('problem-lab');
+                } else if (currentPath.includes('question-bank')) {
+                    setNavActive('question-bank');
+                } else if (currentPath.includes('exam-prep')) {
+                    setNavActive('exam-prep');
+                } else if (currentPath.includes('community')) {
+                    setNavActive('community');
+                }
+            }
+            
+            function setNavActive(page) {
+                // 桌面端导航
+                const desktopLink = document.querySelector(`.nav-link[data-page="${page}"]`);
+                if (desktopLink) {
+                    desktopLink.classList.add('active');
+                }
+                
+                // 移动端导航
+                const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+                mobileLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if ((page === 'home' && (href.includes('数学宇宙') || href.includes('index'))) ||
+                        (page !== 'home' && href.includes(page))) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            // 初始化激活状态
+            setActiveNavItem();
+            
+            // 用户菜单点击外部关闭
+            document.addEventListener('click', function(event) {
+                const userMenu = document.querySelector('.user-menu');
+                const userAvatar = document.querySelector('.user-avatar');
+                
+                if (userMenu && userAvatar && 
+                    !userMenu.contains(event.target) && 
+                    !userAvatar.contains(event.target)) {
+                    // 点击外部，关闭用户菜单
+                    userMenu.style.opacity = '0';
+                    userMenu.style.visibility = 'hidden';
+                    userMenu.style.transform = 'translateY(15px)';
+                }
+            });
+            
+            // 导航链接点击效果
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // 添加点击效果
+                    this.style.transform = 'scale(0.95)';
+                    
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                    
+                    // 更新激活状态
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 移动端点击后关闭菜单
+                    if (window.innerWidth <= 1200) {
+                        mobileMenu.classList.remove('active');
+                        document.querySelector('.hamburger').classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

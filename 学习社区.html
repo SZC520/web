@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathVerse | 数学学习社区</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f9ff;
+            color: #1e293b;
+            line-height: 1.6;
+            background-image: radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+        }
+        
+        /* 导航栏 - 更轻松明亮的风格 */
+        .navbar {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 4px solid #fbbf24;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            margin-right: 12px;
+            font-size: 2rem;
+            color: #fbbf24;
+            background-color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 25px;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 10px 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-link i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .nav-link:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .user-icon:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 主要内容区域 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        /* 社区标题区域 - 更活泼的设计 */
+        .community-header {
+            background: linear-gradient(135deg, #38bdf8, #3b82f6);
+            color: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 12px 25px rgba(56, 189, 248, 0.25);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid white;
+        }
+        
+        .community-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+        
+        .community-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.1) 0%, transparent 70%);
+        }
+        
+        .community-title {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .community-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .community-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 150px;
+            transition: transform 0.3s, background 0.3s;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+        
+        /* 社区功能区域 */
+        .community-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            border: 3px solid transparent;
+            position: relative;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, #38bdf8, #8b5cf6);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.15);
+            border-color: #3b82f6;
+        }
+        
+        .feature-header {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-bottom: 2px dashed #e2e8f0;
+            min-height: 200px;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+        
+        .feature-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .feature-subtitle {
+            color: #64748b;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .feature-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .feature-desc {
+            color: #475569;
+            margin-bottom: 25px;
+            flex-grow: 1;
+            text-align: center;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+        
+        .feature-link {
+            color: #3b82f6;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 2px dashed #e2e8f0;
+            gap: 10px;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        
+        .feature-link i {
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover .feature-link {
+            color: #8b5cf6;
+        }
+        
+        .feature-card:hover .feature-link i {
+            transform: translateX(8px);
+        }
+        
+        /* 热门讨论区 */
+        .discussions-section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: #1e293b;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+        }
+        
+        .section-title i {
+            margin-right: 15px;
+            color: #3b82f6;
+        }
+        
+        .discussions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .discussion-card {
+            background-color: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border-left: 5px solid #3b82f6;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .discussion-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+        }
+        
+        .discussion-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .discussion-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .discussion-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        
+        .discussion-author {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1.1rem;
+        }
+        
+        .discussion-time {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 5px;
+        }
+        
+        .discussion-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        .discussion-excerpt {
+            color: #475569;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .discussion-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* 学习小组区 */
+        .study-groups-section {
+            margin-bottom: 50px;
+        }
+        
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .group-card {
+            background-color: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-top: 5px solid #10b981;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .group-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #10b981, #3b82f6);
+        }
+        
+        .group-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .group-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .group-card:hover .group-icon {
+            transform: scale(1.1);
+        }
+        
+        .group-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+        
+        .group-desc {
+            color: #475569;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .group-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: white;
+            padding: 50px 0 25px;
+            margin-top: 60px;
+            border-top: 5px solid #3b82f6;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #fbbf24;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: #3b82f6;
+        }
+        
+        .footer-section p {
+            text-align: center;
+            max-width: 300px;
+            margin: 0 auto;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+        
+        .footer-links {
+            list-style: none;
+            text-align: center;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: #3b82f6;
+            transform: translateX(5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+        
+        .copyright strong {
+            color: #fbbf24;
+        }
+        
+        /* 定义颜色方案 */
+        .color-1 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .color-2 { background: linear-gradient(135deg, #10b981, #059669); }
+        .color-3 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .color-4 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .color-5 { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .color-6 { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .community-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .discussions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .groups-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .community-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .stat-item {
+                min-width: 100%;
+            }
+            
+            .footer-section {
+                min-width: 100%;
+            }
+            
+            .community-title {
+                font-size: 2.2rem;
+            }
+            
+            .feature-card, .discussion-card, .group-card {
+                padding: 25px;
+            }
+        }
+        
+        /* 新增：所有卡片添加点击效果 */
+        .clickable {
+            position: relative;
+        }
+        
+        /* 防止链接内的点击事件冒泡到卡片 */
+        .feature-link, .footer-links a, .nav-link {
+            pointer-events: auto;
+            z-index: 10;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="数学宇宙.html" class="logo">
+                <i class="fas fa-cube"></i> MathVerse
+            </a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="数学宇宙.html" class="nav-link">
+                        <i class="fas fa-home"></i> 首页
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="知识图谱.html" class="nav-link">
+                        <i class="fas fa-chart-line"></i> 知识图谱
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="智慧工坊.html" class="nav-link">
+                        <i class="fas fa-brain"></i> 智慧工坊
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="智能题库.html" class="nav-link">
+                        <i class="fas fa-database"></i> 智能题库
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="备考冲刺.html" class="nav-link active">
+                        <i class="fas fa-users"></i> 备考冲刺
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="user-info">
+                <div class="user-icon" onclick="openProfile()">
+                    <span>交流</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 社区标题区域 -->
+        <section class="community-header">
+            <h1 class="community-title">MathVerse 数学学习社区</h1>
+            <p class="community-subtitle">与全国高中生一起交流数学学习心得，分享解题技巧，组队攻克难题，共同进步！这里是你数学学习路上的好伙伴！</p>
+            
+            <div class="community-stats">
+                <div class="stat-item">
+                    <div class="stat-value">15,280+</div>
+                    <div class="stat-label">活跃用户</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">5,642+</div>
+                    <div class="stat-label">讨论话题</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">320+</div>
+                    <div class="stat-label">学习小组</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">98%</div>
+                    <div class="stat-label">问题解决率</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 社区功能区域 -->
+        <div class="community-features">
+            <!-- 功能1：问题求助 -->
+            <div class="feature-card clickable" onclick="openFeature('ask-help')">
+                <div class="feature-header">
+                    <div class="feature-icon color-1">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3 class="feature-title">问题求助</h3>
+                    <p class="feature-subtitle">遇到难题？快速获得解答</p>
+                </div>
+                <div class="feature-content">
+                    <p class="feature-desc">发布你的数学难题，获得来自老师、学霸和AI助手的详细解答。支持图片上传、公式编辑和分步解析。</p>
+                    <div class="feature-link" onclick="event.stopPropagation(); openFeature('ask-help');">
+                        <span>发布问题</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 功能2：经验分享 -->
+            <div class="feature-card clickable" onclick="openFeature('share-experience')">
+                <div class="feature-header">
+                    <div class="feature-icon color-2">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="feature-title">经验分享</h3>
+                    <p class="feature-subtitle">学霸学习方法与技巧</p>
+                </div>
+                <div class="feature-content">
+                    <p class="feature-desc">分享你的学习心得、备考策略和解题技巧。阅读高分学霸的学习方法，提升学习效率。</p>
+                    <div class="feature-link" onclick="event.stopPropagation(); openFeature('share-experience');">
+                        <span>分享经验</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 功能3：学习小组 -->
+            <div class="feature-card clickable" onclick="openFeature('study-groups')">
+                <div class="feature-header">
+                    <div class="feature-icon color-3">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3 class="feature-title">学习小组</h3>
+                    <p class="feature-subtitle">找到志同道合的学习伙伴</p>
+                </div>
+                <div class="feature-content">
+                    <p class="feature-desc">加入或创建学习小组，与同学一起制定学习计划、互相监督、定期讨论，共同进步。</p>
+                    <div class="feature-link" onclick="event.stopPropagation(); openFeature('study-groups');">
+                        <span>查看小组</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 功能4：资源分享 -->
+            <div class="feature-card clickable" onclick="openFeature('resource-share')">
+                <div class="feature-header">
+                    <div class="feature-icon color-4">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="feature-title">资源分享</h3>
+                    <p class="feature-subtitle">学习资料与笔记共享</p>
+                </div>
+                <div class="feature-content">
+                    <p class="feature-desc">上传和下载学习笔记、错题集、备考资料。共享优质学习资源，互帮互助。</p>
+                    <div class="feature-link" onclick="event.stopPropagation(); openFeature('resource-share');">
+                        <span>浏览资源</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 功能5：直播交流 -->
+            <div class="feature-card clickable" onclick="openFeature('competition')">
+                <div class="feature-header">
+                    <div class="feature-icon color-5">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="feature-title">直播交流</h3>
+                    <p class="feature-subtitle">数学爱好者的聚集地</p>
+                </div>
+                <div class="feature-content">
+                    <p class="feature-desc">讨论数学试题、分享学习经验、寻找学习小伙伴。</p>
+                    <div class="feature-link" onclick="event.stopPropagation(); openFeature('competition');">
+                        <span>参与讨论</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 功能6：名师答疑 -->
+            <div class="feature-card clickable" onclick="openFeature('teacher-qa')">
+                <div class="feature-header">
+                    <div class="feature-icon color-6">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="feature-title">名师答疑</h3>
+                    <p class="feature-subtitle">专业教师在线解答</p>
+                </div>
+                <div class="feature-content">
+                    <p class="feature-desc">向认证教师提问，获得专业、准确的解答。每周有固定时间的名师在线答疑活动。</p>
+                    <div class="feature-link" onclick="event.stopPropagation(); openFeature('teacher-qa');">
+                        <span>提问教师</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 热门讨论区 -->
+        <section class="discussions-section">
+            <h2 class="section-title">
+                <i class="fas fa-fire"></i> 热门讨论
+            </h2>
+            
+            <div class="discussions-grid">
+                <!-- 讨论1 -->
+                <div class="discussion-card clickable" onclick="openDiscussion('discussion-1')">
+                    <div class="discussion-header">
+                        <div class="discussion-avatar">李</div>
+                        <div>
+                            <div class="discussion-author">李同学</div>
+                            <div class="discussion-time">2小时前 · 函数与导数</div>
+                        </div>
+                    </div>
+                    <h3 class="discussion-title">求助：这道导数大题的第二问怎么解？</h3>
+                    <p class="discussion-excerpt">已知函数f(x)=x³-3x，求f(x)在区间[-2,2]上的最大值和最小值。第一问已解决，第二问要求证明某个不等式...</p>
+                    <div class="discussion-meta">
+                        <div class="meta-item">
+                            <i class="far fa-comment"></i>
+                            <span>24 回复</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="far fa-eye"></i>
+                            <span>156 浏览</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="far fa-heart"></i>
+                            <span>38 点赞</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 讨论2 -->
+                <div class="discussion-card clickable" onclick="openDiscussion('discussion-2')">
+                    <div class="discussion-header">
+                        <div class="discussion-avatar">王</div>
+                        <div>
+                            <div class="discussion-author">王老师</div>
+                            <div class="discussion-time">5小时前 · 学习方法</div>
+                        </div>
+                    </div>
+                    <h3 class="discussion-title">分享：高三数学冲刺阶段的时间管理技巧</h3>
+                    <p class="discussion-excerpt">距离高考还有三个月，如何合理安排每天的数学学习时间？本文分享一套行之有效的时间管理方法...</p>
+                    <div class="discussion-meta">
+                        <div class="meta-item">
+                            <i class="far fa-comment"></i>
+                            <span>42 回复</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="far fa-eye"></i>
+                            <span>289 浏览</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="far fa-heart"></i>
+                            <span>67 点赞</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 讨论3 -->
+                <div class="discussion-card clickable" onclick="openDiscussion('discussion-3')">
+                    <div class="discussion-header">
+                        <div class="discussion-avatar">张</div>
+                        <div>
+                            <div class="discussion-author">张同学</div>
+                            <div class="discussion-time">1天前 · 解析几何</div>
+                        </div>
+                    </div>
+                    <h3 class="discussion-title">椭圆与双曲线的综合题解法总结</h3>
+                    <p class="discussion-excerpt">整理了最近做过的10道椭圆与双曲线综合题，总结了几种常见的解题思路和技巧，希望对大家有帮助...</p>
+                    <div class="discussion-meta">
+                        <div class="meta-item">
+                            <i class="far fa-comment"></i>
+                            <span>18 回复</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="far fa-eye"></i>
+                            <span>203 浏览</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="far fa-heart"></i>
+                            <span>45 点赞</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 学习小组区 -->
+        <section class="study-groups-section">
+            <h2 class="section-title">
+                <i class="fas fa-user-friends"></i> 推荐学习小组
+            </h2>
+            
+            <div class="groups-grid">
+                <!-- 小组1 -->
+                <div class="group-card clickable" onclick="openGroup('group-1')">
+                    <div class="group-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3 class="group-title">函数与导数攻坚组</h3>
+                    <p class="group-desc">专注于函数与导数难题攻克，每日一题，每周专题讨论。</p>
+                    <div class="group-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-users"></i>
+                            <span>86 成员</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="far fa-comments"></i>
+                            <span>活跃</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 小组2 -->
+                <div class="group-card clickable" onclick="openGroup('group-2')">
+                    <div class="group-icon">
+                        <i class="fas fa-shapes"></i>
+                    </div>
+                    <h3 class="group-title">几何图形研究社</h3>
+                    <p class="group-desc">立体几何与解析几何爱好者聚集地，分享空间想象技巧。</p>
+                    <div class="group-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-users"></i>
+                            <span>124 成员</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="far fa-comments"></i>
+                            <span>活跃</span>
+                        </div>
+                    </div>
+                </div>
+                
+               
+                
+                <!-- 小组4 -->
+                <div class="group-card clickable" onclick="openGroup('group-4')">
+                    <div class="group-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="group-title">高三冲刺互助组</h3>
+                    <p class="group-desc">2024届高考生互助小组，分享备考经验，互相督促学习。</p>
+                    <div class="group-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-users"></i>
+                            <span>256 成员</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="far fa-comments"></i>
+                            <span>非常活跃</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>MathVerse 社区</h3>
+                <p>高中数学学习交流平台，与全国高中生一起进步成长。</p>
+            </div>
+            
+            
+            
+            
+            
+
+            
+            <div class="copyright">
+                <p>&copy; 2025 MathVerse 高中数学学习社区. 保留所有权利. <strong>一起学习，共同进步！</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 社区功能跳转函数
+        function openFeature(feature) {
+            // 定义社区功能对应的实际URL
+            const featureUrls = {
+                'ask-help': '问题求助.html',
+                'share-experience': '经验分享.html',
+                'study-groups': '学习小组.html',
+                'resource-share': '资源分享.html',
+                'competition': '直播交流.html',
+                'teacher-qa': '名师答疑.html'
+            };
+            
+            const url = featureUrls[feature];
+            if (url) {
+                // 在新标签页中打开功能页面
+                window.open(url, '_blank');
+            } else {
+                // 如果URL未定义，显示提示
+                alert(`即将跳转到【${feature}】功能页面\n\n（演示模式：实际应用中这里会跳转到相应页面）`);
+            }
+        }
+        
+        // 讨论跳转函数
+        function openDiscussion(discussion) {
+            // 定义讨论对应的实际URL
+            const discussionUrls = {
+                'discussion-1': '高中数学热门讨论区.html',
+                'discussion-2': '高中数学热门讨论区.html',
+                'discussion-3': '高中数学热门讨论区.html'
+            };
+            
+            const url = discussionUrls[discussion];
+            if (url) {
+                // 在新标签页中打开讨论页面
+                window.open(url, '_blank');
+            } else {
+                alert(`即将跳转到讨论详情页面\n\n（演示模式：实际应用中这里会跳转到相应页面）`);
+            }
+        }
+        
+        // 学习小组跳转函数
+        function openGroup(group) {
+            // 定义学习小组对应的实际URL
+            const groupUrls = {
+                'group-1': '学习小组.html',
+                'group-2': '学习小组.html',
+                'group-3': '学习小组.html',
+                'group-4': '学习小组.html'
+            };
+            
+            const url = groupUrls[group];
+            if (url) {
+                // 在新标签页中打开小组页面
+                window.open(url, '_blank');
+            } else {
+                alert(`即将跳转到学习小组页面\n\n（演示模式：实际应用中这里会跳转到相应页面）`);
+            }
+        }
+        
+        // 个人资料跳转
+        function openProfile() {
+            window.open('https://mathverse.example.com/profile', '_blank');
+        }
+        
+        // 通用页面跳转
+        function openPage(page) {
+            const pageUrls = {
+                'rules': 'https://mathverse.example.com/community/rules',
+                'agreement': 'https://mathverse.example.com/agreement',
+                'privacy': 'https://mathverse.example.com/privacy',
+                'report': 'https://mathverse.example.com/community/report'
+            };
+            
+            const url = pageUrls[page];
+            if (url) {
+                window.open(url, '_blank');
+            } else {
+                alert(`即将跳转到【${page}】页面`);
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为所有可点击元素添加悬停效果
+            const clickableElements = document.querySelectorAll('.clickable, .nav-link');
+            
+            clickableElements.forEach(element => {
+                element.addEventListener('mouseenter', function() {
+                    this.style.cursor = 'pointer';
+                });
+            });
+            
+            // 初始化数据统计动画
+            const statValues = document.querySelectorAll('.stat-value');
+            statValues.forEach(value => {
+                const originalText = value.textContent;
+                value.textContent = '0';
+                
+                let counter = 0;
+                const target = parseFloat(originalText);
+                const increment = target / 50;
+                
+                const updateCounter = () => {
+                    if (counter < target) {
+                        counter += increment;
+                        if (originalText.includes('+')) {
+                            value.textContent = Math.ceil(counter) + '+';
+                        } else if (originalText.includes('%')) {
+                            value.textContent = counter.toFixed(1) + '%';
+                        } else {
+                            value.textContent = Math.ceil(counter);
+                        }
+                        setTimeout(updateCounter, 30);
+                    } else {
+                        value.textContent = originalText;
+                    }
+                };
+                
+                setTimeout(updateCounter, 500);
+            });
+            
+            // 添加卡片动画
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = `opacity 0.6s ${index * 0.1}s, transform 0.6s ${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 300 + index * 100);
+            });
+            
+            // 添加热门讨论和学习小组动画
+            const discussionCards = document.querySelectorAll('.discussion-card');
+            discussionCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = `opacity 0.5s ${index * 0.1}s, transform 0.5s ${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 600 + index * 100);
+            });
+            
+            const groupCards = document.querySelectorAll('.group-card');
+            groupCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = `opacity 0.5s ${index * 0.1}s, transform 0.5s ${index * 0.1}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 800 + index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

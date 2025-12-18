@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中数学热门讨论区</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e6e6e6;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo-icon {
+            background-color: #4361ee;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .logo-text h1 {
+            font-size: 32px;
+            color: #333;
+            text-align: left;
+        }
+        
+        .logo-text p {
+            color: #666;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        
+        .subtitle {
+            color: #4361ee;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+        
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background-color: #f1f3f9;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tag:hover, .tag.active {
+            background-color: #4361ee;
+            color: white;
+        }
+        
+        .create-btn {
+            background-color: #4361ee;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+        
+        .create-btn:hover {
+            background-color: #3a56d4;
+        }
+        
+        .discussions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .discussion-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .discussion-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .discussion-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            color: #4361ee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            margin-right: 15px;
+        }
+        
+        .user-info {
+            flex-grow: 1;
+        }
+        
+        .user-name {
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+        }
+        
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .topic-tag {
+            background-color: #e9f7ef;
+            color: #2e7d32;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        
+        .discussion-title {
+            font-size: 22px;
+            color: #222;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        .discussion-content {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .discussion-content .math-expression {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-family: 'Cambria Math', serif;
+            font-size: 17px;
+            border-left: 3px solid #4361ee;
+        }
+        
+        .discussion-stats {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .stat-item:hover {
+            color: #4361ee;
+        }
+        
+        .stat-item i {
+            font-size: 18px;
+        }
+        
+        .hot-indicator {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 0 12px 0 12px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        
+        .replies-section {
+            background-color: #f9fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 25px;
+            display: none;
+        }
+        
+        .replies-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .reply-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .reply-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .reply-content {
+            flex-grow: 1;
+        }
+        
+        .reply-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .reply-author {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .reply-time {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .reply-text {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .reply-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .reply-action {
+            color: #777;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .reply-action:hover {
+            color: #4361ee;
+        }
+        
+        .reply-form {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .reply-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .reply-btn {
+            background-color: #4361ee;
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            align-self: flex-start;
+            transition: background-color 0.3s;
+        }
+        
+        .reply-btn:hover {
+            background-color: #3a56d4;
+        }
+        
+        .show-replies-btn {
+            background: none;
+            border: none;
+            color: #4361ee;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding: 5px 0;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+        
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .page-btn.active {
+            background-color: #4361ee;
+            color: white;
+            border-color: #4361ee;
+        }
+        
+        .page-btn:hover:not(.active) {
+            background-color: #f5f5f5;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .filter-bar {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .discussion-title {
+                font-size: 20px;
+            }
+            
+            .discussion-stats {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .reply-form {
+                flex-direction: column;
+            }
+            
+            .reply-btn {
+                align-self: flex-end;
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-square-root-alt"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>高中数学热门讨论区</h1>
+                    <p>交流解题思路，分享学习经验，共同进步</p>
+                </div>
+            </div>
+            <div class="subtitle">📈 当前在线：1,248人 | 今日讨论：342条</div>
+        </header>
+        
+        <div class="filter-bar">
+            <div class="filter-tags">
+                <div class="tag active">全部话题</div>
+                <div class="tag">函数与导数</div>
+                <div class="tag">解析几何</div>
+                <div class="tag">立体几何</div>
+                <div class="tag">数列与级数</div>
+                <div class="tag">概率统计</div>
+                <div class="tag">学习方法</div>
+                <div class="tag">试题分享</div>
+            </div>
+            <button class="create-btn" id="createPostBtn">
+                <i class="fas fa-plus-circle"></i> 发起讨论
+            </button>
+        </div>
+        
+        <div class="discussions-list" id="discussionsList">
+            <!-- 讨论卡片将通过JS动态生成 -->
+        </div>
+        
+        <div class="pagination">
+            <div class="page-btn active">1</div>
+            <div class="page-btn">2</div>
+            <div class="page-btn">3</div>
+            <div class="page-btn">4</div>
+            <div class="page-btn">...</div>
+            <div class="page-btn">12</div>
+        </div>
+        
+        <footer>
+            <p>高中数学讨论区 &copy; 2025 | 已有 15,823 名数学爱好者加入讨论</p>
+        </footer>
+    </div>
+
+    <script>
+        // 讨论数据
+        const discussions = [
+            {
+                id: 1,
+                user: "李同学",
+                time: "2小时前",
+                topic: "函数与导数",
+                title: "求助：这道导数大题的第二问怎么解？",
+                content: "已知函数f(x)=x^2-3x，求f(x)在区间[-2,2]上的最大值和最小值。第一问已解决，第二问要求证明某个不等式。",
+                isHot: true,
+                replies: 24,
+                views: 156,
+                likes: 38,
+                repliesList: [
+                    { user: "王老师", time: "1小时前", content: "第二问可以通过构造函数g(x)=f(x)-k来证明，首先求出f'(x)=2x-3，然后分析单调性。" },
+                    { user: "张同学", time: "45分钟前", content: "我用了拉格朗日中值定理来证明这个不等式，感觉更简洁。" },
+                    { user: "刘同学", time: "30分钟前", content: "可以分享一下第一问的解答过程吗？我卡在求极值点了。" }
+                ]
+            },
+            {
+                id: 2,
+                user: "王老师",
+                time: "5小时前",
+                topic: "学习方法",
+                title: "分享：高三数学冲刺阶段的时间管理技巧",
+                content: "距离高考还有三个月，如何合理安排每天的数学学习时间？本文分享一套行之有效的时间管理方法，包括错题整理、专题突破和模拟考试的时间分配。",
+                isHot: true,
+                replies: 42,
+                views: 289,
+                likes: 67,
+                repliesList: [
+                    { user: "赵同学", time: "3小时前", content: "谢谢老师分享！正好需要这样的规划指导。" },
+                    { user: "陈老师", time: "2小时前", content: "补充一点：每天保持30分钟的基础题训练很重要，不能只做难题。" }
+                ]
+            },
+            {
+                id: 3,
+                user: "张同学",
+                time: "1天前",
+                topic: "解析几何",
+                title: "椭圆与双曲线的综合题解法总结",
+                content: "整理了最近做过的10道椭圆与双曲线综合题，总结了几种常见的解题思路和技巧，包括参数方程的应用、焦点三角形性质、离心率求法等。",
+                isHot: false,
+                replies: 18,
+                views: 203,
+                likes: 45,
+                repliesList: [
+                    { user: "孙同学", time: "20小时前", content: "太感谢了！最近正在攻解析几何，这些总结太有用了。" },
+                    { user: "周老师", time: "15小时前", content: "总结得很到位，建议再加上一些高考真题的链接。" }
+                ]
+            },
+            {
+                id: 4,
+                user: "陈同学",
+                time: "3小时前",
+                topic: "数列与级数",
+                title: "数列递推公式的构造方法有哪些？",
+                content: "遇到数列题总是不知道如何构造递推公式，求各位大佬分享一些常见的构造方法和技巧，比如特征根法、待定系数法等。",
+                isHot: true,
+                replies: 31,
+                views: 187,
+                likes: 52,
+                repliesList: [
+                    { user: "吴老师", time: "2小时前", content: "常用的有：1) 累加法 2) 累乘法 3) 构造等比数列 4) 特征根法。具体使用哪种要看题目给出的条件。" }
+                ]
+            },
+            {
+                id: 5,
+                user: "赵老师",
+                time: "6小时前",
+                topic: "概率统计",
+                title: "条件概率与贝叶斯公式的应用实例",
+                content: "分享几道高考中出现的条件概率综合题，重点讲解贝叶斯公式在实际问题中的应用，包括疾病检测、抽奖问题等场景。",
+                isHot: false,
+                replies: 22,
+                views: 176,
+                likes: 41,
+                repliesList: [
+                    { user: "钱同学", time: "4小时前", content: "老师，疾病检测那道题能再详细讲解一下吗？对先验概率和后验概率的理解还有点模糊。" }
+                ]
+            },
+            {
+                id: 6,
+                user: "刘同学",
+                time: "8小时前",
+                topic: "立体几何",
+                title: "空间向量法解立体几何题真的万能吗？",
+                content: "最近在学空间向量法，感觉确实比传统几何法简单直接。但老师说过向量法不是万能的，有哪些情况不适合用向量法？",
+                isHot: true,
+                replies: 29,
+                views: 234,
+                likes: 63,
+                repliesList: [
+                    { user: "郑老师", time: "5小时前", content: "向量法适合求夹角、距离、证明垂直等问题，但对于一些需要几何直观的题目，传统方法可能更简洁。" },
+                    { user: "周同学", time: "3小时前", content: "如果几何模型很复杂，建立坐标系困难，这时用传统几何法可能更好。" }
+                ]
+            }
+        ];
+        
+        // 初始化讨论列表
+        function initDiscussionsList() {
+            const discussionsList = document.getElementById('discussionsList');
+            discussionsList.innerHTML = '';
+            
+            discussions.forEach(discussion => {
+                const discussionCard = document.createElement('div');
+                discussionCard.className = 'discussion-card';
+                discussionCard.dataset.id = discussion.id;
+                
+                // 用户头像字母
+                const avatarLetter = discussion.user.charAt(0);
+                
+                // 生成回复统计HTML
+                let repliesHtml = '';
+                if (discussion.repliesList && discussion.repliesList.length > 0) {
+                    repliesHtml = `
+                        <div class="replies-section" id="replies-${discussion.id}">
+                            <div class="replies-title">
+                                <i class="fas fa-comments"></i>
+                                <span>${discussion.replies} 条回复</span>
+                            </div>
+                            ${discussion.repliesList.map(reply => {
+                                const replyAvatarLetter = reply.user.charAt(0);
+                                return `
+                                    <div class="reply-item">
+                                        <div class="reply-avatar">${replyAvatarLetter}</div>
+                                        <div class="reply-content">
+                                            <div class="reply-header">
+                                                <div class="reply-author">${reply.user}</div>
+                                                <div class="reply-time">${reply.time}</div>
+                                            </div>
+                                            <div class="reply-text">${reply.content}</div>
+                                            <div class="reply-actions">
+                                                <span class="reply-action">回复</span>
+                                                <span class="reply-action">点赞</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                            <div class="reply-form">
+                                <textarea class="reply-input" placeholder="写下你的回复..."></textarea>
+                                <button class="reply-btn" onclick="addReply(${discussion.id})">发表回复</button>
+                            </div>
+                        </div>
+                        <button class="show-replies-btn" onclick="toggleReplies(${discussion.id})">
+                            <i class="fas fa-chevron-down"></i>
+                            <span>查看全部 ${discussion.replies} 条回复</span>
+                        </button>
+                    `;
+                }
+                
+                discussionCard.innerHTML = `
+                    ${discussion.isHot ? '<div class="hot-indicator">🔥 热门</div>' : ''}
+                    <div class="discussion-header">
+                        <div class="user-avatar">${avatarLetter}</div>
+                        <div class="user-info">
+                            <div class="user-name">${discussion.user}</div>
+                            <div class="post-meta">
+                                <span>${discussion.time}</span>
+                                <span>•</span>
+                                <span class="topic-tag">${discussion.topic}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="discussion-title">${discussion.title}</h2>
+                    <div class="discussion-content">
+                        ${discussion.content}
+                        ${discussion.topic === "函数与导数" ? 
+                            '<div class="math-expression">f(x)=x²-3x, x∈[-2,2]</div>' : ''}
+                    </div>
+                    <div class="discussion-stats">
+                        <div class="stat-item" onclick="handleLike(${discussion.id})">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span>${discussion.likes} 点赞</span>
+                        </div>
+                        <div class="stat-item" onclick="toggleReplies(${discussion.id})">
+                            <i class="fas fa-comment"></i>
+                            <span>${discussion.replies} 回复</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-eye"></i>
+                            <span>${discussion.views} 浏览</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-share"></i>
+                            <span>分享</span>
+                        </div>
+                    </div>
+                    ${repliesHtml}
+                `;
+                
+                discussionsList.appendChild(discussionCard);
+            });
+        }
+        
+        // 切换显示/隐藏回复
+        function toggleReplies(discussionId) {
+            const repliesSection = document.getElementById(`replies-${discussionId}`);
+            const showBtn = repliesSection.previousElementSibling;
+            
+            if (repliesSection.style.display === 'block') {
+                repliesSection.style.display = 'none';
+                showBtn.innerHTML = `<i class="fas fa-chevron-down"></i><span>查看全部 ${discussions.find(d => d.id === discussionId).replies} 条回复</span>`;
+            } else {
+                repliesSection.style.display = 'block';
+                showBtn.innerHTML = `<i class="fas fa-chevron-up"></i><span>收起回复</span>`;
+                
+                // 模拟增加浏览数
+                const discussion = discussions.find(d => d.id === discussionId);
+                discussion.views += 1;
+                updateDiscussionStats(discussionId);
+            }
+        }
+        
+        // 添加回复
+        function addReply(discussionId) {
+            const replyInput = document.querySelector(`#replies-${discussionId} .reply-input`);
+            const replyText = replyInput.value.trim();
+            
+            if (replyText === '') {
+                alert('请输入回复内容');
+                return;
+            }
+            
+            const discussion = discussions.find(d => d.id === discussionId);
+            const newReply = {
+                user: "我",
+                time: "刚刚",
+                content: replyText
+            };
+            
+            discussion.repliesList.push(newReply);
+            discussion.replies += 1;
+            
+            // 清空输入框
+            replyInput.value = '';
+            
+            // 重新渲染该讨论卡片
+            renderSingleDiscussion(discussionId);
+            
+            // 保持回复区域展开
+            setTimeout(() => {
+                const repliesSection = document.getElementById(`replies-${discussionId}`);
+                repliesSection.style.display = 'block';
+                const showBtn = repliesSection.previousElementSibling;
+                showBtn.innerHTML = `<i class="fas fa-chevron-up"></i><span>收起回复</span>`;
+            }, 100);
+        }
+        
+        // 处理点赞
+        function handleLike(discussionId) {
+            const discussion = discussions.find(d => d.id === discussionId);
+            discussion.likes += 1;
+            updateDiscussionStats(discussionId);
+            
+            // 添加点赞动画效果
+            const likeBtn = document.querySelector(`[data-id="${discussionId}"] .fa-thumbs-up`);
+            likeBtn.style.color = '#4361ee';
+            likeBtn.classList.remove('fa-thumbs-up');
+            likeBtn.classList.add('fa-thumbs-up', 'fa-solid');
+            
+            setTimeout(() => {
+                likeBtn.style.color = '';
+            }, 1000);
+        }
+        
+        // 更新讨论统计数字
+        function updateDiscussionStats(discussionId) {
+            const discussion = discussions.find(d => d.id === discussionId);
+            const discussionCard = document.querySelector(`[data-id="${discussionId}"]`);
+            
+            // 更新点赞数
+            const likeElement = discussionCard.querySelector('.fa-thumbs-up').parentElement;
+            likeElement.querySelector('span').textContent = `${discussion.likes} 点赞`;
+            
+            // 更新回复数
+            const replyElement = discussionCard.querySelector('.fa-comment').parentElement;
+            replyElement.querySelector('span').textContent = `${discussion.replies} 回复`;
+            
+            // 更新浏览数
+            const viewElement = discussionCard.querySelector('.fa-eye').parentElement;
+            viewElement.querySelector('span').textContent = `${discussion.views} 浏览`;
+            
+            // 更新回复标题
+            const repliesTitle = discussionCard.querySelector('.replies-title');
+            if (repliesTitle) {
+                repliesTitle.querySelector('span').textContent = `${discussion.replies} 条回复`;
+            }
+            
+            // 更新按钮文本
+            const showBtn = discussionCard.querySelector('.show-replies-btn');
+            if (showBtn) {
+                const icon = showBtn.querySelector('i').className;
+                const isExpanded = icon.includes('fa-chevron-up');
+                showBtn.innerHTML = isExpanded ? 
+                    `<i class="fas fa-chevron-up"></i><span>收起回复</span>` :
+                    `<i class="fas fa-chevron-down"></i><span>查看全部 ${discussion.replies} 条回复</span>`;
+            }
+        }
+        
+        // 渲染单个讨论卡片
+        function renderSingleDiscussion(discussionId) {
+            const discussion = discussions.find(d => d.id === discussionId);
+            const discussionCard = document.querySelector(`[data-id="${discussionId}"]`);
+            
+            // 用户头像字母
+            const avatarLetter = discussion.user.charAt(0);
+            
+            // 生成回复统计HTML
+            let repliesHtml = '';
+            if (discussion.repliesList && discussion.repliesList.length > 0) {
+                repliesHtml = `
+                    <div class="replies-section" id="replies-${discussion.id}" style="display: block;">
+                        <div class="replies-title">
+                            <i class="fas fa-comments"></i>
+                            <span>${discussion.replies} 条回复</span>
+                        </div>
+                        ${discussion.repliesList.map(reply => {
+                            const replyAvatarLetter = reply.user.charAt(0);
+                            return `
+                                <div class="reply-item">
+                                    <div class="reply-avatar">${replyAvatarLetter}</div>
+                                    <div class="reply-content">
+                                        <div class="reply-header">
+                                            <div class="reply-author">${reply.user}</div>
+                                            <div class="reply-time">${reply.time}</div>
+                                        </div>
+                                        <div class="reply-text">${reply.content}</div>
+                                        <div class="reply-actions">
+                                            <span class="reply-action">回复</span>
+                                            <span class="reply-action">点赞</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                        <div class="reply-form">
+                            <textarea class="reply-input" placeholder="写下你的回复..."></textarea>
+                            <button class="reply-btn" onclick="addReply(${discussion.id})">发表回复</button>
+                        </div>
+                    </div>
+                    <button class="show-replies-btn" onclick="toggleReplies(${discussion.id})">
+                        <i class="fas fa-chevron-up"></i>
+                        <span>收起回复</span>
+                    </button>
+                `;
+            }
+            
+            discussionCard.innerHTML = `
+                ${discussion.isHot ? '<div class="hot-indicator">🔥 热门</div>' : ''}
+                <div class="discussion-header">
+                    <div class="user-avatar">${avatarLetter}</div>
+                    <div class="user-info">
+                        <div class="user-name">${discussion.user}</div>
+                        <div class="post-meta">
+                            <span>${discussion.time}</span>
+                            <span>•</span>
+                            <span class="topic-tag">${discussion.topic}</span>
+                        </div>
+                    </div>
+                </div>
+                <h2 class="discussion-title">${discussion.title}</h2>
+                <div class="discussion-content">
+                    ${discussion.content}
+                    ${discussion.topic === "函数与导数" ? 
+                        '<div class="math-expression">f(x)=x²-3x, x∈[-2,2]</div>' : ''}
+                </div>
+                <div class="discussion-stats">
+                    <div class="stat-item" onclick="handleLike(${discussion.id})">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span>${discussion.likes} 点赞</span>
+                    </div>
+                    <div class="stat-item" onclick="toggleReplies(${discussion.id})">
+                        <i class="fas fa-comment"></i>
+                        <span>${discussion.replies} 回复</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-eye"></i>
+                        <span>${discussion.views} 浏览</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-share"></i>
+                        <span>分享</span>
+                    </div>
+                </div>
+                ${repliesHtml}
+            `;
+        }
+        
+        // 标签筛选功能
+        function initFilterTags() {
+            const tags = document.querySelectorAll('.tag');
+            tags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    // 移除所有标签的active类
+                    tags.forEach(t => t.classList.remove('active'));
+                    // 给当前点击的标签添加active类
+                    this.classList.add('active');
+                    
+                    // 在实际应用中，这里会发送请求筛选对应话题的讨论
+                    // 此处我们模拟筛选效果
+                    const topic = this.textContent;
+                    if (topic === '全部话题') {
+                        initDiscussionsList();
+                    } else {
+                        // 筛选对应话题的讨论
+                        const filteredDiscussions = discussions.filter(d => d.topic === topic);
+                        if (filteredDiscussions.length === 0) {
+                            document.getElementById('discussionsList').innerHTML = 
+                                `<div class="discussion-card" style="text-align: center; padding: 40px;">
+                                    <h3>暂无"${topic}"相关的讨论</h3>
+                                    <p>点击上方"发起讨论"按钮创建第一个话题吧！</p>
+                                </div>`;
+                        }
+                    }
+                });
+            });
+        }
+        
+        // 发起讨论按钮
+        document.getElementById('createPostBtn').addEventListener('click', function() {
+            alert('发起讨论功能：在实际应用中，这里会跳转到发帖页面或弹出发布表单。\n\n当前为演示版本，您可以点击"回复"按钮参与讨论。');
+        });
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            initDiscussionsList();
+            initFilterTags();
+            
+            // 模拟在线人数变化
+            setInterval(() => {
+                const onlineElement = document.querySelector('.subtitle');
+                const currentOnline = parseInt(onlineElement.textContent.match(/\d+/)[0]);
+                const change = Math.floor(Math.random() * 21) - 10; // -10到10的随机变化
+                const newOnline = Math.max(1200, currentOnline + change);
+                onlineElement.innerHTML = `📈 当前在线：${newOnline.toLocaleString()}人 | 今日讨论：${342 + Math.floor(Math.random() * 10)}条`;
+            }, 8000);
+            
+            // 模拟热门帖子变化
+            setInterval(() => {
+                const randomIndex = Math.floor(Math.random() * discussions.length);
+                discussions[randomIndex].isHot = !discussions[randomIndex].isHot;
+                renderSingleDiscussion(discussions[randomIndex].id);
+            }, 15000);
+        });
+    </script>
+</body>
+</html>

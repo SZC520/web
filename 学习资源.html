@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中数学学习资源 | 绚丽学习平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #3d5afe;
+            --primary-purple: #7c4dff;
+            --primary-pink: #ff4081;
+            --accent-teal: #00e5ff;
+            --accent-orange: #ff9100;
+            --accent-green: #00e676;
+            --light-bg: #f5f7ff;
+            --card-bg: #ffffff;
+            --text-dark: #263238;
+            --text-light: #546e7a;
+            --shadow-light: rgba(61, 90, 254, 0.1);
+            --shadow-medium: rgba(124, 77, 255, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 5% 10%, rgba(61, 90, 254, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 95% 90%, rgba(124, 77, 255, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, rgba(255, 64, 129, 0.05) 0%, transparent 50%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            padding: 50px 0 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 8px 20px rgba(61, 90, 254, 0.3);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, var(--primary-blue), var(--primary-purple), var(--primary-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            font-weight: 800;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            max-width: 900px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+        
+        /* 导航样式 */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+            gap: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tab-btn {
+            background: white;
+            border: none;
+            color: var(--text-light);
+            padding: 15px 35px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-btn:hover {
+            transform: translateY(-5px);
+            color: var(--primary-blue);
+            box-shadow: 0 10px 20px var(--shadow-medium);
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: white;
+            box-shadow: 0 10px 20px rgba(61, 90, 254, 0.3);
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 3列卡片布局 */
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        @media (max-width: 1100px) {
+            .module-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .module-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            box-shadow: 0 10px 25px var(--shadow-light);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px var(--shadow-medium);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .card-icon.video {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-teal));
+        }
+        
+        .card-icon.download {
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-orange));
+        }
+        
+        .card-icon.simulation {
+            background: linear-gradient(135deg, var(--primary-pink), var(--accent-green));
+        }
+        
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        
+        .card-desc {
+            color: var(--text-light);
+            margin-bottom: 25px;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+        
+        .resource-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .resource-item {
+            padding: 18px;
+            background: rgba(245, 247, 255, 0.7);
+            border-radius: 12px;
+            margin-bottom: 18px;
+            border-left: 4px solid var(--primary-blue);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .resource-item:hover {
+            transform: translateX(8px);
+            background: white;
+            box-shadow: 0 8px 20px rgba(61, 90, 254, 0.15);
+        }
+        
+        .resource-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        
+        .resource-item:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .resource-name {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .resource-desc {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 10px 18px;
+            background: rgba(61, 90, 254, 0.08);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .resource-link:hover {
+            background: var(--primary-blue);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(61, 90, 254, 0.3);
+        }
+        
+        .resource-link i {
+            font-size: 0.9rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 40px;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* 响应式设计调整 */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .tab-btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            
+            .module-card {
+                padding: 25px;
+            }
+            
+            .card-title {
+                font-size: 1.4rem;
+            }
+        }
+        
+        /* 装饰元素 */
+        .floating-element {
+            position: absolute;
+            z-index: -1;
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+        
+        .float-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--primary-blue), transparent);
+            top: 5%;
+            right: 5%;
+        }
+        
+        .float-2 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, var(--primary-pink), transparent);
+            bottom: 10%;
+            left: 5%;
+        }
+        
+        .float-3 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--accent-green), transparent);
+            top: 40%;
+            left: 10%;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-blue), var(--primary-purple));
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 装饰元素 -->
+    <div class="floating-element float-1"></div>
+    <div class="floating-element float-2"></div>
+    <div class="floating-element float-3"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h1>高中数学资源平台</h1>
+            </div>
+            <p class="subtitle">汇聚优质数学学习资源，融合现代科技与教学方法，打造高效、有趣、直观的高中数学学习体验。从视频课程到3D仿真，全方位辅助你的数学学习之旅。</p>
+            
+            <!-- 导航标签 -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" data-target="video-resources">
+                    <i class="fas fa-play-circle"></i> 视频资源
+                </button>
+                <button class="tab-btn" data-target="download-resources">
+                    <i class="fas fa-download"></i> 资料工具
+                </button>
+                <button class="tab-btn" data-target="simulation-3d">
+                    <i class="fas fa-cube"></i> 可视化学习
+                </button>
+            </div>
+        </header>
+        
+        <main>
+            <!-- 视频资源模块 -->
+            <section id="video-resources" class="content-section active">
+                <h2 class="section-title">优质视频资源推荐</h2>
+                <div class="module-grid">
+                    <!-- 卡片1 -->
+                    <div class="module-card">
+                        <div class="card-header">
+                            <div class="card-icon video">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <h2 class="card-title">基础课程</h2>
+                        </div>
+                        <p class="card-desc">涵盖高中数学全部知识点，由特级教师精心录制，系统性强，讲解透彻，适合打牢基础。</p>
+                        
+                        <ul class="resource-list">
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-graduation-cap"></i> 国家智慧教育平台
+                                </div>
+                                <div class="resource-desc">教育部官方权威课程，全学段系统覆盖，完全免费</div>
+                                <a href="https://www.zxx.edu.cn" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    立即学习 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fab fa-youtube"></i> 佟大大还是ETT
+                                </div>
+                                <div class="resource-desc">适合基础弱的同学，解题思路清晰易懂，趣味性强</div>
+                                <a href="https://space.bilibili.com/123321175?spm_id_from=333.337.0.0" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    访问主页 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-school"></i> 一数
+                                </div>
+                                <div class="resource-desc">比较适合基础一般或中等的同学，可以从基础篇开始学。</div>
+                                <a href="https://space.bilibili.com/14229967?spm_id_from=333.337.search-card.all.click" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    立即观看 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                           
+                        </ul>
+                    </div>
+                    
+                    <!-- 卡片2 -->
+                    <div class="module-card">
+                        <div class="card-header">
+                            <div class="card-icon video">
+                                <i class="fas fa-puzzle-piece"></i>
+                            </div>
+                            <h2 class="card-title">巩固课程</h2>
+                        </div>
+                        <p class="card-desc">针对高中数学重难点进行专题讲解，深入剖析解题思路，攻克学习瓶颈。</p>
+                        
+                        <ul class="resource-list">
+                        
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-graduation-cap"></i> 神奇小猪的数学课
+                                </div>
+                                <div class="resource-desc">讲课方式较有趣，以专题课为主</div>
+                                <a href="https://search.bilibili.com/all?keyword=%E7%A5%9E%E5%A5%87%E5%B0%8F%E7%8C%AA%E7%9A%84%E6%95%B0%E5%AD%A6%E8%AF%BE&from_source=webtop_search&spm_id_from=333.1007&search_source=5" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    立即学习 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-school"></i> 夏老师的数学课
+                                </div>
+                                <div class="resource-desc">主讲高中数学，以讲解试卷为主</div>
+                                <a href="https://search.bilibili.com/all?keyword=%E5%A4%8F%E8%80%81%E5%B8%88%E7%9A%84%E6%95%B0%E5%AD%A6%E8%AF%BE&from_source=webtop_search&spm_id_from=333.1007&search_source=5"target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    立即观看 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                             <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-school"></i> 高中数学李尚泽
+                                </div>
+                                <div class="resource-desc">高中数学系统复习，知识点全覆盖。</div>
+                                <a href="https://search.bilibili.com/all?keyword=%E9%AB%98%E4%B8%AD%E6%95%B0%E5%AD%A6%E6%9D%8E%E5%B0%9A%E6%B3%BD&from_source=webtop_search&spm_id_from=333.1007&search_source=5"target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    立即观看 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            
+                           
+                           
+                        </ul>
+                    </div>
+                    
+                    <!-- 卡片3 -->
+                    <div class="module-card">
+                        <div class="card-header">
+                            <div class="card-icon video">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h2 class="card-title">拓展课程</h2>
+                        </div>
+                        <p class="card-desc">传授高效解题方法，总结解题技巧，提升解题速度和准确率。</p>
+                        
+                        <ul class="resource-list">
+                            
+                             <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-school"></i> 高中数学蔡德锦
+                                </div>
+                                <div class="resource-desc">合适学有余力的同学，精辟分析高考数学，讲解技巧，提升解题速度。</div>
+                                <a href="https://search.bilibili.com/all?vt=21992640&keyword=%E9%AB%98%E4%B8%AD%E6%95%B0%E5%AD%A6%E8%94%A1%E5%BE%B7%E9%94%A6&from_source=webtop_search&spm_id_from=333.1387&search_source=5" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    立即观看 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                             <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-school"></i> 高中数学提分技巧
+                                </div>
+                                <div class="resource-desc">合适学有余力的同学，精辟分析高考数学，讲解技巧，提升解题速度。</div>
+                                <a href="https://space.bilibili.com/391593275?spm_id_from=333.337.search-card.all.click" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    立即观看 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 下载资源模块 -->
+            <section id="download-resources" class="content-section">
+                <h2 class="section-title">精品资料下载推荐</h2>
+                <div class="module-grid">
+                    <!-- 卡片1 -->
+                    <div class="module-card">
+                        <div class="card-header">
+                            <div class="card-icon download">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h2 class="card-title">试题与讲义</h2>
+                        </div>
+                        <p class="card-desc">高质量的高中数学试题、讲义、知识点总结等资料，助力系统复习与备考。</p>
+                        
+                        <ul class="resource-list">
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-archive"></i> 学科网资源库
+                                </div>
+                                <div class="resource-desc">海量试题、教案、课件，可按教材版本与知识点筛选</div>
+                                <a href="https://www.zxxk.com" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    访问下载 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-book-open"></i> 高考资源网
+                                </div>
+                                <div class="resource-desc">历年高考真题、模拟题、名校试题，备考必备</div>
+                                <a href="https://www.gaokao.com" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    访问下载 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-database"></i> 菁优网题库
+                                </div>
+                                <div class="resource-desc">强大智能题库，试题配有详细解析，可组卷下载</div>
+                                <a href="https://www.jyeoo.com" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    访问下载 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 卡片2 -->
+                    <div class="module-card">
+                        <div class="card-header">
+                            <div class="card-icon download">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <h2 class="card-title">学习工具软件</h2>
+                        </div>
+                        <p class="card-desc">功能强大的数学学习辅助工具与软件，提升学习效率与效果。</p>
+                        
+                        <ul class="resource-list">
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-calculator"></i> GeoGebra
+                                </div>
+                                <div class="resource-desc">免费动态数学软件，几何、代数、微积分全功能</div>
+                                <a href="https://www.geogebra.org" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    下载软件 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-drafting-compass"></i> 几何画板
+                                </div>
+                                <div class="resource-desc">专业数学教学软件，几何学习与演示神器</div>
+                                <a href="https://www1.jykjrj.cn/tem.html?soft=sp-f8vgk&plan=spce&unit=ce&keyword=jihehuaban&e_matchtype=1&e_creative=132865999312&e_keywordid=1287226846360&e_keywordid2=931051875242" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    下载软件 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-square-root-alt"></i> MathType公式编辑器
+                                </div>
+                                <div class="resource-desc">专业数学公式编辑工具，制作数学文档必备</div>
+                                <a href="https://www.mathtype.com" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    下载软件 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 卡片3 -->
+                    <div class="module-card">
+                        <div class="card-header">
+                            <div class="card-icon download">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <h2 class="card-title">电子书与教材</h2>
+                        </div>
+                        <p class="card-desc">高中数学电子教材、参考书、拓展读物，随时随地学习查阅。</p>
+                        
+                        <ul class="resource-list">
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-book-reader"></i> 人教版电子教材
+                                </div>
+                                <div class="resource-desc">人教版高中数学全套电子教材，高清可检索</div>
+                                <a href="http://www.dzkbw.com/books/rjb/gaozhong-shuxue/" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    下载教材 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-brain"></i> 数学思维拓展
+                                </div>
+                                <div class="resource-desc">数学思维训练、趣味数学、数学史等拓展读物</div>
+                                <a href="https://baijiahao.baidu.com/s?id=1843685261445513500&wfr=spider&for=pc" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    下载书籍 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-clipboard-list"></i> 知识点速记手册
+                                </div>
+                                <div class="resource-desc">高中数学公式、定理、结论速查手册，复习利器</div>
+                                <a href="https://zhuanlan.zhihu.com/p/702384632" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    下载手册 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 3D虚拟仿真模块 -->
+            <section id="simulation-3d" class="content-section">
+                <h2 class="section-title">3D可视化仿真技术</h2>
+                <div class="module-grid">
+                    <!-- 卡片1 -->
+                    <div class="module-card">
+                        <div class="card-header">
+                            <div class="card-icon simulation">
+                                <i class="fas fa-vr-cardboard"></i>
+                            </div>
+                            <h2 class="card-title">几何3D可视化</h2>
+                        </div>
+                        <p class="card-desc">将抽象的几何图形转化为直观的3D模型，动态演示空间关系，培养空间想象能力。</p>
+                        
+                        <ul class="resource-list">
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-cube"></i> GeoGebra
+                                </div>
+                                <div class="resource-desc">旋转、展开、切割几何体，直观理解空间结构</div>
+                                <a href="https://rj.souhu888.cn/down2025/?s=geogebra" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    进入演示 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-project-diagram"></i> Desmos
+                                </div>
+                                <div class="resource-desc">以函数作图和图形计算闻名，界面极其简洁优美，交互体验一流。</div>
+                                <a href="https://www.desmos.com/?lang=zh-CN" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    查看模型 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                             <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-project-diagram"></i> 国家虚拟仿真实验室
+                                </div>
+                                <div class="resource-desc">免费的虚拟仿真实验平台，自由创新</div>
+                                <a href="https://www.ilab-x.com/special/topic" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    查看模型 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    
+                    <!-- 卡片2 -->
+                    <div class="module-card">
+                        <div class="card-header">
+                            <div class="card-icon simulation">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <h2 class="card-title">交互式学习体验</h2>
+                        </div>
+                        <p class="card-desc">通过交互式3D应用和模拟实验，在操作中理解数学原理，提升学习兴趣与效果。</p>
+                        
+                        <ul class="resource-list">
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-dice"></i> 数学乐
+                                </div>
+                                <div class="resource-desc">一个将数学概念用通俗语言和生活化例子解释的中文网站，内含大量简单的交互动画。</div>
+                                <a href="https://www.shuxuele.com/geometry/index.html" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    开始实验 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-chart-area"></i> 可汗学院
+                                </div>
+                                <div class="resource-desc">虽然是综合学习平台，但其数学课程内置了大量精心设计的交互式练习和小工具。</div>
+                                <a href="https://www.bgrdh.com/sites/9162.html" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    进入交互 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-sitemap"></i> PhET 互动仿真程序
+                                </div>
+                                <div class="resource-desc">由美国科罗拉多大学创建的免费互动仿真程序，涵盖数理化多个学科。</div>
+                                <a href="https://phet.colorado.edu/zh_CN/" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    开始游戏 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 卡片3 -->
+                    <div class="module-card">
+                        <div class="card-header">
+                            <div class="card-icon simulation">
+                                <i class="fas fa-atom"></i>
+                            </div>
+                            <h2 class="card-title">高级数学可视化</h2>
+                        </div>
+                        <p class="card-desc">可利用AI工具实现复杂数学概念与过程的高级可视化，将抽象思维转化为直观体验。</p>
+                        
+                        <ul class="resource-list">
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-infinity"></i> Claude（Anthropic）
+                                </div>
+                                <div class="resource-desc">极限过程、导数、积分等概念的3D动态演示</div>
+                                <a href="https://ai.szbdtg.com/home?type=2&secret=1xu4new5jmpw7akzovjm10cd4nqh564y&key=q7p16olt1y1ei82bemkf&qhclickid=4907c316ff593ab7" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    查看演示 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-dna"></i> ChatGPT（OpenAI）
+                                </div>
+                                <div class="resource-desc">函数图像、性质、变换的3D动态演示</div>
+                                <a href="https://ai.szbdtg.com/home?type=2&secret=1xu4new5jmpw7akzovjm10cd4nqh564y&key=q7p16olt1y1ei82bemkf&qhclickid=4907c316ff593ab7" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    查看演示 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                            <li class="resource-item">
+                                <div class="resource-name">
+                                    <i class="fas fa-wave-square"></i> 谷歌Gemini
+                                </div>
+                                <div class="resource-desc">计算知识引擎，在数学可视化方面极其强大和专业。</div>
+                                <a href="https://ai.szbdtg.com/home?type=2&secret=1xu4new5jmpw7akzovjm10cd4nqh564y&key=q7p16olt1y1ei82bemkf&qhclickid=4907c316ff593ab7" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                    查看演示 <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>© 2025 高中数学学习资源平台 | 科技赋能教育 · 创新引领学习</p>
+            <p style="margin-top: 15px; color: var(--primary-blue); font-weight: 600;">
+                建议使用Chrome或Edge浏览器 | 部分资源需要网络连接 | 仅供学习交流使用
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 标签切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    // 添加当前按钮的active类
+                    this.classList.add('active');
+                    
+                    // 隐藏所有内容区域
+                    contentSections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // 显示对应内容区域
+                    const targetId = this.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                    
+                    // 添加页面滚动效果
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // 卡片悬停效果增强
+            const cards = document.querySelectorAll('.module-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+            
+            // 添加点击资源项的效果
+            const resourceItems = document.querySelectorAll('.resource-item');
+            resourceItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // 防止点击链接时触发
+                    if (e.target.tagName === 'A' || e.target.closest('a')) {
+                        return;
+                    }
+                    
+                    // 添加点击效果
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                    
+                    // 找到资源项内的链接并模拟点击
+                    const link = this.querySelector('.resource-link');
+                    if (link) {
+                        setTimeout(() => {
+                            link.click();
+                        }, 300);
+                    }
+                });
+            });
+            
+            // 添加页面加载动画
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+                document.body.style.transition = 'opacity 0.5s ease';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不等式 | 高考必考热点复习</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(231, 76, 60, 0.05) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(192, 57, 43, 0.05) 0%, transparent 25%);
+        }
+        
+        /* 高考冲刺主题色 */
+        :root {
+            --primary-red: #e74c3c;      /* 警示红 */
+            --accent-orange: #e67e22;    /* 温暖橙 */
+            --accent-purple: #9b59b6;    /* 智慧紫 */
+            --light-bg: #f8faff;
+            --card-bg: #ffffff;
+            --dark-text: #1a1a2e;
+            --light-text: #4a5568;
+            --success-green: #2ecc71;
+            --warning-yellow: #f1c40f;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary-red);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary-red), var(--accent-orange));
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+        }
+        
+        .logo-text {
+            background: linear-gradient(to right, #ffffff, #ffcccb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .back-btn {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .back-btn:hover {
+            color: white;
+            background-color: rgba(231, 76, 60, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+        }
+        
+        /* 主要内容区域 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        /* 页面头部 */
+        .page-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #1e3a8a 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-left: 6px solid var(--primary-red);
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(231, 76, 60, 0.1) 0%, transparent 70%);
+        }
+        
+        .topic-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-red), #c0392b);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 6px 15px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 8px rgba(231, 76, 60, 0.3);
+        }
+        
+        .topic-title {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .topic-subtitle {
+            font-size: 1.3rem;
+            color: #e2e8f0;
+            max-width: 900px;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+        
+        .topic-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 140px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffcc00;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            text-align: center;
+        }
+        
+        /* 内容卡片 */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-red);
+        }
+        
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-red), var(--accent-orange));
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-red), var(--accent-orange));
+            box-shadow: 0 6px 12px rgba(231, 76, 60, 0.2);
+        }
+        
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .card-content {
+            color: var(--light-text);
+            line-height: 1.7;
+        }
+        
+        .card-content p {
+            margin-bottom: 15px;
+        }
+        
+        .card-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .card-content li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .card-content li::before {
+            content: '•';
+            color: var(--primary-red);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        /* 复习建议特殊样式 */
+        .advice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .advice-item {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid var(--primary-red);
+            transition: all 0.3s;
+        }
+        
+        .advice-item:hover {
+            background: #fef0f0;
+            transform: translateX(5px);
+        }
+        
+        .advice-title {
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .advice-desc {
+            color: var(--light-text);
+            font-size: 0.95rem;
+        }
+        
+        /* 鼓励用语区域 */
+        .encouragement-section {
+            background: linear-gradient(135deg, #fef0f0, #fee2e2);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            border-left: 6px solid var(--primary-red);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .encouragement-title {
+            font-size: 1.8rem;
+            color: #991b1b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .encouragement-text {
+            font-size: 1.2rem;
+            color: #991b1b;
+            font-style: italic;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* 资料下载区域 */
+        .download-section {
+            margin-top: 50px;
+        }
+        
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .download-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--success-green);
+        }
+        
+        .download-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .download-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 15px;
+            background: linear-gradient(135deg, var(--primary-red), #c0392b);
+        }
+        
+        .download-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+        
+        .download-desc {
+            color: var(--light-text);
+            margin-bottom: 20px;
+            flex-grow: 1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .download-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary-red), #c0392b);
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            font-size: inherit;
+        }
+        
+        .download-btn:hover {
+            background: linear-gradient(135deg, #c0392b, var(--primary-red));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        /* 页脚 */
+        footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            border-top: 4px solid var(--primary-red);
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffcc00;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-red);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .footer-links a i {
+            margin-right: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+        
+        .copyright strong {
+            color: #ffcc00;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .topic-title {
+                font-size: 2.2rem;
+            }
+            
+            .topic-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .topic-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .page-header {
+                padding: 30px 20px;
+            }
+            
+            .content-card {
+                padding: 25px;
+            }
+        }
+        
+        /* 考点重点标记 */
+        .key-point {
+            background: #fef0f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary-red);
+        }
+        
+        .key-point-title {
+            font-weight: 700;
+            color: #991b1b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .key-point-content {
+            color: #991b1b;
+        }
+        
+        /* 高亮文本 */
+        .highlight-text {
+            color: var(--primary-red);
+            font-weight: 700;
+        }
+        
+        /* 不等式特殊样式 */
+        .formula-box {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #e2e8f0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .formula-title {
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+        }
+        
+        .formula-content {
+            color: #1e293b;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        
+        /* 可点击链接样式 */
+        .content-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0;
+        }
+        
+        /* 防止按钮内的点击事件冒泡到卡片 */
+        .download-btn, .advice-item, .key-point, .formula-box {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="数学宇宙.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <span class="logo-text">MathVerse</span>
+            </a>
+            
+            <a href="备考冲刺.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回首页
+            </a>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="page-header">
+            <div class="topic-tag">
+                <i class="fas fa-fire-alt"></i> 必考热点
+            </div>
+            <h1 class="topic-title">不等式与线性规划</h1>
+            <p class="topic-subtitle">
+                高考中频考点！包括基本不等式、绝对值不等式、线性规划问题的求解与应用。
+                <span class="highlight-text">每年高考分值约5-10分，常与其他知识点结合考察。</span>
+            </p>
+            
+            <div class="topic-stats">
+                <div class="stat-item">
+                    <div class="stat-value">5-10分</div>
+                    <div class="stat-label">高考分值</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">4-6小时</div>
+                    <div class="stat-label">建议复习时间</div>
+                </div>
+               
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <div class="content-grid">
+            <!-- 课标解读 -->
+            <div class="content-card" onclick="navigateToModule('课标解读')">
+                <a href="http://127.0.0.1:5500/%E4%B8%8D%E7%AD%89%E5%BC%8F-%E8%AF%BE%E6%A0%87%E8%A7%A3%E8%AF%BB.html" class="content-link" target="_blank"></a>
+                <div class="card-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h2 class="card-title">课标解读</h2>
+                <div class="card-content">
+                    <p>不等式是描述数量大小关系的数学模型，线性规划是优化理论的重要基础。高考中对不等式与线性规划的考查体现了数学的应用价值和工具作用。</p>
+                    
+                    <div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-exclamation-circle"></i> 核心要求
+                        </div>
+                        <div class="key-point-content">
+                            理解不等式的性质，掌握基本不等式及其应用，会解一元二次不等式、绝对值不等式，理解线性规划的概念，能解决简单的线性规划问题。
+                        </div>
+                    </div>
+                    
+                    <p><strong>考查重点：</strong></p>
+                    <ul>
+                        <li>不等式的性质与解法</li>
+                        <li>基本不等式及其应用</li>
+                        <li>绝对值不等式的解法</li>
+                        <li>一元二次不等式的解法</li>
+                        <li>线性规划问题的求解</li>
+                        <li>不等式在实际问题中的应用</li>
+                    </ul>
+                    
+                    <p><strong>能力要求：</strong></p>
+                    <ul>
+                        <li>逻辑推理与不等式证明能力</li>
+                        <li>代数变形与不等式求解能力</li>
+                        <li>几何直观与数形结合能力</li>
+                        <li>数学建模与优化问题解决能力</li>
+                    </ul>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">核心公式：</div>
+                        <div class="formula-content">
+                            基本不等式：a² + b² ≥ 2ab<br>
+                            均值不等式：a+b ≥ 2√(ab) (a,b>0)<br>
+                            绝对值不等式：|a| - |b| ≤ |a±b| ≤ |a| + |b|<br>
+                            一元二次不等式：ax² + bx + c > 0
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 复习建议 -->
+            <div class="content-card" onclick="navigateToModule('复习建议')">
+                <a href="http://127.0.0.1:5500/%E4%B8%8D%E7%AD%89%E5%BC%8F-%E5%A4%8D%E4%B9%A0%E5%BB%BA%E8%AE%AE.html" class="content-link" target="_blank"></a>
+                <div class="card-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h2 class="card-title">复习建议</h2>
+                <div class="card-content">
+                    <p>不等式与线性规划是高中数学的重要模块，也是高考的常考内容。科学的复习策略能帮助您高效掌握这一模块。</p>
+                    
+                    <div class="advice-list">
+                        <div class="advice-item">
+                            <div class="advice-title">
+                                <i class="fas fa-check-circle"></i> 夯实基础概念
+                            </div>
+                            <div class="advice-desc">
+                                掌握不等式的性质，理解基本不等式、均值不等式、绝对值不等式的意义和应用条件，熟悉线性规划的基本概念。
+                            </div>
+                        </div>
+                        
+                        <div class="advice-item">
+                            <div class="advice-title">
+                                <i class="fas fa-chart-line"></i> 专题突破训练
+                            </div>
+                            <div class="advice-desc">
+                                分专题练习：不等式性质与证明、不等式求解、基本不等式应用、线性规划。每个专题针对性训练，掌握解题方法。
+                            </div>
+                        </div>
+                        
+                        <div class="advice-item">
+                            <div class="advice-title">
+                                <i class="fas fa-puzzle-piece"></i> 注重方法总结
+                            </div>
+                            <div class="advice-desc">
+                                总结不等式证明的常用方法（比较法、综合法、分析法等），掌握线性规划问题的图解法，培养数形结合能力。
+                            </div>
+                        </div>
+                        
+                        <div class="advice-item">
+                            <div class="advice-title">
+                                <i class="fas fa-clock"></i> 时间分配建议
+                            </div>
+                            <div class="advice-desc">
+                                <strong>第1-2天：</strong>复习不等式性质与解法<br>
+                                <strong>第3-4天：</strong>基本不等式专题训练<br>
+                                <strong>第5-6天：</strong>线性规划专题训练<br>
+                                <strong>第7天：</strong>综合模拟与查漏补缺
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-star"></i> 高效复习小贴士
+                        </div>
+                        <div class="key-point-content">
+                            1. 每天练习不等式证明题，培养逻辑推理能力<br>
+                            2. 重视基本不等式的变形与应用，掌握取等条件<br>
+                            3. 建立错题本，记录典型不等式问题<br>
+                            4. 考前重点复习近3年高考真题中的不等式题
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 核心考点 -->
+            <div class="content-card" onclick="navigateToModule('核心考点')">
+                <a href="http://127.0.0.1:5500/%E4%B8%8D%E7%AD%89%E5%BC%8F-%E6%A0%B8%E5%BF%83%E8%80%83%E7%82%B9.html" class="content-link" target="_blank"></a>
+                <div class="card-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h2 class="card-title">核心考点分析</h2>
+                <div class="card-content">
+                    <p>根据近5年高考统计，不等式与线性规划模块的考点分布如下：</p>
+                    
+                    <div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-chart-pie"></i> 考点分布统计
+                        </div>
+                        <div class="key-point-content">
+                            <strong>1. 不等式性质与解法：</strong> 约35%<br>
+                            <strong>2. 基本不等式应用：</strong> 约30%<br>
+                            <strong>3. 线性规划问题：</strong> 约25%<br>
+                            <strong>4. 综合应用题：</strong> 约10%
+                        </div>
+                    </div>
+                    
+                    <p><strong>高频考点：</strong></p>
+                    <ul>
+                        <li>不等式的基本性质</li>
+                        <li>一元二次不等式的解法</li>
+                        <li>绝对值不等式的解法</li>
+                        <li>基本不等式的证明与应用</li>
+                        <li>均值不等式的应用</li>
+                        <li>线性规划问题的求解</li>
+                        <li>不等式在实际问题中的应用</li>
+                    </ul>
+                    
+                    <p><strong>难点突破：</strong></p>
+                    <ul>
+                        <li>含参不等式的解法</li>
+                        <li>基本不等式的综合应用</li>
+                        <li>线性规划中的最值问题</li>
+                        <li>不等式证明的构造技巧</li>
+                        <li>不等式与其他知识的综合</li>
+                    </ul>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">重要不等式公式：</div>
+                        <div class="formula-content">
+                            柯西不等式：(a₁²+a₂²)(b₁²+b₂²) ≥ (a₁b₁+a₂b₂)²<br>
+                            三角不等式：|a| - |b| ≤ |a±b| ≤ |a| + |b|<br>
+                            基本不等式推广：a+b+c ≥ 3√[3](abc) (a,b,c>0)<br>
+                            一元二次不等式判别式：Δ = b² - 4ac
+                        </div>
+                    </div>
+                    
+                    <div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-clipboard-check"></i> 应试策略
+                        </div>
+                        <div class="key-point-content">
+                            选择题要利用不等式性质快速判断，填空题要注意基本不等式取等条件，解答题要步骤清晰、推理严谨。特别注意线性规划问题中的可行域绘制和目标函数几何意义。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 鼓励用语区域 -->
+        <section class="encouragement-section">
+            <h2 class="encouragement-title">
+                <i class="fas fa-heart"></i> 加油！高考必胜
+            </h2>
+            <p class="encouragement-text">
+                "不等式虽抽象，线性规划虽复杂，但只要掌握方法，理解原理，必能攻克难关！<br>
+                不等式的性质如同人生的准则，有章可循，有理可依！<br>
+                相信自己的逻辑思维，你比想象中更强大。高考数学稳拿这5-10分，你可以做到！"
+            </p>
+        </section>
+        
+        <!-- 资料下载区域 -->
+        <section class="download-section">
+            <h2 class="card-title" style="margin-bottom: 10px;">
+                <i class="fas fa-download"></i> 复习资料下载
+            </h2>
+            <p style="color: var(--light-text); margin-bottom: 30px;">精选高质量复习资料，助力高效备考</p>
+            
+            <div class="download-grid">
+                <!-- 资料1 -->
+                <div class="download-card" onclick="downloadFile('不等式与线性规划专题讲义.pdf')">
+                    <a href="downloads/备考冲刺/不等式.rar" class="content-link" target="_blank"></a>
+                    <div class="download-header">
+                        <div class="download-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3 class="download-title">不等式专题讲义</h3>
+                    </div>
+                    <p class="download-desc">包含不等式所有知识点梳理、重要公式总结、典型例题解析、解题方法总结，适合基础复习与提高。</p>
+                    <div class="download-meta">
+                        <span><i class="far fa-file"></i> PDF文档</span>
+                        <span><i class="far fa-clock"></i> 100+页</span>
+                    </div>
+                    <button class="download-btn" onclick="event.stopPropagation(); downloadFile('不等式与线性规划专题讲义.pdf')">
+                        <i class="fas fa-download"></i> 点击框内任意位置下载
+                    </button>
+                </div>
+                
+                <!-- 资料2 -->
+                <div class="download-card" onclick="downloadFile('历年高考不等式真题汇编.pdf')">
+                    <a href="downloads/备考冲刺/不等式易错题专项训练.rar" class="content-link" target="_blank"></a>
+                    <div class="download-header">
+                        <div class="download-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h3 class="download-title">不等式易错题专项训练</h3>
+                    </div>
+                    <p class="download-desc">近10年高频不等式题精选，含详细解析，帮助把握命题规律与考查趋势。</p>
+                    <div class="download-meta">
+                        <span><i class="far fa-file"></i> PDF文档</span>
+                        <span><i class="far fa-clock"></i> 100+页</span>
+                    </div>
+                    <button class="download-btn" onclick="event.stopPropagation(); downloadFile('历年高考不等式真题汇编.pdf')">
+                        <i class="fas fa-download"></i> 点击框内任意位置下载
+                    </button>
+                </div>
+                
+               
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+           
+            
+            
+            
+           
+            
+            <div class="copyright">
+                <p>&copy; 2025 MathVerse 高中数学高考冲刺平台. 保留所有权利. <strong>不等式与线性规划 · 高考必考 · 冲刺高分！</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 导航到模块页面
+        function navigateToModule(moduleName) {
+            // 在实际应用中，这里会跳转到相应页面
+            // 由于已经通过a链接实现了跳转，这里可以留空或用于其他逻辑
+        }
+        
+        // 模拟文件下载功能
+        function downloadFile(filename) {
+            // 显示下载提示
+           
+            
+            // 在实际应用中，这里可以替换为真实的文件下载代码
+            // window.location.href = 'path/to/your/file/' + filename;
+            
+            // 添加下载动画效果
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 下载中...';
+            btn.style.opacity = '0.8';
+            btn.style.cursor = 'wait';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+                
+                // 显示下载成功提示
+                const successMsg = document.createElement('div');
+                successMsg.style.position = 'fixed';
+                successMsg.style.top = '20px';
+                successMsg.style.right = '20px';
+                successMsg.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                successMsg.style.color = 'white';
+                successMsg.style.padding = '15px 25px';
+                successMsg.style.borderRadius = '8px';
+                successMsg.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+                successMsg.style.zIndex = '10000';
+                successMsg.innerHTML = `<i class="fas fa-check-circle"></i> ${filename} 下载成功！`;
+                document.body.appendChild(successMsg);
+                
+                setTimeout(() => {
+                    document.body.removeChild(successMsg);
+                }, 3000);
+            }, 1500);
+            
+            // 阻止事件冒泡，避免触发卡片点击事件
+            event.stopPropagation();
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加卡片动画效果
+            const contentCards = document.querySelectorAll('.content-card');
+            contentCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = `opacity 0.6s ${index * 0.2}s, transform 0.6s ${index * 0.2}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 300 + index * 200);
+            });
+            
+            // 添加下载卡片动画效果
+            setTimeout(() => {
+                const downloadCards = document.querySelectorAll('.download-card');
+                downloadCards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        card.style.transition = `opacity 0.6s ${index * 0.15}s, transform 0.6s ${index * 0.15}s`;
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 500 + index * 150);
+                });
+            }, 800);
+            
+            // 添加统计数据动画
+            const statValues = document.querySelectorAll('.stat-value');
+            statValues.forEach(value => {
+                const originalText = value.textContent;
+                
+                // 特殊处理分数值
+                if (originalText.includes('-')) {
+                    const parts = originalText.split('-');
+                    if (parts.length === 2) {
+                        const start = parseInt(parts[0]);
+                        const end = parseInt(parts[1]);
+                        
+                        let current = 0;
+                        const updateCounter = () => {
+                            if (current < start) {
+                                current++;
+                                value.textContent = current + '-' + end;
+                                setTimeout(updateCounter, 50);
+                            } else {
+                                value.textContent = originalText;
+                            }
+                        };
+                        
+                        setTimeout(updateCounter, 1000);
+                    }
+                } else {
+                    // 其他统计值
+                    value.textContent = '0';
+                    
+                    let counter = 0;
+                    const target = isNaN(parseInt(originalText)) ? 0 : parseInt(originalText);
+                    
+                    if (target > 0) {
+                        const increment = target / 20;
+                        
+                        const updateCounter = () => {
+                            if (counter < target) {
+                                counter += increment;
+                                value.textContent = Math.ceil(counter);
+                                setTimeout(updateCounter, 50);
+                            } else {
+                                value.textContent = originalText;
+                            }
+                        };
+                        
+                        setTimeout(updateCounter, 1000);
+                    }
+                }
+            });
+            
+            // 添加鼓励用语的打字机效果
+            setTimeout(() => {
+                const encouragementText = document.querySelector('.encouragement-text');
+                const originalText = encouragementText.textContent;
+                encouragementText.textContent = '';
+                
+                let i = 0;
+                const typeWriter = () => {
+                    if (i < originalText.length) {
+                        encouragementText.textContent += originalText.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 30);
+                    }
+                };
+                
+                setTimeout(typeWriter, 500);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

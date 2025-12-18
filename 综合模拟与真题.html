@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>综合模拟与真题 | 高考必考热点复习</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(30, 144, 255, 0.05) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(138, 43, 226, 0.05) 0%, transparent 25%);
+        }
+        
+        /* 高考冲刺主题色 */
+        :root {
+            --primary-blue: #1e90ff;     /* 希望蓝 */
+            --accent-purple: #8a2be2;    /* 智慧紫 */
+            --accent-orange: #ff8c00;    /* 冲刺橙 */
+            --light-bg: #f8faff;
+            --card-bg: #ffffff;
+            --dark-text: #1a1a2e;
+            --light-text: #4a5568;
+            --success-green: #2ecc71;
+            --warning-yellow: #f1c40f;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary-blue);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-purple));
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);
+        }
+        
+        .logo-text {
+            background: linear-gradient(to right, #ffffff, #b3d9ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .back-btn {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .back-btn:hover {
+            color: white;
+            background-color: rgba(30, 144, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+        }
+        
+        /* 主要内容区域 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        /* 页面头部 */
+        .page-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #1e3a8a 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-left: 6px solid var(--primary-blue);
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(30, 144, 255, 0.1) 0%, transparent 70%);
+        }
+        
+        .topic-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue), #3742fa);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 6px 15px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 8px rgba(30, 144, 255, 0.3);
+        }
+        
+        .topic-title {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .topic-subtitle {
+            font-size: 1.3rem;
+            color: #e2e8f0;
+            max-width: 900px;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+        
+        .topic-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 140px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffcc00;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            text-align: center;
+        }
+        
+        /* 内容卡片 */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-blue);
+        }
+        
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-blue), var(--accent-purple));
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-purple));
+            box-shadow: 0 6px 12px rgba(30, 144, 255, 0.2);
+        }
+        
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .card-content {
+            color: var(--light-text);
+            line-height: 1.7;
+        }
+        
+        .card-content p {
+            margin-bottom: 15px;
+        }
+        
+        .card-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .card-content li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .card-content li::before {
+            content: '•';
+            color: var(--primary-blue);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        /* 复习建议特殊样式 */
+        .advice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .advice-item {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid var(--primary-blue);
+            transition: all 0.3s;
+        }
+        
+        .advice-item:hover {
+            background: #f0f9ff;
+            transform: translateX(5px);
+        }
+        
+        .advice-title {
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .advice-desc {
+            color: var(--light-text);
+            font-size: 0.95rem;
+        }
+        
+        /* 鼓励用语区域 */
+        .encouragement-section {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            border-left: 6px solid var(--primary-blue);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .encouragement-title {
+            font-size: 1.8rem;
+            color: #0369a1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .encouragement-text {
+            font-size: 1.2rem;
+            color: #0369a1;
+            font-style: italic;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* 资料下载区域 */
+        .download-section {
+            margin-top: 50px;
+        }
+        
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .download-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--success-green);
+        }
+        
+        .download-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .download-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 15px;
+            background: linear-gradient(135deg, var(--primary-blue), #3742fa);
+        }
+        
+        .download-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+        
+        .download-desc {
+            color: var(--light-text);
+            margin-bottom: 20px;
+            flex-grow: 1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .download-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary-blue), #3742fa);
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            font-size: inherit;
+        }
+        
+        .download-btn:hover {
+            background: linear-gradient(135deg, #3742fa, var(--primary-blue));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(30, 144, 255, 0.3);
+        }
+        
+        /* 页脚 */
+        footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            border-top: 4px solid var(--primary-blue);
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffcc00;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-blue);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .footer-links a i {
+            margin-right: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+        
+        .copyright strong {
+            color: #ffcc00;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .topic-title {
+                font-size: 2.2rem;
+            }
+            
+            .topic-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .topic-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .page-header {
+                padding: 30px 20px;
+            }
+            
+            .content-card {
+                padding: 25px;
+            }
+        }
+        
+        /* 考点重点标记 */
+        .key-point {
+            background: #f0f9ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary-blue);
+        }
+        
+        .key-point-title {
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .key-point-content {
+            color: #0369a1;
+        }
+        
+        /* 高亮文本 */
+        .highlight-text {
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+        
+        /* 综合模拟特殊样式 */
+        .formula-box {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #e2e8f0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .formula-title {
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+        }
+        
+        .formula-content {
+            color: #1e293b;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        
+        /* 可点击链接样式 */
+        .content-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0;
+        }
+        
+        /* 防止按钮内的点击事件冒泡到卡片 */
+        .download-btn, .advice-item, .key-point, .formula-box {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 新增：立即学习按钮 */
+        .learn-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--accent-orange), #ff6b35);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            font-size: inherit;
+            margin-top: 20px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .learn-btn:hover {
+            background: linear-gradient(135deg, #ff6b35, var(--accent-orange));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(255, 140, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="数学宇宙.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <span class="logo-text">MathVerse</span>
+            </a>
+            
+            <a href="备考冲刺.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回首页
+            </a>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="page-header">
+            <div class="topic-tag">
+                <i class="fas fa-fire-alt"></i> 必考热点
+            </div>
+            <h1 class="topic-title">综合模拟与真题</h1>
+            <p class="topic-subtitle">
+                高考冲刺关键！包括历年真题精讲、模拟试题训练、考点综合应用、应试技巧提升。
+                <span class="highlight-text">高考前必备冲刺模块，全面提升应试能力。</span>
+            </p>
+            
+            <div class="topic-stats">
+                <div class="stat-item">
+                    <div class="stat-value">冲刺模块</div>
+                    <div class="stat-label">模块性质</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">15-20小时</div>
+                    <div class="stat-label">建议复习时间</div>
+                </div>
+               
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <div class="content-grid">
+            <!-- 历年真题精讲 -->
+            <div class="content-card">
+                <a href="http://127.0.0.1:5500/%E7%BB%BC%E5%90%88%E6%A8%A1%E6%8B%9F-%E5%8E%86%E5%B9%B4%E7%9C%9F%E9%A2%98.html" class="content-link" target="_blank"></a>
+                <div class="card-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h2 class="card-title">历年真题精讲</h2>
+                <div class="card-content">
+                    <p>高考真题是最有价值的复习资料，通过分析近10年高考真题，把握命题规律、考点分布和命题趋势，做到有的放矢。</p>
+                    
+                    <div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-exclamation-circle"></i> 核心价值
+                        </div>
+                        <div class="key-point-content">
+                            掌握高考命题思路，熟悉真题考查方式，了解高频考点分布，提升解题速度和准确率。
+                        </div>
+                    </div>
+                    
+                    <p><strong>复习重点：</strong></p>
+                    <ul>
+                        <li>近10年高考数学真题分类解析</li>
+                        <li>高频考点与命题规律分析</li>
+                        <li>真题解题思路与技巧总结</li>
+                        <li>常见易错点与避坑指南</li>
+                        <li>时间分配与应试策略</li>
+                    </ul>
+                    
+                    <p><strong>能力提升：</strong></p>
+                    <ul>
+                        <li>真题阅读理解能力</li>
+                        <li>快速识别考点能力</li>
+                        <li>规范解题步骤能力</li>
+                        <li>时间管理能力</li>
+                        <li>应试心理调节能力</li>
+                    </ul>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">真题分析要点：</div>
+                        <div class="formula-content">
+                            1. 分析命题趋势与风格变化<br>
+                            2. 统计考点分布与重复频率<br>
+                            3. 总结解题方法与技巧<br>
+                            4. 建立错题档案与反思
+                        </div>
+                    </div>
+                    
+                   
+                </div>
+            </div>
+            
+            <!-- 模拟试题训练 -->
+            <div class="content-card">
+                <a href="http://127.0.0.1:5500/%E7%BB%BC%E5%90%88%E6%A8%A1%E6%8B%9F-%E6%A8%A1%E6%8B%9F%E8%AE%AD%E7%BB%83.html" class="content-link" target="_blank"></a>
+                <div class="card-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h2 class="card-title">模拟试题训练</h2>
+                <div class="card-content">
+                    <p>高质量模拟试题训练是提升应试能力的关键环节，通过模拟考试环境，检验复习效果，发现薄弱环节，提升实战能力。</p>
+                    
+                    <div class="advice-list">
+                        <div class="advice-item">
+                            <div class="advice-title">
+                                <i class="fas fa-check-circle"></i> 全真模拟训练
+                            </div>
+                            <div class="advice-desc">
+                                按照高考时间、题型、难度进行全真模拟考试，适应考试节奏，提高答题速度和准确率。
+                            </div>
+                        </div>
+                        
+                        <div class="advice-item">
+                            <div class="advice-title">
+                                <i class="fas fa-chart-line"></i> 专项突破训练
+                            </div>
+                            <div class="advice-desc">
+                                针对薄弱环节进行专项强化训练，重点突破选择题、填空题、解答题等不同题型。
+                            </div>
+                        </div>
+                        
+                        <div class="advice-item">
+                            <div class="advice-title">
+                                <i class="fas fa-puzzle-piece"></i> 解题技巧训练
+                            </div>
+                            <div class="advice-desc">
+                                训练快速解题技巧，包括特殊值法、排除法、数形结合法等，提高解题效率。
+                            </div>
+                        </div>
+                        
+                        <div class="advice-item">
+                            <div class="advice-title">
+                                <i class="fas fa-clock"></i> 时间管理训练
+                            </div>
+                            <div class="advice-desc">
+                                <strong>选择题：</strong> 每题不超过3分钟<br>
+                                <strong>填空题：</strong> 每题不超过5分钟<br>
+                                <strong>解答题：</strong> 每题不超过15分钟<br>
+                                <strong>总时间：</strong> 120分钟
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-star"></i> 模拟训练小贴士
+                        </div>
+                        <div class="key-point-content">
+                            1. 严格按照高考时间进行模拟<br>
+                            2. 模拟后认真分析错题原因<br>
+                            3. 建立错题本并定期复习<br>
+                            4. 总结解题技巧与应试策略
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
+            <!-- 应试技巧与策略 -->
+            <div class="content-card">
+                <a href="http://127.0.0.1:5500/%E7%BB%BC%E5%90%88%E6%A8%A1%E6%8B%9F-%E5%BA%94%E8%AF%95%E6%8A%80%E5%B7%A7.html" class="content-link" target="_blank"></a>
+                <div class="card-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h2 class="card-title">应试技巧与策略</h2>
+                <div class="card-content">
+                    <p>科学的应试技巧能帮助考生在考场上发挥最佳水平，掌握答题策略、时间分配、心理调节等技巧至关重要。</p>
+                    
+                    <div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-chart-pie"></i> 答题策略分布
+                        </div>
+                        <div class="key-point-content">
+                            <strong>1. 选择题策略：</strong> 快速判断，排除法优先<br>
+                            <strong>2. 填空题策略：</strong> 准确计算，注意细节<br>
+                            <strong>3. 解答题策略：</strong> 步骤清晰，分步得分<br>
+                            <strong>4. 时间分配策略：</strong> 前易后难，合理分配
+                        </div>
+                    </div>
+                    
+                    <p><strong>核心技巧：</strong></p>
+                    <ul>
+                        <li>审题技巧：抓关键词，理解题意</li>
+                        <li>解题技巧：选择最优解题方法</li>
+                        <li>检查技巧：重点检查易错环节</li>
+                        <li>时间管理技巧：合理分配答题时间</li>
+                        <li>心理调节技巧：保持良好心态</li>
+                    </ul>
+                    
+                    <p><strong>常见问题应对：</strong></p>
+                    <ul>
+                        <li>遇到难题：暂时跳过，保证会做的题得分</li>
+                        <li>时间紧张：先做易得分的题目</li>
+                        <li>计算错误：养成验算习惯</li>
+                        <li>思路卡壳：换个角度思考问题</li>
+                        <li>紧张焦虑：深呼吸，调整心态</li>
+                    </ul>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">时间分配公式：</div>
+                        <div class="formula-content">
+                            选择题(40分钟) + 填空题(20分钟) + 解答题(60分钟)<br>
+                            总分150分 = 时间120分钟<br>
+                            平均每分钟要得1.25分
+                        </div>
+                    </div>
+                    
+                    <div class="key-point">
+                        <div class="key-point-title">
+                            <i class="fas fa-clipboard-check"></i> 考前注意事项
+                        </div>
+                        <div class="key-point-content">
+                            1. 提前熟悉考场环境<br>
+                            2. 准备好考试用品<br>
+                            3. 保持良好作息<br>
+                            4. 调整好心态<br>
+                            5. 相信自己的准备
+                        </div>
+                    </div>
+                    
+                   
+                </div>
+            </div>
+        </div>
+        
+        <!-- 鼓励用语区域 -->
+        <section class="encouragement-section">
+            <h2 class="encouragement-title">
+                <i class="fas fa-heart"></i> 加油！高考必胜
+            </h2>
+            <p class="encouragement-text">
+                "模拟训练虽辛苦，真题分析虽繁琐，但只要坚持到底，必能收获成功！<br>
+                每一次模拟都是实战的预演，每一道真题都是宝贵的财富！<br>
+                相信自己的努力，你比想象中更强大。高考数学冲刺高分，你可以做到！"
+            </p>
+        </section>
+        
+        <!-- 资料下载区域 -->
+        <section class="download-section">
+            <h2 class="card-title" style="margin-bottom: 10px;">
+                <i class="fas fa-download"></i> 复习资料下载
+            </h2>
+            <p style="color: var(--light-text); margin-bottom: 30px;">精选高质量复习资料，助力高效备考</p>
+            
+            <div class="download-grid">
+                <!-- 资料1 -->
+                <div class="download-card">
+                    <a href="downloads/备考冲刺/综合模拟与真题/2021-2025年高考真题.rar" class="content-link" target="_blank"></a>
+                    <div class="download-header">
+                        <div class="download-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3 class="download-title">高考真题合集</h3>
+                    </div>
+                    <p class="download-desc">近5年高考数学真题完整合集，含详细解析和考点分析，是冲刺阶段最重要的复习资料。</p>
+                    <div class="download-meta">
+                        <span><i class="far fa-file"></i> PDF文档</span>
+                        <span><i class="far fa-clock"></i> 100+页</span>
+                    </div>
+                    <button class="download-btn" onclick="event.stopPropagation(); window.open('http://127.0.0.1:5500/%E7%BB%BC%E5%90%88%E6%A8%A1%E6%8B%9F-%E9%AB%98%E8%80%83%E7%9C%9F%E9%A2%98%E5%90%88%E9%9B%86.pdf', '_blank')">
+                        <i class="fas fa-download"></i> 点击框内任意位置下载
+                    </button>
+                </div>
+                
+                <!-- 资料2 -->
+                <div class="download-card">
+                    <a href="downloads/备考冲刺/综合模拟与真题/模拟试卷.rar" class="content-link" target="_blank"></a>
+                    <div class="download-header">
+                        <div class="download-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h3 class="download-title">模拟试卷合集</h3>
+                    </div>
+                    <p class="download-desc">5套高质量模拟试卷，完全按照高考命题规律编制，含详细答案和评分标准。</p>
+                    <div class="download-meta">
+                        <span><i class="far fa-file"></i> PDF文档</span>
+                        <span><i class="far fa-clock"></i> 100+页</span>
+                    </div>
+                    <button class="download-btn" onclick="event.stopPropagation(); window.open('http://127.0.0.1:5500/%E7%BB%BC%E5%90%88%E6%A8%A1%E6%8B%9F-%E6%A8%A1%E6%8B%9F%E8%AF%95%E5%8D%B7.pdf', '_blank')">
+                        <i class="fas fa-download"></i> 点击框内任意位置下载
+                    </button>
+                </div>
+                
+                <!-- 资料3 -->
+                <div class="download-card">
+                    <a href="downloads/备考冲刺/综合模拟与真题/应试指南.rar" class="content-link" target="_blank"></a>
+                    <div class="download-header">
+                        <div class="download-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <h3 class="download-title">应试技巧指南</h3>
+                    </div>
+                    <p class="download-desc">全面的高考数学应试技巧指南，包括时间管理、答题策略、心理调节等内容。</p>
+                    <div class="download-meta">
+                        <span><i class="far fa-file"></i> PDF文档</span>
+                        <span><i class="far fa-clock"></i> 10+页</span>
+                    </div>
+                    <button class="download-btn" onclick="event.stopPropagation(); window.open('http://127.0.0.1:5500/%E7%BB%BC%E5%90%88%E6%A8%A1%E6%8B%9F-%E5%BA%94%E8%AF%95%E6%8C%87%E5%8D%97.pdf', '_blank')">
+                        <i class="fas fa-download"></i>  点击框内任意位置下载
+                    </button>
+                </div>
+                
+                
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+          
+            
+           
+           
+            
+            <div class="copyright">
+                <p>&copy; 2025 MathVerse 高中数学高考冲刺平台. 保留所有权利. <strong>综合模拟与真题 · 高考冲刺 · 决胜高考！</strong></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 导航到模块页面
+        function navigateToModule(moduleName) {
+            // 在实际应用中，这里会跳转到相应页面
+            // 由于已经通过a链接实现了跳转，这里可以留空或用于其他逻辑
+        }
+        
+        // 模拟文件下载功能
+        function downloadFile(filename) {
+            // 显示下载提示
+            
+            // 在实际应用中，这里可以替换为真实的文件下载代码
+            // window.location.href = 'path/to/your/file/' + filename;
+            
+            // 添加下载动画效果
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 下载中...';
+            btn.style.opacity = '0.8';
+            btn.style.cursor = 'wait';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+                
+                // 显示下载成功提示
+                const successMsg = document.createElement('div');
+                successMsg.style.position = 'fixed';
+                successMsg.style.top = '20px';
+                successMsg.style.right = '20px';
+                successMsg.style.background = 'linear-gradient(135deg, #1e90ff, #3742fa)';
+                successMsg.style.color = 'white';
+                successMsg.style.padding = '15px 25px';
+                successMsg.style.borderRadius = '8px';
+                successMsg.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+                successMsg.style.zIndex = '10000';
+                successMsg.innerHTML = `<i class="fas fa-check-circle"></i> ${filename} 下载成功！`;
+                document.body.appendChild(successMsg);
+                
+                setTimeout(() => {
+                    document.body.removeChild(successMsg);
+                }, 3000);
+            }, 1500);
+            
+            // 阻止事件冒泡，避免触发卡片点击事件
+            event.stopPropagation();
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加卡片动画效果
+            const contentCards = document.querySelectorAll('.content-card');
+            contentCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = `opacity 0.6s ${index * 0.2}s, transform 0.6s ${index * 0.2}s`;
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 300 + index * 200);
+            });
+            
+            // 添加下载卡片动画效果
+            setTimeout(() => {
+                const downloadCards = document.querySelectorAll('.download-card');
+                downloadCards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        card.style.transition = `opacity 0.6s ${index * 0.15}s, transform 0.6s ${index * 0.15}s`;
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 500 + index * 150);
+                });
+            }, 800);
+            
+            // 添加统计数据动画
+            const statValues = document.querySelectorAll('.stat-value');
+            statValues.forEach(value => {
+                const originalText = value.textContent;
+                
+                // 特殊处理分数值
+                if (originalText.includes('-')) {
+                    const parts = originalText.split('-');
+                    if (parts.length === 2) {
+                        const start = parseInt(parts[0]);
+                        const end = parseInt(parts[1]);
+                        
+                        let current = 0;
+                        const updateCounter = () => {
+                            if (current < start) {
+                                current++;
+                                value.textContent = current + '-' + end;
+                                setTimeout(updateCounter, 50);
+                            } else {
+                                value.textContent = originalText;
+                            }
+                        };
+                        
+                        setTimeout(updateCounter, 1000);
+                    }
+                } else {
+                    // 其他统计值
+                    value.textContent = '0';
+                    
+                    let counter = 0;
+                    const target = isNaN(parseInt(originalText)) ? 0 : parseInt(originalText);
+                    
+                    if (target > 0) {
+                        const increment = target / 20;
+                        
+                        const updateCounter = () => {
+                            if (counter < target) {
+                                counter += increment;
+                                value.textContent = Math.ceil(counter);
+                                setTimeout(updateCounter, 50);
+                            } else {
+                                value.textContent = originalText;
+                            }
+                        };
+                        
+                        setTimeout(updateCounter, 1000);
+                    }
+                }
+            });
+            
+            // 添加鼓励用语的打字机效果
+            setTimeout(() => {
+                const encouragementText = document.querySelector('.encouragement-text');
+                const originalText = encouragementText.textContent;
+                encouragementText.textContent = '';
+                
+                let i = 0;
+                const typeWriter = () => {
+                    if (i < originalText.length) {
+                        encouragementText.textContent += originalText.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 30);
+                    }
+                };
+                
+                setTimeout(typeWriter, 500);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

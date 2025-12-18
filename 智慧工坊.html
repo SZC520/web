@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathVerse - 数学学习平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 页面整体缩放为85% */
+body {
+    transform: scale(0.85);
+    transform-origin: top left;
+    width: 117.65%; /* 100% / 0.85 = 117.65% */
+    height: 117.65%;
+    min-height: 117.65vh;
+    overflow-x: hidden;
+}
+
+/* 确保内容居中 */
+.container {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 50px 20px;
+    width: 100%;
+}
+
+/* 修复导航栏位置 */
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c2e 0%, #1a1a3e 50%, #0d1b2a 100%);
+            color: #e0e0ff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 星空背景效果 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+                radial-gradient(2px 2px at 60px 20px, #d0d0ff, transparent),
+                radial-gradient(3px 3px at 90px 50px, #a0a0ff, transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        /* 顶部导航栏 */
+        .top-nav {
+            background: rgba(15, 20, 50, 0.9);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(100, 100, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            color: #c0c0ff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: white;
+            background: rgba(100, 100, 255, 0.2);
+        }
+        
+        .nav-link.active {
+            color: white;
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.3);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        /* 横幅图片区域 */
+        .banner {
+            height: 300px;
+            background: linear-gradient(rgba(10, 15, 40, 0.8), rgba(10, 15, 40, 0.9)), 
+                        url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, #0c0c2e);
+        }
+        
+        .banner-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ff7e5f 0%, #feb47b 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .banner-subtitle {
+            font-size: 1.5rem;
+            color: #c0c0ff;
+            max-width: 800px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+        
+        .banner-btn {
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(37, 117, 252, 0.3);
+            animation: fadeInUp 1s ease-out 0.6s both;
+            text-decoration: none;
+            display: inline-flex;
+        }
+        
+        .banner-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(37, 117, 252, 0.4);
+        }
+        
+        /* 主内容区域 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            border-radius: 2px;
+        }
+        
+        /* 模块网格 */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 70px;
+            background: rgba(20, 11, 47, 0.7);
+        }
+        
+        .module-card {
+            background: rgba(53, 23, 65, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(100, 100, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+            height: 100%;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border-color: rgba(100, 100, 255, 0.3);
+        }
+        
+        .module-icon {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: #6a11cb;
+        }
+        
+        .module-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .module-description {
+            color: #b0b0ff;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .module-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            color: #8888cc;
+            font-size: 0.9rem;
+        }
+        
+        /* 特色卡片 */
+        .featured-card {
+            background: linear-gradient(135deg, rgba(30, 35, 70, 0.95) 0%, rgba(40, 45, 90, 0.9) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            border: 1px solid rgba(100, 100, 255, 0.2);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 800px;
+            transition: all 0.3s ease;
+        }
+        
+        .featured-icon {
+            font-size: 3rem;
+            color: #A05AF0;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .featured-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+            flex-grow: 1;
+        }
+        
+        .featured-description {
+            font-size: 1rem;
+            color: #E0E0FF;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            flex-grow: 1;
+            min-width: 0;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: rgba(10, 15, 40, 0.9);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(100, 100, 255, 0.2);
+            margin-top: 60px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-link {
+            color: #a0a0ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        .copyright {
+            color: #8888cc;
+            font-size: 0.9rem;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .top-nav {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .banner-title {
+                font-size: 2.8rem;
+            }
+            
+            .banner-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .banner {
+                height: 350px;
+            }
+            
+            .banner-title {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .featured-card {
+                padding: 30px 20px;
+            }
+        }
+        
+        /* 模块特殊颜色 */
+        .module-card:nth-child(1) .module-icon { color: #6a11cb; }
+        .module-card:nth-child(2) .module-icon { color: #2575fc; }
+        .module-card:nth-child(3) .module-icon { color: #11998e; }
+        .module-card:nth-child(4) .module-icon { color: #ff7e5f; }
+        .module-card:nth-child(5) .module-icon { color: #feb47b; }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="top-nav">
+        <a href="数学宇宙.html" class="logo">智慧工坊</a>
+        
+        <div class="nav-links">
+            <a href="数学宇宙.html" class="nav-link active" data-url="https://www.example.com/home">首页</a>
+            <a href="知识图谱.html" class="nav-link" data-url="https://www.example.com/knowledge-graph">知识图谱</a>
+            <a href="智能题库.html" class="nav-link" data-url="https://www.example.com/question-bank">智能题库</a>
+            <a href="备考冲刺.html" class="nav-link" data-url="https://www.example.com/exam-prep">备考冲刺</a>
+            <a href="学习社区.html" class="nav-link" data-url="https://www.example.com/community">学习社区</a>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">孙</div>
+            <span>欢迎，孙同学</span>
+        </div>
+    </nav>
+    
+    <!-- 横幅图片区域 -->
+    <section class="banner">
+        <h1 class="banner-title">探索数学的浩瀚宇宙</h1>
+        <a  class="banner-btn" ">
+            <i class="fas fa-rocket"></i> 开始探索
+        </a>
+    </section>
+    
+    <!-- 主内容区域 -->
+    <main class="container">
+        <div class="modules-grid">
+            <!-- 知识储备模块 -->
+            <a href="http://127.0.0.1:5500/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%A8%A1%E5%9D%97.html"  target="_blank" class="module-card" data-url="https://www.example.com/knowledge-reserve">
+                <div class="module-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="module-title">基础知识储备</h3>
+                <p class="module-description">
+                    系统梳理高中数学核心概念、公式定理与典型方法的结构化学习库
+                </p>
+                <div class="module-stats">
+                    <span>今日学习：2.5小时</span>
+                    <span>进度：78%</span>
+                </div>
+            </a>
+            
+            <!-- 典例训练模块 -->
+            <a href="http://127.0.0.1:5500/%E4%B8%93%E9%A2%98%E8%AE%AD%E7%BB%83%E6%8B%93%E5%B1%95.html" class="module-card" data-url="https://www.example.com/example-training"   target="_blank">
+                <div class="module-icon">
+                    <i class="fas fa-drafting-compass"></i>
+                </div>
+                <h3 class="module-title">专题训练拓展</h3>
+                <p class="module-description">
+                    精品专题训练，技巧、思路一应俱全，为每一道难题提供智能解题工具。
+                </p>
+                <div class="module-stats">
+                    <span>工具：12个</span>
+                    <span>使用次数：1,248</span>
+                </div>
+            </a>
+            
+            <!-- 学习资源模块 -->
+            <a href="http://127.0.0.1:5500/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90.html" class="module-card" data-url="https://www.example.com/learning-resources"target="_blank">
+                <div class="module-icon">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <h3 class="module-title">学习资源</h3>
+                <p class="module-description">
+                    百万真题+AI推荐，精准攻克薄弱环节，个性化题目推荐，高效提升数学能力。
+                </p>
+                <div class="module-stats">
+                    <span>题目：1,254,321</span>
+                    <span>正确率：85%</span>
+                </div>
+            </a>
+        </div>
+        
+        <!-- 特色模块 -->
+        <div class="featured-card">
+            <div class="featured-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div>
+                <h3 class="featured-title">今日特色推荐</h3>
+                <p class="featured-description">
+                    根据你的学习数据，我们推荐今日学习重点：三角函数综合应用。这个知识点在你最近三次练习中准确率为68%，需要加强巩固。
+                </p>
+            </div>
+            <a href="智能题库.html" class="banner-btn" style="font-size: 1.1rem; padding: 12px 30px;" data-url="https://www.example.com/trigonometry-special">
+                <i class="fas fa-play-circle"></i> 开始专题学习
+            </a>
+        </div>
+    </main>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-links">
+            <a href="" class="footer-link" data-url="">关于我们</a>
+            <a href="" class="footer-link" data-url="">联系我们</a>
+            <a href="" class="footer-link" data-url="">隐私政策</a>
+            <a href="" class="footer-link" data-url="">服务条款</a>
+        </div>
+        <p class="copyright">MathVerse - 探索高中数学的浩瀚宇宙 © 2025 | 人类群星闪耀时，数学光芒永不灭</p>
+    </footer>
+
+    <script>
+        // 导航链接点击效果
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // 不阻止默认行为，让链接正常工作
+                
+                // 移除所有链接的active类
+                document.querySelectorAll('.nav-link').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // 给当前点击的链接添加active类
+                this.classList.add('active');
+            });
+        });
+        
+        // 模块卡片点击效果 - 保留原有效果，但不阻止链接跳转
+        document.querySelectorAll('.module-card, .banner-btn, .footer-link').forEach(element => {
+            element.addEventListener('click', function(e) {
+                // 不阻止默认行为，让链接正常工作
+                console.log(`跳转到: ${this.getAttribute('data-url') || this.getAttribute('href')}`);
+            });
+        });
+        
+        // 如果需要在新标签页打开链接，可以添加以下代码（可选）
+        /*
+        document.querySelectorAll('a').forEach(link => {
+            // 为外部链接添加target="_blank"
+            if (link.href && link.href.includes('example.com') && !link.href.includes(window.location.hostname)) {
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+            }
+        });
+        */
+    </script>
+</body>
+</html>

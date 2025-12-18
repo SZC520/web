@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathVerse | 数学问题求助中心</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- MathJax 用于数学公式渲染 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f9ff;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            margin-right: 12px;
+            font-size: 2rem;
+            color: #fbbf24;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 25px;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 主要内容区域 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        /* 页面标题区域 */
+        .page-header {
+            background: linear-gradient(135deg, #38bdf8, #3b82f6);
+            color: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.25);
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+        
+        /* 求助表单区域 */
+        .help-form-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 992px) {
+            .help-form-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-container, .preview-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3b82f6;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: #3b82f6;
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        /* 公式工具栏 */
+        .math-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .math-btn {
+            padding: 8px 12px;
+            background-color: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .math-btn:hover {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        /* 文件上传区域 */
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+        
+        .upload-area:hover {
+            border-color: #3b82f6;
+            background-color: #f0f9ff;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        
+        .upload-note {
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+        
+        #file-list {
+            margin-top: 15px;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f8fafc;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        
+        .file-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .remove-file {
+            color: #ef4444;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        /* 预览区域 */
+        .preview-content {
+            padding: 20px;
+            background-color: #f8fafc;
+            border-radius: 10px;
+            min-height: 300px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .preview-title {
+            font-size: 1.3rem;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        
+        .preview-topic {
+            display: inline-block;
+            background-color: #dbeafe;
+            color: #1e40af;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .preview-text {
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .preview-images {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .preview-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #e2e8f0;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #475569;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #cbd5e1;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        /* 相关问题区域 */
+        .related-questions {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .questions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .question-item {
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .question-item:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .question-topic {
+            background-color: #dbeafe;
+            color: #1e40af;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .question-time {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        
+        .question-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .question-excerpt {
+            color: #64748b;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .question-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #1e293b;
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            text-align: center;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #3b82f6;
+        }
+        
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="数学宇宙.html" class="logo">
+                <i class="fas fa-cube"></i> MathVerse
+            </a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="数学宇宙.html" class="nav-link">
+                        <i class="fas fa-home"></i> 首页
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="知识图谱.html" class="nav-link">
+                        <i class="fas fa-chart-line"></i> 知识图谱
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="智慧工坊.html" class="nav-link">
+                        <i class="fas fa-brain"></i> 智慧工坊
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="备考冲刺.html" class="nav-link active">
+                        <i class="fas fa-users"></i> 备考冲刺
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 页面标题区域 -->
+        <section class="page-header">
+            <h1 class="page-title">数学问题求助中心</h1>
+            <p class="page-subtitle">遇到难题？快速获得解答！发布你的数学问题，获得来自老师、学霸和AI助手的详细解答。支持图片上传、公式编辑和分步解析。</p>
+        </section>
+
+        <!-- 求助表单区域 -->
+        <div class="help-form-section">
+            <!-- 表单容器 -->
+            <div class="form-container">
+                <h2 class="section-title">
+                    <i class="fas fa-edit"></i> 发布你的问题
+                </h2>
+                
+                <form id="questionForm">
+                    <div class="form-group">
+                        <label class="form-label" for="questionTitle">问题标题</label>
+                        <input type="text" id="questionTitle" class="form-input" placeholder="例如：求函数f(x)=x²-3x+2在区间[0,3]的最大值和最小值" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="questionTopic">问题分类</label>
+                        <select id="questionTopic" class="form-select" required>
+                            <option value="">请选择问题分类</option>
+                            <option value="函数与导数">函数与导数</option>
+                            <option value="三角函数">三角函数与解三角形</option>
+                            <option value="数列">数列</option>
+                            <option value="立体几何">立体几何</option>
+                            <option value="解析几何">解析几何</option>
+                            <option value="概率统计">概率与统计</option>
+                            <option value="不等式">不等式</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">数学公式工具栏</label>
+                        <div class="math-toolbar">
+                            <button type="button" class="math-btn" onclick="insertMath('平方根', '\\sqrt{}')">√ 平方根</button>
+                            <button type="button" class="math-btn" onclick="insertMath('分数', '\\frac{}{}')">分数</button>
+                            <button type="button" class="math-btn" onclick="insertMath('上标', '^{}')">上标</button>
+                            <button type="button" class="math-btn" onclick="insertMath('下标', '_{}')">下标</button>
+                            <button type="button" class="math-btn" onclick="insertMath('积分', '\\int_{}^{}')">∫ 积分</button>
+                            <button type="button" class="math-btn" onclick="insertMath('求和', '\\sum_{}^{}')">∑ 求和</button>
+                            <button type="button" class="math-btn" onclick="insertMath('极限', '\\lim_{}')">lim 极限</button>
+                            <button type="button" class="math-btn" onclick="insertMath('矩阵', '\\begin{bmatrix} \\\\ \\end{bmatrix}')">矩阵</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="questionContent">问题描述</label>
+                        <textarea id="questionContent" class="form-textarea" placeholder="请详细描述你的问题，包括已知条件、解题思路和具体困惑。你可以使用上面的工具栏插入数学公式，使用LaTeX语法，例如：\sqrt{x^2+1} 或 \frac{1}{2}。" required></textarea>
+                        <div style="font-size: 0.85rem; color: #64748b; margin-top: 5px;">提示：用 $$ 包围的LaTeX公式会被渲染，例如 $$f(x)=\\frac{1}{\\sqrt{2\\pi}}e^{-\\frac{x^2}{2}}$$</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">上传图片或文件</label>
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="upload-text">点击或拖拽文件到此处上传</div>
+                            <div class="upload-note">支持 JPG, PNG, PDF 格式，最大 5MB</div>
+                            <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" multiple style="display: none;">
+                        </div>
+                        <div id="file-list"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="urgency">紧急程度</label>
+                        <select id="urgency" class="form-select">
+                            <option value="normal">一般（1-3天内解答）</option>
+                            <option value="urgent">紧急（24小时内解答）</option>
+                            <option value="very-urgent">非常紧急（12小时内解答）</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> 发布问题
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="clearForm()">
+                            <i class="fas fa-redo"></i> 清空内容
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- 预览容器 -->
+            <div class="preview-container">
+                <h2 class="section-title">
+                    <i class="fas fa-eye"></i> 问题预览
+                </h2>
+                <div class="preview-content" id="previewContent">
+                    <p style="color: #94a3b8; text-align: center; margin-top: 100px;">在此处预览你的问题...</p>
+                </div>
+                <div style="margin-top: 20px; font-size: 0.9rem; color: #64748b;">
+                    <i class="fas fa-info-circle"></i> 预览仅供参考，发布前请仔细检查内容
+                </div>
+            </div>
+        </div>
+
+        <!-- 相关问题区域 -->
+        <section class="related-questions">
+            <h2 class="section-title">
+                <i class="fas fa-link"></i> 相关问题
+            </h2>
+            <div class="questions-list" id="relatedQuestions">
+                <!-- 相关问题将通过JavaScript动态加载 -->
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="数学宇宙.html">首页</a>
+                <a href="知识图谱.html">知识图谱</a>
+                <a href="智慧工坊.html">智慧工坊</a>
+                <a href="备考冲刺.html">备考冲刺</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 MathVerse 数学问题求助中心. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化文件上传功能
+            initFileUpload();
+            
+            // 初始化表单预览
+            initPreview();
+            
+            // 加载相关问题
+            loadRelatedQuestions();
+            
+            // 初始化MathJax配置
+            if (window.MathJax) {
+                MathJax = {
+                    tex: {
+                        inlineMath: [['$', '$'], ['\\(', '\\)']],
+                        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                    },
+                    options: {
+                        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+                    }
+                };
+            }
+        });
+        
+        // 文件上传功能
+        function initFileUpload() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const fileList = document.getElementById('file-list');
+            
+            // 点击上传区域触发文件选择
+            uploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            // 拖拽上传功能
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#3b82f6';
+                uploadArea.style.backgroundColor = '#f0f9ff';
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = '#cbd5e1';
+                uploadArea.style.backgroundColor = '';
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#cbd5e1';
+                uploadArea.style.backgroundColor = '';
+                
+                if (e.dataTransfer.files.length) {
+                    handleFiles(e.dataTransfer.files);
+                }
+            });
+            
+            // 文件选择变化
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length) {
+                    handleFiles(fileInput.files);
+                }
+            });
+            
+            // 处理文件
+            function handleFiles(files) {
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    
+                    // 检查文件大小（5MB限制）
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert(`文件 "${file.name}" 大小超过5MB限制`);
+                        continue;
+                    }
+                    
+                    // 检查文件类型
+                    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+                    if (!validTypes.includes(file.type)) {
+                        alert(`文件 "${file.name}" 格式不支持，请上传 JPG, PNG 或 PDF 文件`);
+                        continue;
+                    }
+                    
+                    // 添加到文件列表
+                    addFileToList(file);
+                }
+                
+                // 更新预览
+                updatePreview();
+            }
+            
+            // 添加文件到列表
+            function addFileToList(file) {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                
+                const fileIcon = file.type.startsWith('image/') ? 'fa-image' : 'fa-file-pdf';
+                
+                fileItem.innerHTML = `
+                    <div class="file-name">
+                        <i class="fas ${fileIcon}"></i>
+                        <span>${file.name} (${formatFileSize(file.size)})</span>
+                    </div>
+                    <div class="remove-file" onclick="removeFile(this)">
+                        <i class="fas fa-times"></i>
+                    </div>
+                `;
+                
+                fileList.appendChild(fileItem);
+            }
+        }
+        
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // 移除文件
+        function removeFile(element) {
+            const fileItem = element.parentElement;
+            fileItem.remove();
+            updatePreview();
+        }
+        
+        // 初始化预览功能
+        function initPreview() {
+            // 监听表单变化，实时更新预览
+            const titleInput = document.getElementById('questionTitle');
+            const topicSelect = document.getElementById('questionTopic');
+            const contentTextarea = document.getElementById('questionContent');
+            
+            titleInput.addEventListener('input', updatePreview);
+            topicSelect.addEventListener('change', updatePreview);
+            contentTextarea.addEventListener('input', updatePreview);
+        }
+        
+        // 更新预览
+        function updatePreview() {
+            const previewContent = document.getElementById('previewContent');
+            const title = document.getElementById('questionTitle').value;
+            const topic = document.getElementById('questionTopic').value;
+            const content = document.getElementById('questionContent').value;
+            const fileList = document.getElementById('file-list');
+            
+            let previewHTML = '';
+            
+            if (title || topic || content) {
+                if (title) {
+                    previewHTML += `<h3 class="preview-title">${title}</h3>`;
+                }
+                
+                if (topic) {
+                    previewHTML += `<div class="preview-topic">${topic}</div>`;
+                }
+                
+                if (content) {
+                    // 处理LaTeX公式，将$$包围的内容转换为MathJax可识别的格式
+                    let processedContent = content
+                        .replace(/\n/g, '<br>')
+                        .replace(/\$\$(.*?)\$\$/g, '\\[$1\\]')
+                        .replace(/\$(.*?)\$/g, '\\($1\\)');
+                    
+                    previewHTML += `<div class="preview-text">${processedContent}</div>`;
+                }
+                
+                // 添加文件预览
+                if (fileList.children.length > 0) {
+                    previewHTML += `<div class="preview-images">`;
+                    previewHTML += `<div><i class="fas fa-paperclip"></i> ${fileList.children.length} 个附件</div>`;
+                    previewHTML += `</div>`;
+                }
+            } else {
+                previewHTML = '<p style="color: #94a3b8; text-align: center; margin-top: 100px;">在此处预览你的问题...</p>';
+            }
+            
+            previewContent.innerHTML = previewHTML;
+            
+            // 重新渲染数学公式
+            if (window.MathJax) {
+                MathJax.typesetPromise([previewContent]).catch((err) => console.log('MathJax error:', err));
+            }
+        }
+        
+        // 插入数学公式
+        function insertMath(name, latex) {
+            const textarea = document.getElementById('questionContent');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            const before = text.substring(0, start);
+            const after = text.substring(end);
+            
+            // 插入LaTeX代码
+            textarea.value = before + latex + after;
+            
+            // 移动光标到插入内容后
+            const newCursorPos = start + latex.length;
+            textarea.selectionStart = newCursorPos;
+            textarea.selectionEnd = newCursorPos;
+            textarea.focus();
+            
+            // 更新预览
+            updatePreview();
+        }
+        
+        // 加载相关问题
+        function loadRelatedQuestions() {
+            const relatedQuestions = document.getElementById('relatedQuestions');
+            
+            // 模拟相关问题数据
+            const questions = [
+                {
+                    id: 1,
+                    title: '如何证明函数f(x)=x³-3x在区间[-2,2]上的最大值和最小值？',
+                    topic: '函数与导数',
+                    time: '2小时前',
+                    excerpt: '已知函数f(x)=x³-3x，求f(x)在区间[-2,2]上的最大值和最小值。第一问已解决，第二问要求证明某个不等式...',
+                    answers: 12,
+                    views: 156
+                },
+                {
+                    id: 2,
+                    title: '椭圆与双曲线的综合题解法总结',
+                    topic: '解析几何',
+                    time: '1天前',
+                    excerpt: '整理了最近做过的10道椭圆与双曲线综合题，总结了几种常见的解题思路和技巧...',
+                    answers: 8,
+                    views: 203
+                },
+                {
+                    id: 3,
+                    title: '三角函数图像变换问题求解',
+                    topic: '三角函数',
+                    time: '3天前',
+                    excerpt: '已知函数y=2sin(2x+π/3)，求其图像经过怎样的变换可以得到y=sinx的图像？',
+                    answers: 15,
+                    views: 289
+                },
+                {
+                    id: 4,
+                    title: '概率统计中条件概率的应用',
+                    topic: '概率统计',
+                    time: '5天前',
+                    excerpt: '在条件概率问题中，如何正确理解P(A|B)与P(B|A)的区别？请举例说明...',
+                    answers: 21,
+                    views: 342
+                }
+            ];
+            
+            // 清空现有内容
+            relatedQuestions.innerHTML = '';
+            
+            // 添加相关问题
+            questions.forEach(question => {
+                const questionItem = document.createElement('div');
+                questionItem.className = 'question-item';
+                questionItem.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-topic">${question.topic}</div>
+                        <div class="question-time">${question.time}</div>
+                    </div>
+                    <h4 class="question-title">${question.title}</h4>
+                    <p class="question-excerpt">${question.excerpt}</p>
+                    <div class="question-meta">
+                        <div class="meta-item">
+                            <i class="far fa-comment"></i>
+                            <span>${question.answers} 个回答</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="far fa-eye"></i>
+                            <span>${question.views} 次浏览</span>
+                        </div>
+                    </div>
+                `;
+                
+                // 点击跳转到问题详情页
+                questionItem.addEventListener('click', () => {
+                    window.open(`https://mathverse.example.com/question/${question.id}`, '_blank');
+                });
+                
+                relatedQuestions.appendChild(questionItem);
+            });
+        }
+        
+        // 表单提交
+        document.getElementById('questionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const title = document.getElementById('questionTitle').value;
+            const topic = document.getElementById('questionTopic').value;
+            const content = document.getElementById('questionContent').value;
+            const urgency = document.getElementById('urgency').value;
+            
+            // 验证表单
+            if (!title.trim()) {
+                alert('请填写问题标题');
+                return;
+            }
+            
+            if (!topic) {
+                alert('请选择问题分类');
+                return;
+            }
+            
+            if (!content.trim()) {
+                alert('请填写问题描述');
+                return;
+            }
+            
+            // 获取文件列表
+            const fileItems = document.getElementById('file-list').children;
+            const fileCount = fileItems.length;
+            
+            // 显示提交成功消息
+            const urgencyText = {
+                'normal': '1-3天内',
+                'urgent': '24小时内',
+                'very-urgent': '12小时内'
+            }[urgency];
+            
+            alert(`问题提交成功！\n\n标题：${title}\n分类：${topic}\n附件：${fileCount} 个文件\n预计解答时间：${urgencyText}\n\n你的问题已提交到MathVerse社区，老师和同学们会尽快为你解答。`);
+            
+            // 重置表单
+            clearForm();
+            
+            // 重新加载相关问题
+            loadRelatedQuestions();
+        });
+        
+        // 清空表单
+        function clearForm() {
+            document.getElementById('questionForm').reset();
+            document.getElementById('file-list').innerHTML = '';
+            updatePreview();
+        }
+    </script>
+</body>
+</html>

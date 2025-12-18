@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学爱好者直播交流平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            padding: 20px 0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            background-color: white;
+            color: #4b6cb7;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo-text h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .logo-text p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: white;
+            color: #4b6cb7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+        
+        .live-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: #4b6cb7;
+        }
+        
+        .section-title h2 {
+            font-size: 22px;
+            color: #333;
+        }
+        
+        .live-video-container {
+            background-color: #222;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .live-indicator {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #ff4757;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 10;
+        }
+        
+        .video-placeholder {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .video-placeholder i {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+        
+        .video-placeholder h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .video-placeholder p {
+            opacity: 0.8;
+        }
+        
+        .video-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .control-btn {
+            background-color: #4b6cb7;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .control-btn:hover {
+            background-color: #3a5795;
+            transform: translateY(-2px);
+        }
+        
+        .control-btn.secondary {
+            background-color: #6c757d;
+        }
+        
+        .control-btn.secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .discussion-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+        
+        .chat-container {
+            height: 350px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+        
+        .chat-message {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .message-content {
+            background-color: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+            color: #4b6cb7;
+        }
+        
+        .message-time {
+            font-size: 12px;
+            color: #6c757d;
+        }
+        
+        .message-text {
+            line-height: 1.5;
+        }
+        
+        .own-message {
+            flex-direction: row-reverse;
+        }
+        
+        .own-message .message-avatar {
+            margin-right: 0;
+            margin-left: 12px;
+            background-color: #4b6cb7;
+            color: white;
+        }
+        
+        .own-message .message-content {
+            background-color: #e3f2fd;
+            text-align: right;
+        }
+        
+        .message-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .message-input input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .message-input button {
+            background-color: #4b6cb7;
+            color: white;
+            border: none;
+            width: 50px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+        
+        .message-input button:hover {
+            background-color: #3a5795;
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .users-section, .resources-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .users-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .user-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-item-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+        
+        .user-item-info h4 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+        
+        .user-item-info p {
+            font-size: 13px;
+            color: #6c757d;
+        }
+        
+        .user-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: auto;
+        }
+        
+        .online {
+            background-color: #28a745;
+        }
+        
+        .away {
+            background-color: #ffc107;
+        }
+        
+        .resources-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .resource-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .resource-item:hover {
+            background-color: #e9ecef;
+            transform: translateY(-3px);
+        }
+        
+        .resource-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: #4b6cb7;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+        
+        .resource-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .resource-info p {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .math-question {
+            background-color: #f0f7ff;
+            border-left: 4px solid #4b6cb7;
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .math-question h4 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #4b6cb7;
+        }
+        
+        .math-question h4 i {
+            margin-right: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .video-placeholder {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .video-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-square-root-alt"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>数学爱好者直播交流</h1>
+                        <p>讨论数学试题、分享学习经验、寻找学习小伙伴</p>
+                    </div>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        张
+                    </div>
+                    <div>
+                        <h3>张同学</h3>
+                        <p>在线</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="live-section">
+                <div class="section-title">
+                    <i class="fas fa-video"></i>
+                    <h2>高中数学专题：三角函数综合应用</h2>
+                </div>
+                
+                <div class="live-video-container">
+                    <div class="live-indicator">
+                        <i class="fas fa-circle"></i> 直播中
+                    </div>
+                    <div class="video-placeholder">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <h3>三角函数图像与性质专题讲解</h3>
+                        <p>主讲老师：李老师 | 在线人数：248人</p>
+                    </div>
+                </div>
+                
+                <div class="video-controls">
+                    <button class="control-btn" id="raiseHandBtn">
+                        <i class="fas fa-hand-paper"></i> 举手提问
+                    </button>
+                    <button class="control-btn secondary" id="toggleAudioBtn">
+                        <i class="fas fa-volume-up"></i> 开启音频
+                    </button>
+                    <button class="control-btn secondary" id="toggleVideoBtn">
+                        <i class="fas fa-video"></i> 开启视频
+                    </button>
+                    <button class="control-btn" id="shareScreenBtn">
+                        <i class="fas fa-desktop"></i> 共享屏幕
+                    </button>
+                </div>
+                
+                <div class="math-question">
+                    <h4><i class="fas fa-question-circle"></i> 当前讨论问题</h4>
+                    <p>已知函数 f(x) = 2sin(ωx + φ) (ω > 0, |φ| < π/2) 的部分图像如图所示，点A(π/6, 2)，点B(5π/12, 0) 是该图像上的两个相邻最高点和最低点。求函数 f(x) 的解析式。</p>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="users-section">
+                    <div class="section-title">
+                        <i class="fas fa-users"></i>
+                        <h2>在线成员 (148)</h2>
+                    </div>
+                    
+                    <div class="users-list" id="usersList">
+                        <!-- 用户列表将通过JS动态生成 -->
+                    </div>
+                </div>
+                
+                <div class="resources-section">
+                    <div class="section-title">
+                        <i class="fas fa-book"></i>
+                        <h2>学习资源</h2>
+                    </div>
+                    
+                    <div class="resources-list">
+                        <a href="三角函数与解三角形.html" class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h4>三角函数专题讲义</h4>
+                                <p>PDF文档 · 2.3MB</p>
+                            </div>
+                        </a>
+                        
+                        <a href="向量与立体几何.html" class="resource-item"  >
+                            <div class="resource-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h4>立体几何解题技巧</h4>
+                                <p>视频课程 · 45分钟</p>
+                            </div>
+                        </a>
+                        
+                        <a href="综合模拟与真题.html" class="resource-item">
+                            <div class="resource-icon">
+                                <i class="fas fa-list-alt"></i>
+                            </div>
+                            <div class="resource-info">
+                                <h4>高考数学真题集</h4>
+                                <p>习题集 · 2020-2025年</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="discussion-section">
+                <div class="section-title">
+                    <i class="fas fa-comments"></i>
+                    <h2>讨论区</h2>
+                </div>
+                
+                <div class="chat-container" id="chatContainer">
+                    <!-- 聊天消息将通过JS动态生成 -->
+                </div>
+                
+                <div class="message-input">
+                    <input type="text" id="messageInput" placeholder="输入消息... (支持LaTeX公式，如 $x^2 + y^2 = 1$)">
+                    <button id="sendMessageBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>数学爱好者直播交流平台 &copy; 2025 | 讨论数学试题、分享学习经验、寻找学习小伙伴</p>
+        </footer>
+    </div>
+
+    <script>
+        // 模拟在线用户数据
+        const onlineUsers = [
+            { name: "王老师", role: "教师", status: "online" },
+            { name: "李明", role: "学生", status: "online" },
+            { name: "陈同学", role: "学生", status: "online" },
+            { name: "刘老师", role: "教师", status: "away" },
+            { name: "张伟", role: "学生", status: "online" },
+            { name: "赵同学", role: "学生", status: "online" },
+            { name: "孙老师", role: "教师", status: "online" },
+            { name: "周同学", role: "学生", status: "away" }
+        ];
+        
+        // 模拟聊天消息数据
+        const chatMessages = [
+            { sender: "王老师", time: "10:05", text: "大家好，今天我们主要讲解三角函数的图像与性质应用。", isOwn: false },
+            { sender: "李明", time: "10:07", text: "老师，这道题中如何确定ω的值？", isOwn: false },
+            { sender: "张同学", time: "10:08", text: "我觉得可以根据周期T=2π/ω，从图中找出周期。", isOwn: true },
+            { sender: "王老师", time: "10:10", text: "张同学说得对，从A点到B点是半个周期，所以T/2 = 5π/12 - π/6 = π/4，因此T=π/2，ω=4。", isOwn: false },
+            { sender: "陈同学", time: "10:12", text: "那φ怎么求呢？", isOwn: false },
+            { sender: "王老师", time: "10:15", text: "将点A(π/6, 2)代入f(x)=2sin(4x+φ)，得到2=2sin(4×π/6+φ)，即sin(2π/3+φ)=1。", isOwn: false }
+        ];
+        
+        // 初始化用户列表
+        function initUsersList() {
+            const usersList = document.getElementById('usersList');
+            usersList.innerHTML = '';
+            
+            onlineUsers.forEach(user => {
+                const userItem = document.createElement('div');
+                userItem.className = 'user-item';
+                
+                // 生成用户头像字母
+                const avatarLetter = user.name.charAt(0);
+                
+                userItem.innerHTML = `
+                    <div class="user-item-avatar">${avatarLetter}</div>
+                    <div class="user-item-info">
+                        <h4>${user.name}</h4>
+                        <p>${user.role}</p>
+                    </div>
+                    <div class="user-status ${user.status}"></div>
+                `;
+                
+                usersList.appendChild(userItem);
+            });
+        }
+        
+        // 初始化聊天消息
+        function initChatMessages() {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.innerHTML = '';
+            
+            chatMessages.forEach(message => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `chat-message ${message.isOwn ? 'own-message' : ''}`;
+                
+                // 生成头像字母
+                const avatarLetter = message.sender.charAt(0);
+                
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">${avatarLetter}</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-sender">${message.sender}</span>
+                            <span class="message-time">${message.time}</span>
+                        </div>
+                        <div class="message-text">${message.text}</div>
+                    </div>
+                `;
+                
+                chatContainer.appendChild(messageDiv);
+            });
+            
+            // 滚动到底部
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // 发送新消息
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const messageText = messageInput.value.trim();
+            
+            if (messageText === '') return;
+            
+            // 获取当前时间
+            const now = new Date();
+            const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            
+            // 添加新消息到聊天区域
+            const chatContainer = document.getElementById('chatContainer');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message own-message';
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">张</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-sender">张同学</span>
+                        <span class="message-time">${timeString}</span>
+                    </div>
+                    <div class="message-text">${messageText}</div>
+                </div>
+            `;
+            
+            chatContainer.appendChild(messageDiv);
+            
+            // 清空输入框
+            messageInput.value = '';
+            
+            // 滚动到底部
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // 模拟其他用户回复（随机）
+            if (Math.random() > 0.5) {
+                setTimeout(() => {
+                    const randomUser = onlineUsers[Math.floor(Math.random() * onlineUsers.length)];
+                    const responses = [
+                        "我也有同样的疑问。",
+                        "这个问题可以用另一种方法解决。",
+                        "能再解释一下这个步骤吗？",
+                        "我明白了，谢谢！",
+                        "这个知识点在课本第几页？"
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    
+                    const responseDiv = document.createElement('div');
+                    responseDiv.className = 'chat-message';
+                    
+                    const responseTime = new Date();
+                    const responseTimeString = `${responseTime.getHours().toString().padStart(2, '0')}:${responseTime.getMinutes().toString().padStart(2, '0')}`;
+                    
+                    responseDiv.innerHTML = `
+                        <div class="message-avatar">${randomUser.name.charAt(0)}</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-sender">${randomUser.name}</span>
+                                <span class="message-time">${responseTimeString}</span>
+                            </div>
+                            <div class="message-text">${randomResponse}</div>
+                        </div>
+                    `;
+                    
+                    chatContainer.appendChild(responseDiv);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, 1000 + Math.random() * 2000);
+            }
+        }
+        
+        // 控制按钮功能
+        let audioEnabled = false;
+        let videoEnabled = false;
+        
+        document.getElementById('raiseHandBtn').addEventListener('click', function() {
+            alert('举手请求已发送，请等待老师允许发言。');
+        });
+        
+        document.getElementById('toggleAudioBtn').addEventListener('click', function() {
+            audioEnabled = !audioEnabled;
+            this.innerHTML = audioEnabled ? 
+                '<i class="fas fa-volume-mute"></i> 关闭音频' : 
+                '<i class="fas fa-volume-up"></i> 开启音频';
+            alert(audioEnabled ? '音频已开启' : '音频已关闭');
+        });
+        
+        document.getElementById('toggleVideoBtn').addEventListener('click', function() {
+            videoEnabled = !videoEnabled;
+            this.innerHTML = videoEnabled ? 
+                '<i class="fas fa-video-slash"></i> 关闭视频' : 
+                '<i class="fas fa-video"></i> 开启视频';
+            alert(videoEnabled ? '视频已开启' : '视频已关闭');
+        });
+        
+        document.getElementById('shareScreenBtn').addEventListener('click', function() {
+            alert('屏幕共享功能需要浏览器权限，请确认授权。');
+        });
+        
+        // 发送消息事件监听
+        document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            initUsersList();
+            initChatMessages();
+            
+            // 模拟用户状态变化
+            setInterval(() => {
+                // 随机改变一个用户的状态
+                const randomIndex = Math.floor(Math.random() * onlineUsers.length);
+                const currentStatus = onlineUsers[randomIndex].status;
+                onlineUsers[randomIndex].status = currentStatus === 'online' ? 'away' : 'online';
+                
+                // 更新用户列表显示
+                initUsersList();
+            }, 10000);
+        });
+    </script>
+</body>
+</html>

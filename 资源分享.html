@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中数学资源分享平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.2rem;
+            color: #4dabf7;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: #4dabf7;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: #4dabf7;
+        }
+        
+        nav a.active {
+            color: #4dabf7;
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #4dabf7;
+            border-radius: 2px;
+        }
+        
+        /* 主要内容区 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+        
+        .sidebar h3 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+            font-size: 1.4rem;
+        }
+        
+        .categories ul {
+            list-style: none;
+        }
+        
+        .categories li {
+            margin-bottom: 12px;
+        }
+        
+        .categories a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            color: #495057;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .categories a:hover {
+            background-color: #e9ecef;
+            color: #1e3c72;
+            transform: translateX(5px);
+        }
+        
+        .categories a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+            color: #1e3c72;
+        }
+        
+        .categories a.active {
+            background-color: #e7f5ff;
+            color: #1e3c72;
+            font-weight: 600;
+        }
+        
+        .upload-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 25px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(30, 60, 114, 0.2);
+        }
+        
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(30, 60, 114, 0.3);
+        }
+        
+        .upload-btn i {
+            margin-right: 8px;
+        }
+        
+        /* 资源展示区 */
+        .resources-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .section-header h2 {
+            color: #1e3c72;
+            font-size: 1.8rem;
+        }
+        
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 2px solid #e9ecef;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #4dabf7;
+            box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        /* 资源卡片 */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .resource-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e9ecef;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-header {
+            padding: 20px 20px 15px;
+            border-bottom: 1px solid #e9ecef;
+            background-color: #f8f9fa;
+        }
+        
+        .resource-type {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .pdf { background-color: #fff5f5; color: #e03131; }
+        .doc { background-color: #e7f5ff; color: #1971c2; }
+        .ppt { background-color: #fff4e6; color: #e8590c; }
+        .image { background-color: #f8f9fa; color: #495057; }
+        
+        .resource-card h4 {
+            font-size: 1.2rem;
+            color: #1e3c72;
+            margin-bottom: 8px;
+        }
+        
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .resource-body {
+            padding: 20px;
+        }
+        
+        .resource-desc {
+            color: #495057;
+            margin-bottom: 20px;
+            height: 60px;
+            overflow: hidden;
+        }
+        
+        .resource-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .download-btn, .preview-btn {
+            padding: 8px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .download-btn {
+            background-color: #1e3c72;
+            color: white;
+        }
+        
+        .download-btn:hover {
+            background-color: #2a5298;
+        }
+        
+        .preview-btn {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        
+        .preview-btn:hover {
+            background-color: #dee2e6;
+        }
+        
+        /* 上传模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            font-size: 1.5rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4dabf7;
+            box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .file-upload {
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-upload:hover {
+            border-color: #4dabf7;
+            background-color: #f8f9fa;
+        }
+        
+        .file-upload i {
+            font-size: 2.5rem;
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+        
+        .file-upload p {
+            color: #6c757d;
+        }
+        
+        .modal-footer {
+            padding: 20px 30px;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #1e3c72;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2a5298;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #495057;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #1e3c72;
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #4dabf7;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-square-root-alt"></i>
+                    <h1>高中数学<span>资源分享</span></h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">首页</a></li>
+                        <li><a href="#">笔记专区</a></li>
+                        <li><a href="#">错题集</a></li>
+                        <li><a href="#">备考资料</a></li>
+                        <li><a href="#">学习社区</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- 侧边栏 -->
+            <aside class="sidebar">
+                <div class="categories">
+                    <h3><i class="fas fa-th-list"></i> 资源分类</h3>
+                    <ul>
+                        <li><a href="#" class="active"><i class="fas fa-calculator"></i> 全部资源</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> 学习笔记</a></li>
+                        <li><a href="#"><i class="fas fa-times-circle"></i> 错题集锦</a></li>
+                        <li><a href="#"><i class="fas fa-chart-bar"></i> 历年真题</a></li>
+                        <li><a href="#"><i class="fas fa-lightbulb"></i> 解题技巧</a></li>
+                        <li><a href="#"><i class="fas fa-clipboard-list"></i> 模拟试卷</a></li>
+                        <li><a href="#"><i class="fas fa-video"></i> 视频讲解</a></li>
+                    </ul>
+                </div>
+                
+                <a href="#" class="upload-btn" id="openUploadModal">
+                    <i class="fas fa-cloud-upload-alt"></i> 上传资源
+                </a>
+                
+                <div class="stats" style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                    <h3><i class="fas fa-chart-line"></i> 平台统计</h3>
+                    <p style="margin-top: 15px; color: #6c757d;">
+                        <i class="fas fa-file-alt" style="margin-right: 8px;"></i> 资源总数: 1,248个<br>
+                        <i class="fas fa-users" style="margin-right: 8px;"></i> 用户分享: 562人<br>
+                        <i class="fas fa-download" style="margin-right: 8px;"></i> 总下载量: 12,847次
+                    </p>
+                </div>
+            </aside>
+
+            <!-- 资源展示区 -->
+            <main class="resources-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-book-open"></i> 最新学习资源</h2>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="搜索资源...">
+                    </div>
+                </div>
+                
+                <div class="resources-grid" id="resourcesContainer">
+                    <!-- 资源卡片将通过JavaScript动态生成 -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 上传资源模态框 -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-cloud-upload-alt"></i> 上传学习资源</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="uploadForm">
+                    <div class="form-group">
+                        <label for="resourceTitle">资源标题</label>
+                        <input type="text" id="resourceTitle" placeholder="例如：高中数学函数专题笔记" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="resourceType">资源类型</label>
+                        <select id="resourceType" required>
+                            <option value="">请选择资源类型</option>
+                            <option value="pdf">PDF文档</option>
+                            <option value="doc">Word文档</option>
+                            <option value="ppt">PPT演示文稿</option>
+                            <option value="image">图片/扫描件</option>
+                            <option value="video">视频讲解</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="resourceCategory">所属分类</label>
+                        <select id="resourceCategory" required>
+                            <option value="">请选择分类</option>
+                            <option value="函数">函数</option>
+                            <option value="几何">几何</option>
+                            <option value="概率统计">概率统计</option>
+                            <option value="数列">数列</option>
+                            <option value="导数">导数</option>
+                            <option value="三角函数">三角函数</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="resourceDesc">资源描述</label>
+                        <textarea id="resourceDesc" placeholder="请简要描述资源内容、适用年级和特点..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>上传文件</label>
+                        <div class="file-upload" id="fileUploadArea">
+                            <i class="fas fa-file-upload"></i>
+                            <p>点击选择文件或拖放文件到此区域</p>
+                            <p style="font-size: 0.9rem; margin-top: 10px;">支持格式：PDF, DOC, PPT, JPG, PNG (最大50MB)</p>
+                        </div>
+                        <input type="file" id="fileInput" style="display: none;">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelUpload">取消</button>
+                <button type="button" class="btn btn-primary" id="submitUpload">上传资源</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+               
+               
+                
+               
+            </div>
+            <div class="copyright">
+                <p>© 2025 高中数学资源分享平台 | 本网站资源仅供学习交流使用</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 模拟资源数据
+        const resources = [
+            {
+                id: 1,
+                title: "函数与导数专题笔记",
+                type: "pdf",
+                category: "函数",
+                description: "包含函数基本性质、导数定义与应用、典型例题解析，适合高三复习使用。",
+                uploader: "张老师",
+                uploadTime: "2025-10-15",
+                downloads: 342,
+                size: "2.4MB"
+            },
+            {
+                id: 2,
+                title: "立体几何解题技巧大全",
+                type: "doc",
+                category: "几何",
+                description: "详细解析立体几何常见题型，包含空间向量法、三视图还原等解题方法。",
+                uploader: "李同学",
+                uploadTime: "2025-10-12",
+                downloads: 215,
+                size: "1.8MB"
+            },
+            {
+                id: 3,
+                title: "概率统计高考真题集",
+                type: "pdf",
+                category: "概率统计",
+                description: "近五年高考概率统计真题汇编，附详细答案和解题思路分析。",
+                uploader: "王老师",
+                uploadTime: "2025-10-10",
+                downloads: 187,
+                size: "3.2MB"
+            },
+            {
+                id: 4,
+                title: "三角函数公式记忆图",
+                type: "image",
+                category: "三角函数",
+                description: "将三角函数公式整理成思维导图，方便记忆与复习，彩色打印效果更佳。",
+                uploader: "陈同学",
+                uploadTime: "2025-10-08",
+                downloads: 298,
+                size: "1.1MB"
+            },
+            {
+                id: 5,
+                title: "数列求和方法总结PPT",
+                type: "ppt",
+                category: "数列",
+                description: "等差数列、等比数列及常见数列求和方法总结，适合课堂讲解或自学使用。",
+                uploader: "刘老师",
+                uploadTime: "2025-10-05",
+                downloads: 156,
+                size: "4.5MB"
+            },
+            {
+                id: 6,
+                title: "解析几何常见题型错题集",
+                type: "pdf",
+                category: "几何",
+                description: "收集解析几何易错题型，包含错误分析和正确解法对比。",
+                uploader: "赵同学",
+                uploadTime: "2025-10-03",
+                downloads: 231,
+                size: "2.7MB"
+            }
+        ];
+
+        // 获取DOM元素
+        const resourcesContainer = document.getElementById('resourcesContainer');
+        const searchInput = document.getElementById('searchInput');
+        const uploadModal = document.getElementById('uploadModal');
+        const openUploadModalBtn = document.getElementById('openUploadModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const cancelUploadBtn = document.getElementById('cancelUpload');
+        const submitUploadBtn = document.getElementById('submitUpload');
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const uploadForm = document.getElementById('uploadForm');
+
+        // 初始化资源显示
+        function renderResources(resourcesArray) {
+            resourcesContainer.innerHTML = '';
+            
+            resourcesArray.forEach(resource => {
+                const typeClass = resource.type === 'pdf' ? 'pdf' : 
+                                resource.type === 'doc' ? 'doc' : 
+                                resource.type === 'ppt' ? 'ppt' : 'image';
+                
+                const typeText = resource.type === 'pdf' ? 'PDF文档' : 
+                               resource.type === 'doc' ? 'Word文档' : 
+                               resource.type === 'ppt' ? 'PPT演示' : '图片文件';
+                
+                const resourceCard = document.createElement('div');
+                resourceCard.className = 'resource-card';
+                resourceCard.innerHTML = `
+                    <div class="resource-header">
+                        <span class="resource-type ${typeClass}">${typeText}</span>
+                        <h4>${resource.title}</h4>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-folder"></i> ${resource.category}</span>
+                            <span><i class="fas fa-user"></i> ${resource.uploader}</span>
+                        </div>
+                    </div>
+                    <div class="resource-body">
+                        <p class="resource-desc">${resource.description}</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-calendar-alt"></i> ${resource.uploadTime}</span>
+                            <span><i class="fas fa-download"></i> ${resource.downloads}次下载</span>
+                            <span><i class="fas fa-weight"></i> ${resource.size}</span>
+                        </div>
+                    </div>
+                    <div class="resource-footer">
+                        <a href="#" class="preview-btn" data-id="${resource.id}">
+                            <i class="fas fa-eye"></i> 预览
+                        </a>
+                        <a href="#" class="download-btn" data-id="${resource.id}">
+                            <i class="fas fa-download"></i> 下载
+                        </a>
+                    </div>
+                `;
+                
+                resourcesContainer.appendChild(resourceCard);
+            });
+            
+            // 添加下载按钮事件
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const resourceId = this.getAttribute('data-id');
+                    const resource = resources.find(r => r.id == resourceId);
+                    alert(`开始下载：${resource.title}\n\n感谢您使用高中数学资源分享平台！`);
+                    
+                    // 更新下载次数
+                    resource.downloads++;
+                    renderResources(resources);
+                });
+            });
+            
+            // 添加预览按钮事件
+            document.querySelectorAll('.preview-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const resourceId = this.getAttribute('data-id');
+                    const resource = resources.find(r => r.id == resourceId);
+                    alert(`预览：${resource.title}\n\n预览功能需要安装相应阅读器，建议先下载后查看。`);
+                });
+            });
+        }
+
+        // 初始化显示所有资源
+        renderResources(resources);
+
+        // 搜索功能
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                renderResources(resources);
+                return;
+            }
+            
+            const filteredResources = resources.filter(resource => {
+                return resource.title.toLowerCase().includes(searchTerm) ||
+                       resource.description.toLowerCase().includes(searchTerm) ||
+                       resource.category.toLowerCase().includes(searchTerm) ||
+                       resource.uploader.toLowerCase().includes(searchTerm);
+            });
+            
+            renderResources(filteredResources);
+        });
+
+        // 上传功能
+        openUploadModalBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            uploadModal.style.display = 'flex';
+        });
+
+        closeModalBtn.addEventListener('click', function() {
+            uploadModal.style.display = 'none';
+            uploadForm.reset();
+        });
+
+        cancelUploadBtn.addEventListener('click', function() {
+            uploadModal.style.display = 'none';
+            uploadForm.reset();
+        });
+
+        // 点击上传区域触发文件选择
+        fileUploadArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        // 拖放文件上传
+        fileUploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#4dabf7';
+            this.style.backgroundColor = '#f8f9fa';
+        });
+
+        fileUploadArea.addEventListener('dragleave', function() {
+            this.style.borderColor = '#dee2e6';
+            this.style.backgroundColor = 'transparent';
+        });
+
+        fileUploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#dee2e6';
+            this.style.backgroundColor = 'transparent';
+            
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                alert(`已选择文件：${e.dataTransfer.files[0].name}`);
+            }
+        });
+
+        // 提交上传表单
+        submitUploadBtn.addEventListener('click', function() {
+            const title = document.getElementById('resourceTitle').value;
+            const type = document.getElementById('resourceType').value;
+            const category = document.getElementById('resourceCategory').value;
+            const desc = document.getElementById('resourceDesc').value;
+            
+            if (!title || !type || !category || !desc) {
+                alert('请填写所有必填字段！');
+                return;
+            }
+            
+            if (!fileInput.files.length) {
+                alert('请选择要上传的文件！');
+                return;
+            }
+            
+            // 模拟添加上传的资源
+            const newResource = {
+                id: resources.length + 1,
+                title: title,
+                type: type,
+                category: category,
+                description: desc,
+                uploader: "我",
+                uploadTime: new Date().toISOString().split('T')[0],
+                downloads: 0,
+                size: "待计算"
+            };
+            
+            resources.unshift(newResource);
+            renderResources(resources);
+            
+            alert('资源上传成功！感谢您的分享！');
+            uploadModal.style.display = 'none';
+            uploadForm.reset();
+        });
+
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(e) {
+            if (e.target === uploadModal) {
+                uploadModal.style.display = 'none';
+                uploadForm.reset();
+            }
+        });
+
+        // 侧边栏分类筛选
+        document.querySelectorAll('.categories a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // 更新活动状态
+                document.querySelectorAll('.categories a').forEach(a => {
+                    a.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const category = this.textContent.replace(/.*\s/, '').trim();
+                
+                if (category === '全部资源') {
+                    renderResources(resources);
+                    document.querySelector('.section-header h2').innerHTML = '<i class="fas fa-book-open"></i> 最新学习资源';
+                    return;
+                }
+                
+                const filteredResources = resources.filter(resource => {
+                    if (category === '学习笔记') return resource.type === 'pdf' || resource.type === 'doc';
+                    if (category === '错题集锦') return resource.title.includes('错题');
+                    if (category === '历年真题') return resource.title.includes('真题') || resource.title.includes('高考');
+                    if (category === '解题技巧') return resource.description.includes('技巧') || resource.description.includes('方法');
+                    return resource.category === category;
+                });
+                
+                renderResources(filteredResources);
+                document.querySelector('.section-header h2').innerHTML = `<i class="fas fa-book-open"></i> ${category}资源`;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中数学名师答疑平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+         .center-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+            color: #f1c40f;
+        }
+        
+        .logo h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: #f1c40f;
+        }
+        
+        .live-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 30px;
+        }
+        
+        .live-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        /* 主要内容布局 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 直播区域 */
+        .live-section {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .video-container {
+            position: relative;
+            background-color: #1a1a1a;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .video-placeholder {
+            text-align: center;
+            color: white;
+        }
+        
+        .video-placeholder i {
+            font-size: 5rem;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        
+        .video-placeholder h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #f1c40f;
+        }
+        
+        .video-placeholder p {
+            color: #bdc3c7;
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+        
+        .teacher-info {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .teacher-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .teacher-details h3 {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .teacher-details p {
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .teacher-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .teacher-tag {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        /* 提问区域 */
+        .question-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .question-header h2 {
+            color: #2c3e50;
+            font-size: 1.6rem;
+        }
+        
+        .question-count {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .question-form {
+            margin-bottom: 30px;
+        }
+        
+        .question-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 120px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+        
+        .question-form textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .question-form textarea::placeholder {
+            color: #95a5a6;
+        }
+        
+        .question-submit {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(to right, #2980b9, #1c6ea4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+        }
+        
+        .question-type {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .type-btn {
+            padding: 8px 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .type-btn.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        /* 问答列表 */
+        .questions-list {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .question-item {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .question-item.answered {
+            border-left-color: #2ecc71;
+        }
+        
+        .question-header-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .question-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .question-time {
+            color: #95a5a6;
+            font-size: 0.85rem;
+        }
+        
+        .question-content {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .question-answer {
+            background-color: #e8f5e9;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            color: #2c3e50;
+            border-left: 3px solid #2ecc71;
+        }
+        
+        .answer-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+            color: #27ae60;
+            font-weight: 600;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        /* 聊天区域 */
+        .chat-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+        }
+        
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .chat-header h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+        }
+        
+        .online-count {
+            background-color: #e8f5e9;
+            color: #27ae60;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            padding-right: 10px;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            max-width: 85%;
+        }
+        
+        .message.teacher {
+            background-color: #e3f2fd;
+            align-self: flex-start;
+            margin-right: auto;
+        }
+        
+        .message.user {
+            background-color: #f1f8e9;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+        }
+        
+        .message-sender {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .message-time {
+            color: #95a5a6;
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .chat-input input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .chat-input button {
+            padding: 12px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .chat-input button:hover {
+            background-color: #2980b9;
+        }
+        
+        /* 课程安排 */
+        .schedule-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .schedule-header h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+        }
+        
+        .schedule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .schedule-item.live {
+            border-left-color: #e74c3c;
+        }
+        
+        .schedule-time {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-right: 15px;
+            margin-right: 15px;
+            border-right: 1px solid #dee2e6;
+            min-width: 70px;
+        }
+        
+        .schedule-day {
+            font-weight: 600;
+            color: #3498db;
+            font-size: 1.1rem;
+        }
+        
+        .schedule-hour {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .schedule-details h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .schedule-details p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .live-badge {
+            background-color: #e74c3c;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px 0 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #f1c40f;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        
+        /* 工具按钮 */
+        .tool-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .tool-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+        }
+        
+        .tool-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-btn i {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .video-container {
+                height: 350px;
+            }
+            
+            .teacher-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .teacher-avatar {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .tool-buttons {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h1>高中数学<span>名师答疑</span></h1>
+                </div>
+                <div class="live-status">
+                    <div class="live-dot"></div>
+                    <span>直播答疑进行中</span>
+                    <span id="currentTime">--:--</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 工具按钮 -->
+        <div class="tool-buttons">
+            <div class="tool-btn" id="whiteboardBtn">
+                <i class="fas fa-chalkboard"></i>
+                <span>共享白板</span>
+            </div>
+            <div class="tool-btn" id="screenShareBtn">
+                <i class="fas fa-desktop"></i>
+                <span>屏幕共享</span>
+            </div>
+            <div class="tool-btn" id="recordBtn">
+                <i class="fas fa-video"></i>
+                <span>录制课程</span>
+            </div>
+            <div class="tool-btn" id="resourcesBtn">
+                <i class="fas fa-file-alt"></i>
+                <span>课堂资料</span>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- 左侧主区域 -->
+            <div class="left-column">
+                <!-- 直播区域 -->
+                <section class="live-section">
+                    <div class="video-container">
+                        <div class="video-placeholder">
+                            <i class="fas fa-video"></i>
+                            <h3>函数与导数专题答疑</h3>
+                            <p>直播进行中：张老师正在讲解函数极值点的判定方法，欢迎同学们提问互动</p>
+                            <div style="margin-top: 20px;">
+                                <button class="btn btn-primary" id="joinLive">
+                                    <i class="fas fa-play-circle"></i> 进入直播
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="teacher-info">
+                        <div class="teacher-avatar">张</div>
+                        <div class="teacher-details">
+                            <h3>张明老师</h3>
+                            <p>高级数学教师 | 15年教学经验 | 省级特级教师</p>
+                            <p><i class="fas fa-graduation-cap"></i> 擅长：函数、导数、解析几何</p>
+                            <div class="teacher-tags">
+                                <span class="teacher-tag">耐心细致</span>
+                                <span class="teacher-tag">解题思路清晰</span>
+                                <span class="teacher-tag">课堂互动活跃</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 提问区域 -->
+                <section class="question-section">
+                    <div class="question-header">
+                        <h2><i class="fas fa-question-circle"></i> 我要提问</h2>
+                        <div class="question-count">已有 <span id="questionNum">12</span> 个问题</div>
+                    </div>
+                    
+                    <div class="question-form">
+                        <textarea id="questionInput" placeholder="请输入您的数学问题，例如：如何判断函数的极值点？"></textarea>
+                        <div class="question-submit">
+                            <div class="question-type">
+                                <div class="type-btn active" data-type="general">一般问题</div>
+                                <div class="type-btn" data-type="urgent">紧急问题</div>
+                                <div class="type-btn" data-type="private">私密提问</div>
+                            </div>
+                            <button class="btn btn-primary" id="submitQuestion">
+                                <i class="fas fa-paper-plane"></i> 提交问题
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="questions-list" id="questionsList">
+                        <!-- 问题列表将通过JavaScript动态生成 -->
+                    </div>
+                </section>
+            </div>
+            
+            <!-- 右侧侧边栏 -->
+            <div class="sidebar">
+                <!-- 聊天区域 -->
+                <section class="chat-section">
+                    <div class="chat-header">
+                        <h3><i class="fas fa-comments"></i> 课堂聊天</h3>
+                        <div class="online-count"><i class="fas fa-user"></i> <span id="onlineCount">86</span> 人在线</div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- 聊天消息将通过JavaScript动态生成 -->
+                    </div>
+                    
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" placeholder="输入消息...">
+                        <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </section>
+                
+                <!-- 课程安排 -->
+                <section class="schedule-section">
+                    <div class="schedule-header">
+                        <h3><i class="fas fa-calendar-alt"></i> 本周答疑安排</h3>
+                        <button class="btn btn-secondary">查看全部</button>
+                    </div>
+                    
+                    <div class="schedule-list">
+                        <div class="schedule-item live">
+                            <div class="schedule-time">
+                                <div class="schedule-day">今天</div>
+                                <div class="schedule-hour">19:00-21:00</div>
+                            </div>
+                            <div class="schedule-details">
+                                <h4>函数与导数专题 <span class="live-badge">直播中</span></h4>
+                                <p>张明老师 | 高三重点难点突破</p>
+                            </div>
+                        </div>
+                        
+                        <div class="schedule-item">
+                            <div class="schedule-time">
+                                <div class="schedule-day">周三</div>
+                                <div class="schedule-hour">19:00-20:30</div>
+                            </div>
+                            <div class="schedule-details">
+                                <h4>立体几何解题技巧</h4>
+                                <p>李华老师 | 空间向量法专题</p>
+                            </div>
+                        </div>
+                        
+                        <div class="schedule-item">
+                            <div class="schedule-time">
+                                <div class="schedule-day">周五</div>
+                                <div class="schedule-hour">18:30-20:00</div>
+                            </div>
+                            <div class="schedule-details">
+                                <h4>概率统计真题解析</h4>
+                                <p>王芳老师 | 高考真题精讲</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+               
+              
+               
+              
+            </div>
+            <div class="copyright">
+                <p>© 2025 高中数学名师答疑平台 | 直播内容仅供学习交流使用</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 模拟数据
+        const questions = [
+            {
+                id: 1,
+                user: "李明",
+                content: "老师您好，请问如何判断一个函数是否有极值点？",
+                time: "19:15",
+                answered: true,
+                answer: "判断函数极值点需要考察一阶导数为零的点，并通过二阶导数符号或函数单调性变化来判断。对于可导函数，首先求导并令导数为零，然后检查这些点两侧导数的符号变化。"
+            },
+            {
+                id: 2,
+                user: "王芳",
+                content: "导数的几何意义是什么？在解题中如何应用？",
+                time: "19:22",
+                answered: true,
+                answer: "导数的几何意义是函数曲线在某一点切线的斜率。在解题中，可以利用导数求切线方程、判断函数单调性、求极值和最值等。"
+            },
+            {
+                id: 3,
+                user: "张强",
+                content: "复合函数求导有什么技巧吗？我总是容易出错。",
+                time: "19:30",
+                answered: true,
+                answer: "复合函数求导的关键是链式法则：先对最外层函数求导，再乘以内层函数的导数。建议从外到内逐层分解，逐步求导，避免遗漏。"
+            },
+            {
+                id: 4,
+                user: "赵雨",
+                content: "如何利用导数证明不等式？",
+                time: "19:38",
+                answered: false,
+                answer: ""
+            },
+            {
+                id: 5,
+                user: "刘星",
+                content: "函数的凹凸性怎么判断？有什么实际意义？",
+                time: "19:45",
+                answered: false,
+                answer: ""
+            }
+        ];
+
+        const chatMessages = [
+            {
+                sender: "张老师",
+                content: "欢迎大家参加今晚的函数与导数专题答疑！",
+                time: "19:00",
+                type: "teacher"
+            },
+            {
+                sender: "张老师",
+                content: "今天我们重点讲解极值点的判定方法和应用。",
+                time: "19:05",
+                type: "teacher"
+            },
+            {
+                sender: "李明",
+                content: "老师好！我已经准备好了。",
+                time: "19:06",
+                type: "user"
+            },
+            {
+                sender: "王芳",
+                content: "今晚的内容对我复习很有帮助，谢谢老师！",
+                time: "19:08",
+                type: "user"
+            },
+            {
+                sender: "张老师",
+                content: "不客气，大家有问题随时在聊天区或提问区提出。",
+                time: "19:10",
+                type: "teacher"
+            },
+            {
+                sender: "张强",
+                content: "老师，导数的定义式需要记忆吗？",
+                time: "19:12",
+                type: "user"
+            },
+            {
+                sender: "张老师",
+                content: "导数的定义式非常重要，不仅是记忆，更要理解其几何意义。",
+                time: "19:13",
+                type: "teacher"
+            }
+        ];
+
+        // 获取DOM元素
+        const questionsList = document.getElementById('questionsList');
+        const chatMessagesContainer = document.getElementById('chatMessages');
+        const questionInput = document.getElementById('questionInput');
+        const submitQuestionBtn = document.getElementById('submitQuestion');
+        const chatInput = document.getElementById('chatInput');
+        const sendMessageBtn = document.getElementById('sendMessage');
+        const questionNum = document.getElementById('questionNum');
+        const onlineCount = document.getElementById('onlineCount');
+        const currentTime = document.getElementById('currentTime');
+        const joinLiveBtn = document.getElementById('joinLive');
+        const typeButtons = document.querySelectorAll('.type-btn');
+        const toolButtons = document.querySelectorAll('.tool-btn');
+
+        // 初始化当前时间
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            currentTime.textContent = `${hours}:${minutes}`;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 60000); // 每分钟更新一次时间
+
+        // 初始化问题列表
+        function renderQuestions() {
+            questionsList.innerHTML = '';
+            questionNum.textContent = questions.length;
+            
+            questions.forEach(question => {
+                const questionItem = document.createElement('div');
+                questionItem.className = `question-item ${question.answered ? 'answered' : ''}`;
+                
+                questionItem.innerHTML = `
+                    <div class="question-header-row">
+                        <div class="question-user">
+                            <div class="user-avatar">${question.user.charAt(0)}</div>
+                            <div>
+                                <div style="font-weight: 600;">${question.user}</div>
+                                <div class="question-time">${question.time}</div>
+                            </div>
+                        </div>
+                        <div>
+                            ${question.answered ? 
+                                '<span style="color:#27ae60; font-size:0.9rem;"><i class="fas fa-check-circle"></i> 已解答</span>' : 
+                                '<span style="color:#e74c3c; font-size:0.9rem;"><i class="fas fa-clock"></i> 待解答</span>'}
+                        </div>
+                    </div>
+                    <div class="question-content">
+                        ${question.content}
+                    </div>
+                    ${question.answered ? 
+                        `<div class="question-answer">
+                            <div class="answer-header">
+                                <i class="fas fa-reply"></i> 张老师回复：
+                            </div>
+                            ${question.answer}
+                        </div>` : ''}
+                `;
+                
+                questionsList.appendChild(questionItem);
+            });
+        }
+
+        // 初始化聊天消息
+        function renderChatMessages() {
+            chatMessagesContainer.innerHTML = '';
+            
+            chatMessages.forEach(message => {
+                const messageElement = document.createElement('div');
+                messageElement.className = `message ${message.type}`;
+                
+                messageElement.innerHTML = `
+                    <div class="message-header">
+                        <span class="message-sender">${message.sender}</span>
+                        <span class="message-time">${message.time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                
+                chatMessagesContainer.appendChild(messageElement);
+            });
+            
+            // 滚动到底部
+            chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+        }
+
+        // 初始化
+        renderQuestions();
+        renderChatMessages();
+
+        // 模拟在线人数变化
+        function updateOnlineCount() {
+            const baseCount = 86;
+            const randomChange = Math.floor(Math.random() * 5) - 2; // -2到2的随机变化
+            onlineCount.textContent = baseCount + randomChange;
+        }
+        
+        setInterval(updateOnlineCount, 10000); // 每10秒更新一次在线人数
+
+        // 提交问题
+        submitQuestionBtn.addEventListener('click', function() {
+            const content = questionInput.value.trim();
+            
+            if (!content) {
+                alert('请输入问题内容！');
+                return;
+            }
+            
+            const activeType = document.querySelector('.type-btn.active').getAttribute('data-type');
+            const typePrefix = activeType === 'urgent' ? '[紧急] ' : activeType === 'private' ? '[私密] ' : '';
+            
+            const now = new Date();
+            const time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            
+            // 添加新问题
+            questions.unshift({
+                id: questions.length + 1,
+                user: "我",
+                content: typePrefix + content,
+                time: time,
+                answered: false,
+                answer: ""
+            });
+            
+            renderQuestions();
+            questionInput.value = '';
+            
+            // 显示提交成功消息
+            alert('问题提交成功！老师会在直播中解答。');
+            
+            // 如果是紧急问题，模拟老师快速回复
+            if (activeType === 'urgent') {
+                setTimeout(() => {
+                    // 自动添加一个模拟回答
+                    const newQuestion = questions.find(q => q.id === questions.length);
+                    if (newQuestion && !newQuestion.answered) {
+                        newQuestion.answered = true;
+                        newQuestion.answer = "这是一个紧急问题，老师会优先解答。关于" + content.substring(0, 20) + "...，一般来说...";
+                        renderQuestions();
+                        
+                        // 在聊天区也添加一条消息
+                        chatMessages.push({
+                            sender: "张老师",
+                            content: `已收到紧急问题，稍后会详细解答。`,
+                            time: `${now.getHours().toString().padStart(2, '0')}:${(now.getMinutes() + 1).toString().padStart(2, '0')}`,
+                            type: "teacher"
+                        });
+                        renderChatMessages();
+                    }
+                }, 2000);
+            }
+        });
+
+        // 发送聊天消息
+        function sendMessage() {
+            const content = chatInput.value.trim();
+            
+            if (!content) {
+                return;
+            }
+            
+            const now = new Date();
+            const time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            
+            // 添加用户消息
+            chatMessages.push({
+                sender: "我",
+                content: content,
+                time: time,
+                type: "user"
+            });
+            
+            renderChatMessages();
+            chatInput.value = '';
+            
+            // 模拟老师回复（如果消息包含特定关键词）
+            setTimeout(() => {
+                let reply = "";
+                const lowerContent = content.toLowerCase();
+                
+                if (lowerContent.includes('导数') || lowerContent.includes('求导')) {
+                    reply = "关于导数的问题，关键是要理解导数的定义和几何意义。";
+                } else if (lowerContent.includes('函数') || lowerContent.includes('极值')) {
+                    reply = "函数极值问题需要结合导数和函数单调性来分析。";
+                } else if (lowerContent.includes('谢谢') || lowerContent.includes('感谢')) {
+                    reply = "不客气，有问题随时提出！";
+                } else {
+                    // 随机回复
+                    const replies = [
+                        "这个问题问得很好，我们会在直播中详细讲解。",
+                        "感谢你的提问，可以具体说明一下你的疑惑点吗？",
+                        "关于这个问题，我建议你先思考函数的定义域和单调性。",
+                        "这个问题涉及的内容较多，我们稍后会进行专题讲解。"
+                    ];
+                    reply = replies[Math.floor(Math.random() * replies.length)];
+                }
+                
+                chatMessages.push({
+                    sender: "张老师",
+                    content: reply,
+                    time: `${now.getHours().toString().padStart(2, '0')}:${(now.getMinutes() + 1).toString().padStart(2, '0')}`,
+                    type: "teacher"
+                });
+                
+                renderChatMessages();
+            }, 1500);
+        }
+
+        // 发送消息事件
+        sendMessageBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // 问题类型选择
+        typeButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                typeButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // 工具按钮功能
+        toolButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const btnId = this.id;
+                let message = "";
+                
+                switch(btnId) {
+                    case 'whiteboardBtn':
+                        message = "共享白板已启动，老师和学生可以共同书写和绘图。";
+                        break;
+                    case 'screenShareBtn':
+                        message = "屏幕共享功能已开启，老师可以共享课件和解题过程。";
+                        break;
+                    case 'recordBtn':
+                        message = "课程录制已开始，直播结束后可在回放区观看。";
+                        break;
+                    case 'resourcesBtn':
+                        message = "课堂资料已更新，包含函数与导数专题的练习题和笔记。";
+                        break;
+                }
+                
+                alert(message);
+            });
+        });
+
+        // 进入直播按钮
+        joinLiveBtn.addEventListener('click', function() {
+            const videoPlaceholder = document.querySelector('.video-placeholder');
+            videoPlaceholder.innerHTML = `
+                <div style="color: #f1c40f; font-size: 1.5rem; margin-bottom: 15px;">
+                    <i class="fas fa-spinner fa-spin"></i> 正在连接直播...
+                </div>
+                <p>直播连接中，请稍候...</p>
+            `;
+            
+            setTimeout(() => {
+                videoPlaceholder.innerHTML = `
+                    <div style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="background-color: #2c3e50; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h3 style="color: #f1c40f; margin-bottom: 10px;">函数极值点判定方法</h3>
+                            <p style="color: #ecf0f1;">1. 求函数的一阶导数 f'(x)</p>
+                            <p style="color: #ecf0f1;">2. 令 f'(x)=0，解出驻点</p>
+                            <p style="color: #ecf0f1;">3. 检查驻点左右两侧 f'(x) 的符号</p>
+                            <p style="color: #ecf0f1;">4. 左正右负为极大值，左负右正为极小值</p>
+                        </div>
+                        <div style="display: flex; gap: 15px;">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-volume-up"></i> 音频设置
+                            </button>
+                            <button class="btn btn-secondary" id="exitLive">
+                                退出直播
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // 添加退出直播功能
+                document.getElementById('exitLive').addEventListener('click', function() {
+                    location.reload();
+                });
+            }, 2000);
+        });
+
+        // 模拟新消息和问题
+        setInterval(() => {
+            // 偶尔添加新问题
+            if (Math.random() > 0.7) {
+                const users = ["陈华", "刘涛", "周敏", "吴刚", "郑雪"];
+                const topics = [
+                    "如何求复合函数的导数？",
+                    "函数的凹凸性有什么应用？",
+                    "导数在物理问题中如何应用？",
+                    "极值点与最值点有什么区别？",
+                    "拉格朗日中值定理如何理解？"
+                ];
+                
+                const now = new Date();
+                const time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                questions.push({
+                    id: questions.length + 1,
+                    user: users[Math.floor(Math.random() * users.length)],
+                    content: topics[Math.floor(Math.random() * topics.length)],
+                    time: time,
+                    answered: false,
+                    answer: ""
+                });
+                
+                renderQuestions();
+            }
+        }, 15000); // 每15秒可能添加一个新问题
+    </script>
+</body>
+</html>

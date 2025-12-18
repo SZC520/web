@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathVerse | 数学学习经验分享</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            margin-right: 12px;
+            font-size: 2rem;
+            color: #fbbf24;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 25px;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 主要内容区域 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        /* 页面标题区域 */
+        .page-header {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            border-radius: 15px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+        
+        .page-title {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 20px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 分享表单区域 */
+        .share-form-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        @media (max-width: 992px) {
+            .share-form-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-container, .featured-experience {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #10b981;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: #10b981;
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+        
+        .required::after {
+            content: ' *';
+            color: #ef4444;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            border-color: #10b981;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 180px;
+            resize: vertical;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        /* 标签选择 */
+        .tags-container {
+            margin-bottom: 15px;
+        }
+        
+        .tags-title {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        
+        .tags-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag-item {
+            padding: 6px 12px;
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .tag-item:hover {
+            background-color: #e2e8f0;
+        }
+        
+        .tag-item.selected {
+            background-color: #d1fae5;
+            color: #065f46;
+            border-color: #10b981;
+        }
+        
+        .tag-item.selected i {
+            color: #10b981;
+        }
+        
+        /* 文件上传区域 */
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+        
+        .upload-area:hover {
+            border-color: #10b981;
+            background-color: #f0fdf4;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        
+        .upload-note {
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+        
+        #file-list {
+            margin-top: 15px;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f8fafc;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        
+        .file-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .remove-file {
+            color: #ef4444;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #475569;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #cbd5e1;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        /* 精选经验区域 */
+        .featured-content {
+            padding: 20px;
+            background-color: #f8fafc;
+            border-radius: 10px;
+            min-height: 200px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .featured-title {
+            font-size: 1.3rem;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        
+        .featured-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .author-info h4 {
+            color: #1e293b;
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+        
+        .author-info p {
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+        
+        .featured-excerpt {
+            line-height: 1.7;
+            color: #475569;
+            margin-bottom: 20px;
+        }
+        
+        .featured-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .featured-tag {
+            background-color: #d1fae5;
+            color: #065f46;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .featured-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* 经验分享列表 */
+        .experiences-section {
+            margin-bottom: 50px;
+        }
+        
+        .experiences-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+        
+        .filter-title {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-tag {
+            padding: 6px 15px;
+            background-color: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .filter-tag:hover {
+            background-color: #f1f5f9;
+        }
+        
+        .filter-tag.active {
+            background-color: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+        
+        .experiences-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .experience-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+            border-left: 5px solid #10b981;
+        }
+        
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .experience-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .experience-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .experience-tag {
+            background-color: #d1fae5;
+            color: #065f46;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .experience-content {
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .experience-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .experience-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .author-small {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .author-details h4 {
+            color: #1e293b;
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+        }
+        
+        .author-details p {
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+        
+        .experience-stats {
+            display: flex;
+            gap: 20px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* 学霸排行榜 */
+        .rankings-section {
+            margin-bottom: 50px;
+        }
+        
+        .rankings-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .ranking-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .ranking-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .ranking-badge {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 15px;
+        }
+        
+        .ranking-1 {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+        }
+        
+        .ranking-2 {
+            background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+        }
+        
+        .ranking-3 {
+            background: linear-gradient(135deg, #d97706, #b45309);
+        }
+        
+        .ranking-other {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .ranking-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .ranking-score {
+            color: #10b981;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .ranking-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .ranking-stats {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #1e293b;
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            text-align: center;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #10b981;
+        }
+        
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .experience-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .experience-footer {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .experience-stats {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="数学宇宙.html" class="logo">
+                <i class="fas fa-cube"></i> MathVerse
+            </a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="数学宇宙.html" class="nav-link">
+                        <i class="fas fa-home"></i> 首页
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="知识图谱.html" class="nav-link">
+                        <i class="fas fa-chart-line"></i> 知识图谱
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="智慧工坊.html" class="nav-link">
+                        <i class="fas fa-brain"></i> 智慧工坊
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="备考冲刺.html" class="nav-link active">
+                        <i class="fas fa-users"></i> 备考冲刺
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 页面标题区域 -->
+        <section class="page-header">
+            <h1 class="page-title">数学学习经验分享</h1>
+            <p class="page-subtitle">分享你的学习心得、备考策略和解题技巧。阅读高分学霸的学习方法，提升学习效率。与全国高中生一起交流，共同进步！</p>
+        </section>
+
+        <!-- 分享表单区域 -->
+        <div class="share-form-section">
+            <!-- 表单容器 -->
+            <div class="form-container">
+                <h2 class="section-title">
+                    <i class="fas fa-edit"></i> 分享你的学习经验
+                </h2>
+                
+                <form id="experienceForm">
+                    <div class="form-group">
+                        <label class="form-label required" for="experienceTitle">经验标题</label>
+                        <input type="text" id="experienceTitle" class="form-input" placeholder="例如：我是如何从90分提升到140分的数学学习心得" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="experienceTopic">经验类型</label>
+                        <select id="experienceTopic" class="form-select" required>
+                            <option value="">请选择经验类型</option>
+                            <option value="学习方法">学习方法</option>
+                            <option value="备考策略">备考策略</option>
+                            <option value="解题技巧">解题技巧</option>
+                            <option value="时间管理">时间管理</option>
+                            <option value="错题整理">错题整理</option>
+                            <option value="考试技巧">考试技巧</option>
+                            <option value="心态调整">心态调整</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required">适用标签</label>
+                        <div class="tags-container">
+                            <div class="tags-title">选择适合你的经验标签（可多选）：</div>
+                            <div class="tags-grid" id="tagsContainer">
+                                <!-- 标签将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required" for="experienceContent">经验内容</label>
+                        <textarea id="experienceContent" class="form-textarea" placeholder="请详细分享你的学习经验，包括具体的方法、步骤、案例和效果。建议结构清晰，分点叙述。" required></textarea>
+                        <div style="font-size: 0.85rem; color: #64748b; margin-top: 5px;">提示：可以分享你的具体学习方法、遇到的困难、如何克服、取得的成绩等</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="authorName">分享者名称</label>
+                        <input type="text" id="authorName" class="form-input" placeholder="请输入你的名字或昵称（可选）">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">上传相关图片</label>
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="upload-text">点击或拖拽文件到此处上传</div>
+                            <div class="upload-note">支持 JPG, PNG 格式，最大 5MB。可上传学习笔记、成绩单等图片</div>
+                            <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" multiple style="display: none;">
+                        </div>
+                        <div id="file-list"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="achievement">取得的成效</label>
+                        <textarea id="achievement" class="form-textarea" placeholder="分享你的学习方法带来的具体成效，例如：数学成绩从90分提升到140分，解题速度提高50%等"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-share-square"></i> 分享经验
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="clearForm()">
+                            <i class="fas fa-redo"></i> 清空内容
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- 精选经验展示 -->
+            <div class="featured-experience">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i> 今日精选经验
+                </h2>
+                <div class="featured-content" id="featuredContent">
+                    <!-- 精选经验内容将通过JavaScript动态加载 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 经验分享列表 -->
+        <section class="experiences-section">
+            <h2 class="section-title">
+                <i class="fas fa-list"></i> 经验分享列表
+            </h2>
+            
+            <div class="experiences-filter">
+                <div class="filter-title">筛选标签：</div>
+                <div class="filter-tags" id="filterTags">
+                    <!-- 筛选标签将通过JavaScript动态生成 -->
+                </div>
+            </div>
+            
+            <div class="experiences-list" id="experiencesList">
+                <!-- 经验分享列表将通过JavaScript动态加载 -->
+            </div>
+        </section>
+
+        <!-- 学霸排行榜 -->
+        <section class="rankings-section">
+            <h2 class="section-title">
+                <i class="fas fa-trophy"></i> 学霸经验分享排行榜
+            </h2>
+            
+            <div class="rankings-container" id="rankingsContainer">
+                <!-- 学霸排行榜将通过JavaScript动态加载 -->
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="数学宇宙.html">首页</a>
+                <a href="知识图谱.html">知识图谱</a>
+                <a href="智慧工坊.html">智慧工坊</a>
+                <a href="备考冲刺.html">备考冲刺</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 MathVerse 数学学习经验分享平台. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化标签系统
+            initTags();
+            
+            // 初始化文件上传功能
+            initFileUpload();
+            
+            // 加载精选经验
+            loadFeaturedExperience();
+            
+            // 加载经验分享列表
+            loadExperiences();
+            
+            // 加载学霸排行榜
+            loadRankings();
+            
+            // 初始化筛选标签
+            initFilterTags();
+        });
+        
+        // 经验标签数据
+        const experienceTags = [
+            { id: 'function', name: '函数与导数', icon: 'fas fa-chart-line' },
+            { id: 'trigonometry', name: '三角函数', icon: 'fas fa-wave-square' },
+            { id: 'sequence', name: '数列', icon: 'fas fa-sort-numeric-down' },
+            { id: 'geometry', name: '立体几何', icon: 'fas fa-draw-polygon' },
+            { id: 'analytic', name: '解析几何', icon: 'fas fa-bullseye' },
+            { id: 'probability', name: '概率统计', icon: 'fas fa-dice' },
+            { id: 'inequality', name: '不等式', icon: 'fas fa-balance-scale' },
+            { id: 'calculation', name: '计算能力', icon: 'fas fa-calculator' },
+            { id: 'thinking', name: '思维训练', icon: 'fas fa-brain' },
+            { id: 'memory', name: '记忆方法', icon: 'fas fa-memory' },
+            { id: 'planning', name: '学习计划', icon: 'fas fa-calendar-alt' },
+            { id: 'efficiency', name: '学习效率', icon: 'fas fa-tachometer-alt' }
+        ];
+        
+        // 筛选标签数据
+        const filterTags = [
+            { id: 'all', name: '全部', active: true },
+            { id: 'popular', name: '最受欢迎', active: false },
+            { id: 'recent', name: '最新发布', active: false },
+            { id: 'high-score', name: '高分经验', active: false },
+            { id: 'method', name: '学习方法', active: false },
+            { id: 'strategy', name: '备考策略', active: false },
+            { id: 'skill', name: '解题技巧', active: false }
+        ];
+        
+        // 初始化标签系统
+        function initTags() {
+            const tagsContainer = document.getElementById('tagsContainer');
+            tagsContainer.innerHTML = '';
+            
+            experienceTags.forEach(tag => {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag-item';
+                tagElement.dataset.id = tag.id;
+                tagElement.innerHTML = `
+                    <i class="${tag.icon}"></i>
+                    <span>${tag.name}</span>
+                `;
+                
+                tagElement.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+                
+                tagsContainer.appendChild(tagElement);
+            });
+        }
+        
+        // 初始化筛选标签
+        function initFilterTags() {
+            const filterTagsContainer = document.getElementById('filterTags');
+            filterTagsContainer.innerHTML = '';
+            
+            filterTags.forEach(tag => {
+                const tagElement = document.createElement('div');
+                tagElement.className = `filter-tag ${tag.active ? 'active' : ''}`;
+                tagElement.textContent = tag.name;
+                tagElement.dataset.id = tag.id;
+                
+                tagElement.addEventListener('click', function() {
+                    // 更新所有标签状态
+                    filterTags.forEach(t => t.active = t.id === tag.id);
+                    
+                    // 更新UI
+                    document.querySelectorAll('.filter-tag').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // 根据筛选条件重新加载经验
+                    loadExperiences(tag.id);
+                });
+                
+                filterTagsContainer.appendChild(tagElement);
+            });
+        }
+        
+        // 文件上传功能
+        function initFileUpload() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const fileList = document.getElementById('file-list');
+            
+            // 点击上传区域触发文件选择
+            uploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            // 拖拽上传功能
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#10b981';
+                uploadArea.style.backgroundColor = '#f0fdf4';
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = '#cbd5e1';
+                uploadArea.style.backgroundColor = '';
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#cbd5e1';
+                uploadArea.style.backgroundColor = '';
+                
+                if (e.dataTransfer.files.length) {
+                    handleFiles(e.dataTransfer.files);
+                }
+            });
+            
+            // 文件选择变化
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length) {
+                    handleFiles(fileInput.files);
+                }
+            });
+            
+            // 处理文件
+            function handleFiles(files) {
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    
+                    // 检查文件大小（5MB限制）
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert(`文件 "${file.name}" 大小超过5MB限制`);
+                        continue;
+                    }
+                    
+                    // 检查文件类型
+                    const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                    if (!validTypes.includes(file.type)) {
+                        alert(`文件 "${file.name}" 格式不支持，请上传 JPG 或 PNG 图片`);
+                        continue;
+                    }
+                    
+                    // 添加到文件列表
+                    addFileToList(file);
+                }
+            }
+            
+            // 添加文件到列表
+            function addFileToList(file) {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                
+                fileItem.innerHTML = `
+                    <div class="file-name">
+                        <i class="fas fa-image"></i>
+                        <span>${file.name} (${formatFileSize(file.size)})</span>
+                    </div>
+                    <div class="remove-file" onclick="removeFile(this)">
+                        <i class="fas fa-times"></i>
+                    </div>
+                `;
+                
+                fileList.appendChild(fileItem);
+            }
+        }
+        
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // 移除文件
+        function removeFile(element) {
+            const fileItem = element.parentElement;
+            fileItem.remove();
+        }
+        
+        // 加载精选经验
+        function loadFeaturedExperience() {
+            const featuredContent = document.getElementById('featuredContent');
+            
+            // 模拟精选经验数据
+            const featured = {
+                title: '从90分到145分：我的高三数学逆袭之路',
+                author: '张明',
+                authorInfo: '2024届考生，高考数学145分',
+                excerpt: '我在高三上学期数学成绩一直徘徊在90分左右，通过调整学习方法和坚持执行计划，最终在高考中取得了145分的好成绩。关键包括：1. 建立系统的知识体系 2. 针对性的专题训练 3. 科学的错题整理方法 4. 合理的时间分配。',
+                tags: ['学习方法', '备考策略', '时间管理'],
+                likes: 128,
+                comments: 42,
+                shares: 35
+            };
+            
+            const tagsHTML = featured.tags.map(tag => 
+                `<span class="featured-tag">${tag}</span>`
+            ).join('');
+            
+            featuredContent.innerHTML = `
+                <h3 class="featured-title">${featured.title}</h3>
+                <div class="featured-author">
+                    <div class="author-avatar">张</div>
+                    <div class="author-info">
+                        <h4>${featured.author}</h4>
+                        <p>${featured.authorInfo}</p>
+                    </div>
+                </div>
+                <div class="featured-tags">
+                    ${tagsHTML}
+                </div>
+                <p class="featured-excerpt">${featured.excerpt}</p>
+                <div class="featured-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-heart"></i>
+                        <span>${featured.likes} 点赞</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-comment"></i>
+                        <span>${featured.comments} 评论</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-share"></i>
+                        <span>${featured.shares} 分享</span>
+                    </div>
+                </div>
+            `;
+            
+            // 点击跳转到详细页面
+            featuredContent.style.cursor = 'pointer';
+            featuredContent.addEventListener('click', () => {
+                window.open('https://mathverse.example.com/experience/featured', '_blank');
+            });
+        }
+        
+        // 加载经验分享列表
+        function loadExperiences(filter = 'all') {
+            const experiencesList = document.getElementById('experiencesList');
+            
+            // 模拟经验分享数据
+            const experiences = [
+                {
+                    id: 1,
+                    title: '函数与导数专题突破方法',
+                    content: '函数与导数是高考数学的重难点，我通过系统的方法在三个月内将这一模块的正确率从60%提升到95%。关键步骤包括：1. 掌握基本初等函数的性质 2. 理解导数的几何意义 3. 分类整理常见题型 4. 建立解题模板库。',
+                    author: '李华',
+                    authorInfo: '高三学生，函数专题满分',
+                    tags: ['函数与导数', '专题突破', '解题技巧'],
+                    likes: 89,
+                    comments: 23,
+                    shares: 15,
+                    date: '2024-03-15'
+                },
+                {
+                    id: 2,
+                    title: '高效错题整理法：从错题到提分',
+                    content: '错题整理不是简单的抄写，而是分析、归纳和反思的过程。我使用四步错题整理法：1. 原题重现 2. 错误分析 3. 正确解法 4. 同类题归纳。坚持三个月后，同类错误率下降80%。',
+                    author: '王悦',
+                    authorInfo: '错题整理达人',
+                    tags: ['错题整理', '学习方法', '学习效率'],
+                    likes: 156,
+                    comments: 42,
+                    shares: 28,
+                    date: '2024-03-12'
+                },
+                {
+                    id: 3,
+                    title: '解析几何快速解题技巧',
+                    content: '解析几何计算量大，但掌握技巧后可以大大节省时间。我总结了五种快速解题方法：1. 设而不求法 2. 参数方程法 3. 几何性质优先法 4. 向量工具法 5. 特殊值检验法。',
+                    author: '陈伟',
+                    authorInfo: '数学竞赛获奖者',
+                    tags: ['解析几何', '解题技巧', '计算能力'],
+                    likes: 112,
+                    comments: 31,
+                    shares: 19,
+                    date: '2024-03-10'
+                },
+                {
+                    id: 4,
+                    title: '高三数学时间管理方案',
+                    content: '如何在有限的时间内高效复习数学？我制定了"三轮复习法"：第一轮系统梳理，第二轮专题突破，第三轮模拟冲刺。每天固定2小时数学学习时间，分为：30分钟基础巩固，60分钟专题训练，30分钟错题复习。',
+                    author: '刘芳',
+                    authorInfo: '时间管理专家',
+                    tags: ['时间管理', '学习计划', '备考策略'],
+                    likes: 78,
+                    comments: 18,
+                    shares: 12,
+                    date: '2024-03-08'
+                }
+            ];
+            
+            // 根据筛选条件过滤经验
+            let filteredExperiences = experiences;
+            if (filter === 'popular') {
+                filteredExperiences = experiences.sort((a, b) => b.likes - a.likes);
+            } else if (filter === 'recent') {
+                filteredExperiences = experiences.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } else if (filter === 'high-score') {
+                filteredExperiences = experiences.filter(exp => exp.title.includes('满分') || exp.title.includes('提分'));
+            } else if (filter === 'method') {
+                filteredExperiences = experiences.filter(exp => 
+                    exp.tags.some(tag => tag.includes('方法') || tag.includes('学习'))
+                );
+            } else if (filter === 'strategy') {
+                filteredExperiences = experiences.filter(exp => 
+                    exp.tags.some(tag => tag.includes('策略') || tag.includes('备考'))
+                );
+            } else if (filter === 'skill') {
+                filteredExperiences = experiences.filter(exp => 
+                    exp.tags.some(tag => tag.includes('技巧') || tag.includes('解题'))
+                );
+            }
+            
+            // 清空现有内容
+            experiencesList.innerHTML = '';
+            
+            // 添加经验分享卡片
+            filteredExperiences.forEach(exp => {
+                const tagsHTML = exp.tags.map(tag => 
+                    `<span class="experience-tag">${tag}</span>`
+                ).join('');
+                
+                const experienceCard = document.createElement('div');
+                experienceCard.className = 'experience-card';
+                experienceCard.innerHTML = `
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">${exp.title}</h3>
+                            <div class="experience-tags">
+                                ${tagsHTML}
+                            </div>
+                        </div>
+                    </div>
+                    <p class="experience-content">${exp.content}</p>
+                    <div class="experience-footer">
+                        <div class="experience-author">
+                            <div class="author-small">${exp.author.charAt(0)}</div>
+                            <div class="author-details">
+                                <h4>${exp.author}</h4>
+                                <p>${exp.authorInfo}</p>
+                            </div>
+                        </div>
+                        <div class="experience-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-heart"></i>
+                                <span>${exp.likes}</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-comment"></i>
+                                <span>${exp.comments}</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-share"></i>
+                                <span>${exp.shares}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // 点击跳转到经验详情页
+                experienceCard.addEventListener('click', () => {
+                    window.open(`https://mathverse.example.com/experience/${exp.id}`, '_blank');
+                });
+                
+                experiencesList.appendChild(experienceCard);
+            });
+        }
+        
+        // 加载学霸排行榜
+        function loadRankings() {
+            const rankingsContainer = document.getElementById('rankingsContainer');
+            
+            // 模拟学霸排行榜数据
+            const rankings = [
+                {
+                    rank: 1,
+                    name: '张明',
+                    score: '145分',
+                    description: '高考数学145分，分享系统学习方法',
+                    experiences: 12,
+                    likes: 1280
+                },
+                {
+                    rank: 2,
+                    name: '李华',
+                    score: '142分',
+                    description: '函数专题专家，解题技巧丰富',
+                    experiences: 8,
+                    likes: 890
+                },
+                {
+                    rank: 3,
+                    name: '王悦',
+                    score: '140分',
+                    description: '错题整理达人，效率提升明显',
+                    experiences: 10,
+                    likes: 760
+                },
+                {
+                    rank: 4,
+                    name: '陈伟',
+                    score: '138分',
+                    description: '竞赛背景，解析几何专家',
+                    experiences: 6,
+                    likes: 650
+                }
+            ];
+            
+            // 清空现有内容
+            rankingsContainer.innerHTML = '';
+            
+            // 添加学霸排行榜卡片
+            rankings.forEach(person => {
+                const rankingCard = document.createElement('div');
+                rankingCard.className = 'ranking-card';
+                
+                const badgeClass = `ranking-${person.rank <= 3 ? person.rank : 'other'}`;
+                
+                rankingCard.innerHTML = `
+                    <div class="ranking-badge ${badgeClass}">
+                        ${person.rank <= 3 ? person.rank : 'TOP'}
+                    </div>
+                    <h3 class="ranking-name">${person.name}</h3>
+                    <div class="ranking-score">${person.score}</div>
+                    <p class="ranking-desc">${person.description}</p>
+                    <div class="ranking-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-file-alt"></i>
+                            <span>${person.experiences} 篇经验</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-heart"></i>
+                            <span>${person.likes} 点赞</span>
+                        </div>
+                    </div>
+                `;
+                
+                // 点击跳转到学霸主页
+                rankingCard.addEventListener('click', () => {
+                    window.open(`https://mathverse.example.com/expert/${person.name}`, '_blank');
+                });
+                
+                rankingsContainer.appendChild(rankingCard);
+            });
+        }
+        
+        // 表单提交
+        document.getElementById('experienceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const title = document.getElementById('experienceTitle').value;
+            const topic = document.getElementById('experienceTopic').value;
+            const content = document.getElementById('experienceContent').value;
+            const author = document.getElementById('authorName').value || '匿名用户';
+            const achievement = document.getElementById('achievement').value;
+            
+            // 获取选中的标签
+            const selectedTags = Array.from(document.querySelectorAll('.tag-item.selected'))
+                .map(tag => tag.querySelector('span').textContent);
+            
+            // 验证表单
+            if (!title.trim()) {
+                alert('请填写经验标题');
+                return;
+            }
+            
+            if (!topic) {
+                alert('请选择经验类型');
+                return;
+            }
+            
+            if (!content.trim()) {
+                alert('请填写经验内容');
+                return;
+            }
+            
+            // 获取文件列表
+            const fileItems = document.getElementById('file-list').children;
+            const fileCount = fileItems.length;
+            
+            // 显示提交成功消息
+            alert(`经验分享成功！\n\n标题：${title}\n类型：${topic}\n标签：${selectedTags.join(', ') || '无'}\n附件：${fileCount} 个图片\n\n感谢你的分享，你的经验将帮助更多同学提升数学成绩！`);
+            
+            // 重置表单
+            clearForm();
+            
+            // 重新加载经验列表
+            loadExperiences();
+            loadRankings();
+        });
+        
+        // 清空表单
+        function clearForm() {
+            document.getElementById('experienceForm').reset();
+            document.getElementById('file-list').innerHTML();
+            
+            // 清除选中的标签
+            document.querySelectorAll('.tag-item.selected').forEach(tag => {
+                tag.classList.remove('selected');
+            });
+        }
+    </script>
+</body>
+</html>
